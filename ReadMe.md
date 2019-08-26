@@ -1,6 +1,6 @@
-## Online Pasta Ordering Application for mobile and web
+# Online Pasta Ordering Application for mobile and web
 
-# dt-deploy
+## dt-deploy
 This is the desktop version, which is a web app using reactJs
 To run
 * checkout project code
@@ -8,7 +8,7 @@ To run
 * then use yarn start OR npm start
 * which will run the development server in port 3000 
 
-# mobile-deploy
+## mobile-deploy
 This is the Mobile version web App using ReactJs
 To run
 * checkout project code
@@ -16,7 +16,7 @@ To run
 * then use yarn start OR npm start
 * which will run the development server in port 3000
 
-# Technologies Used
+## Technologies Used
 * ReactJS
 * Redux
 * Axios - For API call
