@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+button {
+    cursor: pointer;
+}
+
+.loading {
+    position: fixed;
+    top: 42%;
+    left: 50%;
+    z-index: 9999;
+}
+
+.container {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100%;
+    background-color: #ffffff;
+}
+
+.wrapper {
+    display: block;
+    width: 100%;
+    margin: auto;
+}
+
+.col {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.myDiv {
+    display: block;
+}

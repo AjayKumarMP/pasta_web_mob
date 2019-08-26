@@ -1,0 +1,50 @@
+@import "../styles/variables";
+
+%container {
+  margin: 0 auto;
+  max-width: $page-width;
+  padding: 0 3vw;
+  width: 100%;
+}
+
+%column {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  >div {
+    flex-shrink: 0;
+  }
+}
+
+// TODO: Move all these column styles into a proper grid system
+%twoColumns {
+  @extend %column;
+
+  >div {
+    min-width: 300px;
+    width: 40%;
+
+    @media #{$mobile-only} {
+      width: 100%;
+    }
+  }
+}
+
+%fourColumns {
+  @extend %column;
+
+  >div {
+    min-width: 300px;
+    width: 23%;
+  }
+}
+
+%subtitle {
+  font-size: 16px;
+  line-height: 1.56;
+
+  @media #{$mobile-and-up} {
+    font-size: 18px;
+  }
+}

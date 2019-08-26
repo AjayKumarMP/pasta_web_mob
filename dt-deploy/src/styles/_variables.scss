@@ -1,0 +1,16 @@
+// Dimensions
+$page-width: 1400px;
+
+// Colors
+$color-black: #383838;
+$color-green: #55872d;
+$color-orange: #f06018;
+$color-grey: #CCCCCC;
+$color-grey-2: #707070;
+$color-white: #FFFFFF;
+$color-white-2: #fafcf7;
+
+// Media queries
+$mobile: 600px;
+$mobile-only: only screen and (max-width: #{$mobile});
+$mobile-and-up: only screen and (min-width: #{$mobile});

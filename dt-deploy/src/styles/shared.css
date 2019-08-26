@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fafcf7;
+  color: #383838;
+  font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+}
+
+a {
+  transition: opacity 0.3s ease-in-out;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+h1 {
+  color: #383838;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media only screen and (min-width: 600px) {
+  h1 {
+    font-size: 50px;
+  }
+}
+
+/* Utils */
+.capitalize {
+  text-transform: capitalize;
+}
+
+.loader {
+  display: block;
+  margin: 50px auto;
+  stroke: rgba(0, 0, 0, 0.5);
+}
+
+.icon {
+  fill: #707070;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea,
+button {
+  outline: none;
+}
+
+.emptyStateText {
+  padding: 20px;
+}
+
+/* Generic Transition */
+.basicTransition-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.basicTransition-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.basicTransition-exit {
+  opacity: 1;
+}
+
+.basicTransition-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Page transitions */
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}

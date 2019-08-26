@@ -1,0 +1,128 @@
+.orderCard {
+    width: 100%;
+    background: #fff;
+    filter: drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.12));
+    // padding: 20px;
+    padding-left: 20px;
+    padding-right: 27px;
+    box-shadow: 0px 0px 18px -6px rgba(0, 0, 0, 0.75);
+    margin-top: 20px;
+    margin-left: 20px;
+    label {
+        font-family: Montserrat;
+        font-weight: 500;
+        font-size: 16px;
+        text-align: left;
+        color: #232323;
+        opacity: 0.54;
+        padding: 0;
+        margin: 0;
+    }
+    p {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 16px;
+        text-align: left;
+        color: #232323;
+        padding: 0;
+        margin: 0;
+    }
+    a {
+        color: #67023f;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+}
+
+.orderDetails {
+    display: grid;
+    margin-top: 2%;
+    grid-template-columns: repeat(2, 1fr);
+    padding-bottom: 10px;
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+.break {
+    margin: 10px 0;
+}
+
+.orderbtn {
+    padding: 9px;
+    height: 35px;
+    background: #67023f;
+    filter: drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.25));
+    border: transparent;
+    justify-self: end;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: left;
+    color: #fff;
+}
+
+.deliveryText {
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+    color: #0cb800 !important;
+}
+
+// order summary
+.orderSummary {
+    padding-top: 50px;
+    label {
+        font-family: Montserrat;
+        font-weight: 500;
+        font-size: 16px;
+        text-align: left;
+        color: #232323;
+        opacity: 0.54;
+    }
+    p {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 20px;
+        text-align: left;
+        color: #232323;
+        margin: 0;
+    }
+}
+
+.orderSummaryCard {
+    width: 619px;
+    background: #67023f;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    label {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 20px;
+        color: #fff;
+    }
+    p {
+        font-family: Montserrat;
+        font-weight: normal;
+        font-size: 18px;
+        color: #fff;
+        margin: 0;
+    }
+    padding: 40px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+.viewSummary {
+    display: inline-flex;
+    color: #67023f !important;
+    cursor: pointer;
+}

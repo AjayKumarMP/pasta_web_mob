@@ -1,0 +1,76 @@
+.contactCard {
+    width: 498.58px;
+    height: 254px;
+    background: #fee094;
+    filter: drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.12));
+    margin: 50px 0;
+    padding: 30px;
+    h4 {
+        font-family: Montserrat;
+        font-weight: bold;
+        font-size: 30px;
+        letter-spacing: 0.01em;
+        color: #67023f;
+    }
+    h5 {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 20px;
+        color: #67023f;
+        margin: 0;
+    }
+    span {
+        font-family: Montserrat;
+        font-weight: 500;
+        font-size: 24px;
+        text-align: center;
+        color: #232323;
+    }
+}
+
+.contactCard2 {
+    width: 498.58px;
+    height: 228px;
+    background: #fff;
+    border: 2px solid #fee094;
+    filter: drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.12));
+    padding: 40px;
+    h5 {
+        font-family: Montserrat;
+        font-weight: bold;
+        font-size: 30px;
+        letter-spacing: 0.01em;
+        text-align: left;
+        color: #67023f;
+    }
+    p {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 20px;
+        text-align: left;
+        color: #67023f;
+    }
+}
+
+.orClass {
+    margin-top: 15.5%;
+    color: #67023f;
+    display: inline-flex;
+    span {
+        width: 35px;
+        padding-top: 8px;
+    }
+    span:nth-child(1) {
+        margin-right: 5px;
+    }
+    span:nth-child(2) {
+        margin-left: 5px;
+    }
+}
+
+.contactUsIcon {
+    float: right;
+    // margin-top: 3%;
+    border: 1px solid black;
+    border-radius: 16px;
+}

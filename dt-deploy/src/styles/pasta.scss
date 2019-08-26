@@ -1,0 +1,544 @@
+.pastaContainer {
+    .background {
+        background-color: #ffe195;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+    }
+    button:hover,
+    .backLogo:hover {
+        cursor: pointer !important;
+    }
+    .backLogo {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .sideImage {
+        bottom: 0;
+        //position: absolute;
+        img {
+            height: 100vh;
+            width: calc((10vh * 3) + 10vw);
+        }
+    }
+    .wrapper {
+        display: grid !important;
+        // display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .leftSide {
+        font-family: 'Montserrat', sans-serif;
+        position: relative;
+        display: flex;
+    }
+    .textSelected {
+        font-weight: 700;
+    }
+    .loading {
+        position: fixed;
+        top: 42%;
+        left: 50%;
+        z-index: 9999;
+    }
+    .bowl {
+        display: flex;
+        cursor: pointer;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        text-align: center;
+        // -webkit-animation:bounce 1s infinite;
+        @-webkit-keyframes bounce {
+            0% {
+                bottom: 5px;
+            }
+            25%,
+            75% {
+                bottom: 15px;
+            }
+            50% {
+                bottom: 20px;
+            }
+            100% {
+                bottom: 0;
+            }
+        }
+        &One {
+            img {
+                height: 80%;
+            }
+        }
+        &Two {
+            img {
+                height: 100%;
+            }
+        }
+        p {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        span {
+            display: block;
+        }
+        @media screen and (min-width: 1500px) {
+            &One {
+                left: 53%;
+            }
+            &Two {
+                top: 67vh;
+            }
+        }
+    }
+    .bowl:hover,
+    .bowlActive {
+        p {
+            font-weight: 700;
+        }
+    }
+    .selectSection {
+        font-family: 'Poppins', sans-serif;
+        height: 100vh;
+        display: grid;
+        grid-template-rows: 1fr 1fr 0.5fr;
+        text-align: center;
+        justify-items: right;
+        align-items: center;
+        h2 {
+            font-weight: 500;
+        }
+        p {
+            margin: 0;
+        }
+        .selectionText {
+            color: #67023f;
+            font-weight: bold;
+        }
+        .price {
+            color: black;
+            font-family: sans-serif;
+            font-weight: 500;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .price span {
+            font-family: 'Montserrat', sans-serif;
+        }
+    }
+    .bottomButton {
+        width: 72%;
+        display: flex;
+        justify-content: space-between;
+        button {
+            border-radius: 30px;
+            cursor: pointer;
+            padding: 13px 67px;
+            &:nth-child(1) {
+                color: #67023f;
+                border: white;
+                background: #fff;
+                font-weight: bold;
+            }
+            &:nth-child(2) {
+                color: #fff;
+                background: #67023f;
+                border: #67023f;
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            width: 70%;
+        }
+    }
+    .ml20 {
+        margin-left: 20px;
+    }
+    .sauce {
+        &Bowl {
+            position: relative;
+            left: -67%;
+            top: 27%;
+            img {
+                // width: 86%;
+            }
+        }
+        &Inbowl {
+            &Sauce {
+                position: absolute;
+                width: 55%;
+                left: 24%;
+                top: 22%;
+            }
+            &Pasta {
+                position: absolute;
+                width: 25%;
+                left: 36%;
+                top: 37%;
+            }
+            &Veggie {
+                &0 {
+                    position: absolute;
+                    width: 20%;
+                    left: 18%;
+                    top: 25%;
+                }
+                &1 {
+                    position: absolute;
+                    width: 20%;
+                    left: 40%;
+                    top: 15%;
+                }
+                &2 {
+                    position: absolute;
+                    width: 20%;
+                    left: 64%;
+                    top: 25%;
+                }
+            }
+            &Garnish {
+                &0 {
+                    position: absolute;
+                    width: 20%;
+                    left: 21%;
+                    top: 51%;
+                }
+                &1 {
+                    position: absolute;
+                    width: 20%;
+                    left: 63%;
+                    top: 51%;
+                }
+            }
+            &Meat {
+                position: absolute;
+                left: 34%;
+                top: 63%;
+                width: 30%;
+            }
+        }
+        &One {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            position: absolute;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((85vw / 3) - 12vh);
+            top: 3%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Two {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((79vw / 2.9) + 5.02vh);
+            top: 17%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Three {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc(31vw - -3vh);
+            top: 39%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Four {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((83vw / 2.9) + 5.02vh);
+            top: 59%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Five {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((84vw / 3) - 11vh);
+            top: 75%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Six {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((123vw / 3) - 12vh);
+            top: 1%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Seven {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((115vw / 2.9) + 5.02vh);
+            top: 20%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Eight {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((118vw / 2.9) + 5.02vh);
+            top: 43%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Nine {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((110vw / 2.9) + 5.02vh);
+            top: 65%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        &Ten {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            left: calc((91vw / 2.9) + 5.02vh);
+            top: 81%;
+            p {
+                margin: 0;
+                position: absolute;
+                top: 99%;
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            &Bowl {
+                position: absolute;
+                left: calc((100vh / 10) + 5vw);
+                top: calc((0.35 * 100vh) - 3vw);
+            }
+            &One,
+            &Five {
+                left: calc((100vh / 10) + 5vw);
+                transform: translate(155%);
+            }
+            &Two,
+            &Four {
+                left: calc((100vh / 10) + 5vw);
+                transform: translate(235%);
+            }
+            &Three {
+                left: calc((100vh / 10) + 5vw);
+                transform: translate(260%);
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            &One,
+            &Two,
+            &Three,
+            &Four,
+            &Five,
+            &Six,
+            &Seven,
+            &Eight,
+            &Nine,
+            &Ten {
+                p {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+        @media screen and (max-width: 1500px) {
+            &One,
+            &Two,
+            &Three,
+            &Four,
+            &Five,
+            &Six,
+            &Seven,
+            &Eight,
+            &Nine,
+            &Ten {
+                img {
+                    // width: 90px;
+                }
+            }
+        }
+    }
+    .detailCard {
+        text-align: left;
+        left: 7%;
+        background-color: #ffffff;
+        position: relative;
+        width: 443px;
+        min-height: 200px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+        font-family: 'Montserrat', sans-serif;
+        padding: 15px 15px;
+        .cardDetailHeading {
+            font-weight: 700;
+        }
+        ul {
+            padding: 0;
+            li {
+                list-style: none;
+            }
+        }
+    }
+    .detailCard::after {
+        content: url('../assets/images/below-box.png');
+        position: absolute;
+        left: -32px;
+        bottom: -47px;
+        min-width: 0;
+        max-width: 0;
+    }
+    .insideCard {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-gap: 10px;
+        ul {
+            padding: 0;
+            margin: 0;
+            li {
+                list-style: none;
+            }
+        }
+    }
+    .sideSection {
+        padding-top: 8%;
+        padding-left: 19%;
+        .sauce {
+            &Bowl {
+                position: absolute;
+                left: calc((100vh / 12));
+                top: calc((0.3 * 100vh) - 2vw);
+            }
+        }
+        h5 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            span {
+                color: #67023f;
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            padding-left: 16%;
+            .sauce {
+                &Bowl {
+                    position: absolute;
+                    left: calc((100vh / 7));
+                    top: calc((0.3 * 100vh) - 1vw);
+                }
+            }
+        }
+        @media screen and (width: 1280px) and (min-height: 765px) {
+            padding-left: 17%;
+        }
+    }
+    .sidesCard {
+        cursor: pointer;
+        width: 252px;
+        height: 130px;
+        background: #e6d7b1;
+        padding: 0 2vw;
+        display: flex;
+        align-items: center;
+        transition: background 0.2s ease-in-out;
+        &Selected {
+            background: #fff0ca;
+            p {
+                font-weight: 700;
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            width: 400px;
+            height: 160px;
+        }
+        @media screen and (max-width: 1500px) {
+            img {
+                width: 100px;
+            }
+        }
+    }
+    .activeBorder {
+        border: 2px dashed #67023f;
+        border-radius: 50%;
+    }
+}

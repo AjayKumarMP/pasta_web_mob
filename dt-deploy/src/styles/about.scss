@@ -1,0 +1,46 @@
+.aboutUsContainer {
+    .container {
+        display: block;
+        width: 100%;
+        min-height: 100vh;
+        max-height: 100%;
+        background-color: #ffffff;
+        .abtwrapper {
+            width: 86% !important;
+            margin-left: 90px !important;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 1.5;
+            color: black;
+            h2 {
+                color: #67023f;
+            }
+            p {
+                padding: 8px;
+            }
+        }
+        .footer {
+            padding-top: 181px;
+            display: grid;
+            grid-template-rows: repeat(2, minmax(0, 1fr));
+            a {
+                color: #67023f;
+                text-decoration: none;
+                font-weight: 600;
+                text-align: center;
+            }
+        }
+        .footerLinks {
+            display: flex;
+            width: 40%;
+            margin: auto;
+            padding: 10px;
+            justify-content: space-between;
+        }
+        .policy {
+            display: flex;
+            padding: 10px;
+            justify-content: center;
+        }
+    }
+}

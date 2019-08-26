@@ -1,0 +1,299 @@
+.header {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.cartWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.column {
+    display: grid;
+    justify-items: flex-end;
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+}
+
+.addBtn {
+    padding: 8px 10px !important;
+    font-size: 16px !important;
+    font-weight: lighter !important;
+    margin-bottom: 15px;
+    border-radius: 10px !important;
+}
+
+.cartCard {
+    padding: 25px;
+    width: 90%;
+    background: #fff;
+    filter: drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.08));
+    h4 {
+        font-family: Montserrat;
+        font-weight: 500;
+        font-size: 24px;
+        color: #000;
+    }
+    p {
+        font-family: Montserrat;
+        font-weight: normal;
+        font-size: 16px;
+        text-align: left;
+        color: #000;
+        opacity: 0.8;
+    }
+    &Money {
+        display: grid;
+        justify-content: space-between;
+    }
+    &Wrap {
+        display: flex;
+        justify-content: space-between;
+    }
+    &Img {
+        img {
+            min-width: 200px;
+            min-height: 200px;
+            width: 100%;
+            height: 100%;
+            max-width: 400px;
+            max-height: 400px;
+        }
+    }
+}
+
+.cartCardFullBtn {
+    // width: 78%;
+    padding: 5px;
+    height: 29px;
+    border-radius: 2px;
+    background: #000;
+    color: #ffffff;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cartCardEdit {
+    display: flex;
+    justify-content: space-between;
+}
+
+.editBtn {
+    width: 156px;
+    height: 38px;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 1px 2px 12px rgba(0, 0, 0, 0.16);
+    border: transparent;
+}
+
+.incrementBody {
+    font-size: 18px;
+    width: 100px;
+    height: 31px;
+    border-radius: 50px;
+    color: #ffffff;
+    background: #1d1d1d;
+}
+
+.incrementBtn {
+    width: 40px;
+    height: 31px;
+    background: transparent;
+    color: #ffffff;
+    border: 80px;
+}
+
+// drink card
+.drinkCard {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+    padding-bottom: 1.3rem;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0.3rem;
+    p {
+        text-align: center;
+        padding: 0 10px;
+        margin: 0;
+    }
+    img {
+        width: 100%;
+    }
+}
+
+.drinkCardFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+    opacity: 0.87;
+}
+
+// drink
+.drink {
+    margin-left: 20px;
+    display: flex;
+    max-width: 100%;
+    flex: 1 1 0;
+    justify-content: space-between;
+    flex-direction: column;
+    h4 {
+        color: #67023f;
+        font-family: 'Poppins', sans-serif;
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+}
+
+.drinkRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem;
+    overflow-x: auto;
+}
+
+.deliveryBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 96px;
+    padding: 8px;
+    background: #fff;
+    filter: drop-shadow(0px 2px 16px rgba(0, 0, 0, 0.1));
+    border-radius: 8px;
+    margin-top: 20px;
+    h4 {
+        font-family: Montserrat;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: left;
+        color: #67023f;
+        margin: 0;
+        padding: 8px;
+    }
+    p {
+        font-family: Montserrat;
+        font-weight: 500;
+        font-size: 16px;
+        color: #0b0b0b;
+        opacity: 0.87;
+        margin: 0;
+        padding: 8px;
+    }
+    a {
+        color: #67023f;
+        font-size: 16px;
+        padding: 8px;
+        text-decoration: none;
+    }
+    div {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.coupon {
+    background-color: #ffffff;
+    width: 100%;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.couponHeader {
+    width: 100%;
+    height: 48px;
+    background: #67023f;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: left;
+    color: #fff;
+    padding: 12px 12px 7%;
+    display: inline-flex;
+    p:nth-child(2) {
+        margin-left: 60%;
+        font-size: 24px;
+    }
+}
+
+.couponBtn {
+    width: 100%;
+    height: 64px;
+    border-radius: 4px;
+    background: #67023f;
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.25);
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+}
+
+.couponsItems {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+    ul {
+        padding: 0;
+        li {
+            margin-top: 6px;
+            list-style: none;
+        }
+    }
+    .couponPrices {
+        text-align: end;
+    }
+}
+
+.totalText {
+    color: black;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.discountText {
+    color: black;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.activeborder {
+    border: 2px dashed #67023f;
+}
+
+.addressHeader {
+    .row {
+        display: flex;
+        margin: 2%;
+        p {
+            margin-top: 0;
+        }
+    }
+}
+
+.credBtn {
+    position: initial;
+    bottom: 0;
+    margin-top: 2% !important;
+    background: #67023f;
+    color: #fff;
+    border: none;
+    height: 39px;
+    line-height: 36px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 22%;
+    border-radius: 7%;
+    margin: 1%;
+}

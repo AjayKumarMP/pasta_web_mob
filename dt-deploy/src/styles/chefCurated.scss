@@ -1,0 +1,301 @@
+// Chef curated home
+@import url('https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap');
+.hamburger {
+    width: 65px;
+    margin: 2%;
+    cursor: pointer;
+}
+
+.logo {
+    position: absolute;
+    right: 7%;
+    top: 4%;
+    width: 150px;
+}
+
+.rowsContainer {
+    color: black;
+    h4,
+    h5,
+    button {
+        font-family: 'Poppins', sans-serif;
+    }
+    p {
+        font-family: 'Montserrat', sans-serif;
+    }
+    display: grid;
+    grid-auto-flow: row;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.greeting {
+    h4 {
+        font-weight: 700;
+        font-size: 1.7rem;
+        margin: 0;
+    }
+    h5 {
+        color: #67023F;
+        font-weight: 500;
+        margin-top: 1%;
+        margin-bottom: 3%;
+        font-size: 1.3rem;
+    }
+}
+
+.makeCuratedWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    h5 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    p {
+        margin: 0;
+        margin-top: 1.5%;
+        width: 70%;
+        font-weight: 500;
+        font-size: 1.05rem;
+    }
+    button {
+        margin-top: 5%;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        padding: 2% 10%;
+    }
+}
+
+.makePastaContainer {
+    background: #FEE094;
+    padding: 20px;
+    box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.12);
+    margin-right: 4%;
+    position: relative;
+    overflow: hidden;
+    h5 {
+        color: #67023F;
+    }
+    button {
+        color: white;
+        background: black;
+    }
+    img {
+        position: absolute;
+        width: 37%;
+        right: 3%;
+        bottom: -43%;
+    }
+}
+
+.chefCuratedContainer {
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, rgba(255, 255, 255, 0) 100%), url('../assets/images/curated-background.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.12);
+    padding: 20px;
+    margin-left: 4%;
+    button {
+        background: white;
+        box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.28);
+    }
+}
+
+.favouritesSection {
+    display: grid;
+    grid-auto-flow: row;
+    h5 {
+        color: #67023F;
+        font-weight: 700;
+        font-size: 1.4rem;
+        margin-bottom: 2%;
+    }
+}
+
+.favoritesItemsContainer {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 2%;
+    padding-bottom: 2%;
+}
+
+.favouritesItem {
+    text-align: center;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.16);
+    padding-bottom: 1.3rem;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0.3rem;
+    p {
+        text-align: left;
+        padding: 5px 10px;
+        margin: 0;
+        font-weight: 500;
+    }
+    img {
+        width: 100%;
+    }
+}
+
+.favouritesitemFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+    opacity: 0.87;
+}
+
+//   ***********************************************
+//   *             Chef curated page               *
+//   ***********************************************
+.curatedItemsContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.curatedItem {
+    width: 30%;
+    position: relative;
+    padding-bottom: 8%;
+    img {
+        width: 100%;
+    }
+}
+
+.curatedItemContent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 5%;
+    position: absolute;
+    background: white;
+    box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.16);
+    border-radius: 10px;
+    width: 90%;
+    left: 4.5%;
+    bottom: 8%;
+    h5 {
+        margin: 0;
+        margin-bottom: 3%;
+        font-size: 1.1rem;
+    }
+    p {
+        margin: 0;
+        margin-bottom: 3%;
+    }
+    span {
+        font-weight: 600;
+    }
+    button {
+        background: white;
+        border: 1px solid #67023F;
+        border-radius: 4px;
+        color: #67023F;
+        font-weight: 600;
+        padding: 1% 2%;
+    }
+}
+
+.hambMenu {
+    background: #000;
+    color: #fff;
+    z-index: 4;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28%;
+    height: 100%;
+}
+
+.hambMenu .hambHeader {
+    display: flex;
+    padding-top: 22px;
+    width: 100%;
+    height: 251px;
+    background: #fee094;
+}
+
+.hambMenu .hambHeader .userArea .circle {
+    width: 109px;
+    margin: 0 auto;
+    height: 109px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.hambMenu .hambHeader .userArea h3 {
+    color: #000;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.hambMenu .hambHeader .userArea .userInfo {
+    padding-top: 13px;
+    padding-left: 30%;
+    width: 100%;
+}
+
+.hambMenu .hambHeader .userArea .userInfo p {
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #000;
+    font-weight: 500;
+}
+
+.hambMenu .hambHeader .userArea {
+    width: 100%;
+}
+
+.hambMain {
+    padding-left: 8%;
+}
+
+.hambMenu .hambMain ul {
+    margin: 20px;
+    list-style: none;
+}
+
+.hambMenu .hambMain ul li {
+    position: relative;
+    font-size: 15px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.hambMenu .hambMain ul li img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.hambMenu .hambMain ul li a {
+    margin-left: 16%;
+}
+
+.hambMenu .hambMain ul li p {
+    margin-left: 35px;
+}
+
+.hambEffect {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.6);
+}
