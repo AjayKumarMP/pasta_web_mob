@@ -19,8 +19,8 @@ let mapDispatchToProps = (dispatch)=>{
 class Login extends React.Component {
 
   state = {
-    emailId: "",
-    password: "",
+    emailId: "asifali_121@mailinator.com",
+    password: "secret",
     loggedIn: false,
     loginBtnText: 'Log In'
   }

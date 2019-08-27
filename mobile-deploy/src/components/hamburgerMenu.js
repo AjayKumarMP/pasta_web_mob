@@ -46,9 +46,11 @@ class Hamburger extends React.Component {
 						<div className='userArea'>
 							<div className='circle' />
 							<div className='userInfo'>
-								<h3>{this.props.userInfo[0].name}</h3>
-								<p>{this.props.userInfo[0].email}</p>
-								<p>{this.props.userInfo[0].phone}</p>
+								<h3>{this.props.userInfo && this.props.userInfo.name
+                                        ? this.props.userInfo.name
+                                        : 'Guest User'}</h3>
+								<p>{this.props.userInfo.email}</p>
+								{/* <p>{this.props.userInfo[0].phone}</p> */}
 							</div>
 						</div>
 					</div>

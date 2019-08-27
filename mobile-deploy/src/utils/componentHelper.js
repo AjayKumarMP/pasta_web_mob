@@ -68,6 +68,20 @@ export class ComponentHelpers extends Component {
     getMyAddresses = () => {
         return this.props.data.addresessHome
     }
+
+    verifyOtp = async(confirmation_code, otp) => {
+        const response = await httpClient.ApiCall('post', APIEndPoints.verifyOtp, {
+            confirmation_code,
+            otp
+        })
+        localStorage.setItem('user', JSON.stringify(response.data))
+        httpClient.setDefaultHeader('access-token', response.data ? response.data.access_token : "")
+        const url = localStorage.getItem('URL')
+        if (url) {
+            localStorage.removeItem('URL')
+            this.props.history.push(url)
+        }
+    }
 }
 
 export function connect(Component) {

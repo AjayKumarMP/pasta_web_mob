@@ -55,6 +55,11 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getGarnishes, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
       this.setState({
         garnishes: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
         loading: false
@@ -279,7 +284,8 @@ class Bowlselect extends ComponentHelpers {
   }
 
   addGarnishToOrder = () => {
-    this.props.placeOrder(Object.assign(this.props.data.placeOrder, { garnish: this.garnish[0] }))
+    console.log(this.garnish)
+    this.props.placeOrder(Object.assign(this.props.data.placeOrder, { garnish: this.garnish }))
   }
 
   render() {

@@ -7,7 +7,7 @@ const httpClient = axios.create({
     headers: {
         "Content-type": "application/json; charset=UTF-8"
     },
-    // baseURL :"http://cripsee.com/pasta/admin/api/v1/"
+    baseURL :"http://cripsee.com/pasta/admin/api/v1/"
 })
 
 const CancelToken = axios.CancelToken

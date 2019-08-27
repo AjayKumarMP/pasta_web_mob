@@ -36,7 +36,7 @@ class FavComp extends React.Component {
     return (
       <div id={this.props.index+"favorite"} className="favorite" style={this.state.style} 
       onClick={(e) => { this.props.handler({id:this.props.info.id, name:this.props.info.name}); this.change(this.props.index) }}>
-        <img src={this.props.info.src}></img>
+        <img src={this.props.info.picture}></img>
         <h5 id="favName">{this.props.info.name}</h5>
         <div className="under-sect">
           <div className='leftSide'>

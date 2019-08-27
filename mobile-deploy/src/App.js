@@ -21,37 +21,34 @@ class PastaProject extends ComponentHelpers {
 			favorits: [
 				
 			],
-			user: [{ name: '', email: '', phone: '' }],
+			user: { name: '', email: '', phone: '' },
 			showHamb: false,
 			conut: 0,
-			loading:true
+			loading:false
 		};
 	}
 
 	async componentWillMount() {
-		this.unRegisterApiCalls = false;
-		this.setState({loading: true})
+		// this.unRegisterApiCalls = false;
+		// this.setState({loading: true})
 		try {
-			const user = localStorage.getItem('user')
-			const userDetails = user !== 'undefined'? JSON.parse(user): ''
+			const userDetails = JSON.parse(localStorage.getItem('user'))
 			if (!this.props.data.isUserLoggedIn()) {
-				localStorage.clear()
-				this.setState({loading: true})
-				return this.props.history.push('/login')
+				// this.setState({loading: true})
+				// return this.props.history.push('/login')
 			} else {
-				this.setState({ user: [{ name: userDetails.full_name, email: userDetails.email, phone: userDetails.phone_no }] })
-				httpClient.setDefaultHeader('access-token', userDetails.access_token)
-				this.source = httpClient.getSource()
+				this.setState({ user: { name: userDetails.full_name, email: userDetails.email, phone: userDetails.phone_no } })
+				// this.source = httpClient.getSource()
 				// const res = await httpClient.ApiCall('post', APIEndPoints.myFavourites,undefined,this.source.token)
 				// const response = JSON.parse(JSON.stringify(res.data[0]).replace(/picture/g, "src"))
 				// var favorits = [response.bowl, response.meat, response.pasta, response.sauce,
 				// response.side, response.vegetable
 				// ]
 				// favorits = favorits.filter(_=>_)
-				// if(!this.unRegisterApiCalls){
 				// 	this.setState({ favorits, loading: false })
 				// }
-			this.setState({loading: false})
+					this.setState({ loading: false })
+
 			}
 		} catch (error) {
 			if(error.message !== "unMounted"){
@@ -62,7 +59,6 @@ class PastaProject extends ComponentHelpers {
 	}
 
 	componentWillUnmount(){
-		this.unRegisterApiCalls = true;
 		this.source && this.source.cancel('unMounted')
 	}
 
@@ -87,7 +83,7 @@ class PastaProject extends ComponentHelpers {
 							<HambMenu handle={this.openHamburger} userInfo={this.state.user} />
 						) : null}
 						<div className='wrap-txt-area'>
-							<h3>Hey {this.state.user[0].name} , </h3>
+							<h3>Hey {this.state.user ?this.state.user.name: ''}, </h3>
 							<h5>Let`s get you a pasta </h5>
 						</div>
 					</div>

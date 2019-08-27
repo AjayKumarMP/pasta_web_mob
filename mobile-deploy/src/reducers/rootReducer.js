@@ -19,7 +19,6 @@ function rootReducer(state = initialState, action) {
                 getOrderPrice: () => {
                     var sum = 0
                     Object.keys(action.payload).forEach(key => {
-                        console.log(action.payload[key], key)
                         if (isNumber(action.payload[key].price)) {
                             sum += action.payload[key].price
                         }
@@ -63,7 +62,7 @@ const initialState = {
     placeOrder: { bowl: {}, sauce: {}, pasta: {}, garnish: {}, meat: {}, vegetable: {}, side: {} },
     isUserLoggedIn: () => {
         const user = localStorage.getItem('user')
-        const userDetails = user !== 'undefined' && user !== undefined && user !== null ? JSON.parse(user) : ''
+        const userDetails = user !== 'undefined' && user !== undefined && user !== null && user !== 'null' ? JSON.parse(user) : ''
         return (userDetails !== '' || userDetails.access_token !== undefined)
     },
     bowls: [],

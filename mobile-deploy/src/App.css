@@ -318,7 +318,8 @@
 
 .hambMenu .hambHeader .userArea .userInfo {
     padding-top: 13px;
-    padding-left: 40px;
+    /* padding-left: 40px; */
+    text-align: center;
     width: 100%;
 }
 
@@ -327,6 +328,29 @@
     font-size: 13px;
     color: #000;
     font-weight: 500;
+}
+
+.close{
+    cursor: pointer;
+}
+.popup-content {
+    width: 378px !important;
+}
+.credBtn {
+    position: initial;
+    bottom: 0;
+    margin-top: 2% !important;
+    background: #67023f;
+    color: #fff;
+    border: none;
+    height: 39px;
+    line-height: 36px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 30%;
+    border-radius: 7%;
+    margin: 1%;
 }
 
 .hambMenu .hambHeader .userArea {
@@ -1266,6 +1290,7 @@
     width: 90px;
     height: 120px;
     display: flex;
+    cursor: pointer;
     flex-wrap: wrap;
     position: relative;
     justify-content: center;
@@ -1346,6 +1371,13 @@ button {
     color: #fff;
     text-transform: uppercase;
     box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.addAddressBtn{
+    width: '90%';
+    font-size: '17px';
+    font-weight: 600;
+    margin-bottom: '6%';
 }
 
 .contactUsWrapp .doneBtn {
@@ -1457,16 +1489,20 @@ button {
     margin-top: 1rem;
 }
 
-.mainFormWrap .inpCont input {
-    outline: none;
-    width: 320px;
-    height: 38px;
-    border-radius: 2.4%;
-    border: none;
-    box-shadow: 0 0 4px rgb(207, 196, 196);
-    margin-left: 20px;
-    padding: 0.5rem;
-}
+.mainFormWrap .inpCont input[type="text"],
+    .mainFormWrap .inpCont [ type="number"] {
+        outline: none;
+        width: 320px;
+        height: 38px;
+        border-radius: 2.4%;
+        border: none;
+        box-shadow: 0 0 4px rgb(207, 196, 196);
+        margin-left: 20px;
+        padding: 0.5rem;
+    }
+    .mainFormWrap .inpCont input[type="radio"] {
+        margin: 4%
+    }
 
 .btCartS {
     padding: 6px 10px;
@@ -1496,7 +1532,8 @@ button {
     height: 180px;
     padding-bottom: 10px;
     margin-top: 40px;
-    box-shadow: 0 0 2px rgb(207, 196, 196);
+    /* box-shadow: 0 0 2px rgb(207, 196, 196); */
+    border-bottom: 1px solid darkgrey
 }
 
 .crtItemWrap .infoSect h4 {
@@ -2189,8 +2226,8 @@ a:hover {
     background: #fff !important;
 }
 
-.sWfBtn {
-    margin-bottom: 12% !important;
+.congratsCartBtn {
+    margin-bottom: 40px !important;
 }
 
 .sWfBtn,

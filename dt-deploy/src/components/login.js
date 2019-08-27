@@ -9,8 +9,8 @@ import { ComponentHelpers, connect } from '../utils/componentHelper';
 class Login extends ComponentHelpers {
 
   state = {
-    emailId: "", // login username
-    password: "", //login password
+    emailId: "", //asifali_121@mailinator.com
+    password: "", //secret
     loggedIn: false,
     loginBtnText: 'Log In'
   }

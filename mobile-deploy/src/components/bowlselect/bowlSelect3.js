@@ -59,6 +59,12 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getPastas, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
+      response.data.push(response.data[0])
       this.setState({
         pastas: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
         loading: false
@@ -282,7 +288,7 @@ class Bowlselect extends ComponentHelpers {
   }
 
   addPastaToOrder = () => {
-    this.props.placeOrder(Object.assign(this.props.data.placeOrder, { pasta: this.pasta[0] }))
+    this.props.placeOrder(Object.assign(this.props.data.placeOrder, { pasta: this.pasta[0]?this.pasta[0]: {} }))
   }
 
   render() {

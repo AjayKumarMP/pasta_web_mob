@@ -37,6 +37,7 @@ import Congr from './components/bowlselect/congratulations';
 import Thanks from './components/bowlselect/thanks';
 import TrackOrd from './components/bowlselect/trackorder';
 import Editpasta from './components/editPasta';
+import Register from './components/register';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import aboutUs from './components/aboutUs';
 import Urcollection from './components/Urcollection';
@@ -52,6 +53,7 @@ const routing = (
 		<Router>
 			<div className='homePage-wrapper'>
 				<Route path='/cheff' component={CheffC} />
+				<Route path='/register' component={Register} />
 				<Route path='/regularbowl' component={RegBowl} />
 				<Route path='/minibowl' component={MiniBowl} />
 				<Route path='/contactus' component={ContactUsComponent} />

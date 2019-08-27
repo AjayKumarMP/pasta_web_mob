@@ -49,7 +49,7 @@ class Plcomponent extends React.Component {
 		let tmp = document.querySelectorAll('.myborder');
 
 		if (e.target.classList.contains('myborder')) {
-			if (this.props.type === 'pasta' || this.props.type === 'sauce' || this.props.type === 'meet') {
+			if (this.props.type === 'pasta' || this.props.type === 'sauce') {
 				tmp.forEach(el => el.classList.remove('activeborder'));
 				this.props.data[this.props.type] = this.props.info.name;
 				e.target.classList.add('activeborder');
@@ -67,6 +67,19 @@ class Plcomponent extends React.Component {
 					}
 				}
 			} else if (this.props.type === 'garnish') {
+				if (!this.props.data[this.props.type].includes(this.props.info.name)) {
+					if (this.props.data[this.props.type].split(', ').length < 3) {
+						this.props.data[this.props.type] += this.props.info.name + ', ';
+						e.target.classList.add('activeborder');
+					}
+				} else {
+					this.props.data[this.props.type] = this.props.data[this.props.type].replace(
+						`${this.props.info.name}, `,
+						''
+					);
+					e.target.classList.remove('activeborder');
+				}
+			}else if (this.props.type === 'meet') {
 				if (!this.props.data[this.props.type].includes(this.props.info.name)) {
 					if (this.props.data[this.props.type].split(', ').length < 3) {
 						this.props.data[this.props.type] += this.props.info.name + ', ';

@@ -11,7 +11,7 @@ class Bowlselect extends ComponentHelpers {
     constructor() {
         super();
         this.clicked = false;
-        this.side = { name: '', id: 0 }
+        this.side = []
         this.state = {
             sides: [],
         }
@@ -53,10 +53,20 @@ class Bowlselect extends ComponentHelpers {
         this.source.cancel('unMounted')
     }
 
-    addSideToProduct = async () => {
-        this.setState({loading: true})
-        this.props.placeOrder(Object.assign(this.props.data.placeOrder, { side: this.side }))
-        this.props.history.push('/congratulations')
+    // addSideToProduct = async () => {
+    //     this.setState({loading: true})
+    //     this.props.placeOrder(Object.assign(this.props.data.placeOrder, { side: this.side }))
+    //     this.props.history.push('/congratulations')
+    // }
+
+    addItemToCart = async(path) => {
+        this.setState({ loading: true })
+        if (this.side.length > 0) {
+            localStorage.setItem('sides', JSON.stringify(this.side))
+        }
+        localStorage.setItem('cartItem', JSON.stringify(this.props.data.placeOrder))
+        this.setState({ loading: false })
+        this.props.history.push(path)
     }
     
     myCart = async()=>{
@@ -64,6 +74,14 @@ class Bowlselect extends ComponentHelpers {
         this.props.history.push('/cart')
     }
 
+    addSide = (side) => {
+        const index = this.side.indexOf(side)
+        if (index > -1) {
+          this.side.splice(index, 1)
+        } else {
+          this.side.push(side)
+        }
+      }
 
     render() {
         const cost = this.props.data.getOrderPrice()
@@ -94,12 +112,12 @@ class Bowlselect extends ComponentHelpers {
                                 } else {
                                     style = "#E6D7B1"
                                 }
-                                return < Side handler={({ name, id }) => { this.side.name = name; this.side.id = id }} type={'side'} key={index} info={item} style={style} />
+                                return < Side handler={(data) => this.addSide(data)} type={'side'} key={index} info={item} style={style} />
                             })
                         }
                     </div>
-                    <button onClick={() => this.addSideToProduct()} className="nextBtn wtCart">Next</button>
-                    <button onClick={()=>this.myCart()} className="cartBtn">Your cart</button>
+                    <button onClick={() => this.addItemToCart('/congratulations')} className="nextBtn wtCart">Next</button>
+                    <button onClick={()=>this.addItemToCart('/cart')} className="cartBtn">Your cart</button>
                 </div>
             </div>
         )

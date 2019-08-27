@@ -1,28 +1,38 @@
 import React from 'react';
 import {Route,Link,BrowserRouter as Router} from 'react-router-dom'
 import { ComponentHelpers, connect } from '../../utils/componentHelper';
+import Loading from '../loader'
 
    
 class AboutUs extends ComponentHelpers {
     state ={
-        name: '',
-        loading: false
+        loading: false,
+        pastaName: ''
     }
 
     myCart = async()=>{
-        this.setState({loading: true})
-        let order = this.props.data.placeOrder
-    if(order){
-            order['name'] = this.state.name
-            await this.addProductToCart(order);
+      try {
+        if(this.state.pastaName === ''){
+          return
         }
-      this.setState({loading: false})
-      this.props.history.push('/cart')
+        this.setState({loading: true})
+        let item = JSON.parse(localStorage.getItem('cartItem'))
+        if(item !== null){
+          item['name'] = this.state.pastaName
+          localStorage.setItem('cartItem', JSON.stringify(item))
+        }
+        this.setState({loading: false})
+        this.props.history.push('/cart')
+    } catch (error) {
+        this.setState({loading: false})
+        console.log(error)
+    }
   }
         
     render(){
         return(
             <div className="contactUsWrapp">
+              <Loading data={this.state.loading} />
               <div className="cnt-nav">
                 <Link to="/selectsides"><img className="prevBtn" src="./images/prevBtn.png"/></Link>
               </div>
@@ -39,9 +49,9 @@ class AboutUs extends ComponentHelpers {
                    </div>
                    <div className="congrUnderSect">
                         <h4>Name your pasta</h4>
-                        <input required onChange={(e)=>this.setState({name: e.target.value})} placeholder="For eg- 'Sam's pasta'" type='name' />
-                        <Link to='/thanksfororder' className="sWfBtn">Share with friends</Link>
+                        <input required onChange={(e)=>this.setState({pastaName: e.target.value})} placeholder="For eg- 'Sam's pasta'" type='name' />
                         <button onClick={()=>this.myCart()} className="congratsCartBtn">Checkout</button>
+                        <Link to='/thanksfororder' className="sWfBtn">Share with friends</Link>
                     </div>
                   </div>
         )

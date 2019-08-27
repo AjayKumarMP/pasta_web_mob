@@ -156,9 +156,9 @@ class Bowlselect extends ComponentHelpers {
 							<p> 650 ml</p>
 						</div>
 					</div>
-					<Link to='/bowlselect2'  className='nextBtn'>
+					<button disabled to='/bowlselect2'  className='nextBtn'>
 						Next
-					</Link>
+					</button>
 				</div>
 			</StyleRoot>
 		);
