@@ -65,11 +65,13 @@ class ContactUs extends React.Component {
               payment_status: this.state.paymentMethod.toLowerCase() ==='cod'?'Pending': 'Paid'
           })            
           this.setState({loading: false})
-          localStorage.setItem('order_id', order.data && order.data.order_id)
+          localStorage.setItem('order_id',  JSON.stringify({id:order.data && order.data.order_id, unique_order_id: order.data && order.data.unique_order_id}))
           localStorage.removeItem('address')
           localStorage.removeItem('coupon_id')
           localStorage.removeItem('payment')
-          this.props.history.push("/ordertracker")
+          localStorage.removeItem('URL')
+          localStorage.removeItem('cartItems')
+          this.props.history.push("/thanksfororder")
         } catch (error) {
           console.log(error)        
         }
@@ -77,7 +79,7 @@ class ContactUs extends React.Component {
   
   
       paymentHandler =()=> {
-          console.log(localStorage.getItem('payment'), this.state.paymentMethod)
+          // console.log(localStorage.getItem('payment'), this.state.paymentMethod)
           switch(this.state.paymentMethod){
               case 'razorPay': {
                   this.options["amount"] = parseInt(parseInt(localStorage.getItem('payment') * 100))

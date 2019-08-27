@@ -35,6 +35,11 @@ class ManageAdressess extends ComponentHelpers {
         this.source && this.source.cancel("unMounted")
     }
 
+    editAddress=(data)=>{
+        localStorage.setItem('editAddress', JSON.stringify(data))
+        this.props.history.push('/addaddress')
+    }
+
     render() {
         return (
             <div className="contactUsWrapp" style={{paddingBottom: this.state.loading?'70%':'0%'}}>
@@ -47,15 +52,15 @@ class ManageAdressess extends ComponentHelpers {
                     <Link to="/addaddress" className="addAdrBtn">Add address</Link>
                     <div className="undr-cont">
                         <div className="wrok-home-cont">
-                            <Link to="">Home</Link>
-                            <Link to="">Work</Link>
+                            <button >Home</button>
+                            <button >Work</button>
                         </div>
                     </div>
                 </div>
                 <div className="addresses">
                     {
                         this.state.address.map((item, index) => {
-                            return <Addr inf='home' info={item} key={index} />
+                            return <Addr editAddr={this.editAddress} inf='home' info={item} key={index} />
                         })
                     }
                 </div>

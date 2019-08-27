@@ -9,7 +9,7 @@ let mapStateToProps = state => {
 class Plcomponent extends React.Component {
 	constructor(props) {
 		super(props);
-
+		debugger
 		if(this.props.id > 4){
 			this.state = { y: -130, x: this.props.id * 70 };
 			this.animationClass = '';
@@ -18,30 +18,10 @@ class Plcomponent extends React.Component {
 			this.animationClass = `choosePl${this.props.id+1}`;
 		}
 
-		// if (this.props.id === 0) {
-		// 	this.state = { y: -90, x: 480 };
-		// 	this.animationClass = 'choosePl1';
-		// } else if (this.props.id == 1) {
-		// 	this.state = { y: -90, x: 480 };
-		// 	this.animationClass = 'choosePl2';
-		// } else if (this.props.id == 2) {
-		// 	this.state = { y: -90, x: 480 };
-		// 	this.animationClass = 'choosePl3';
-		// } else if (this.props.id == 3) {
-		// 	this.state = { y: -90, x: 480 };
-		// 	this.animationClass = 'choosePl4';
-		// } else if (this.props.id == 4) {
-		// 	this.state = { y: -90, x: 480 };
-		// 	this.animationClass = 'choosePl5';
-		// } else {
-		// 	this.state = { y: -130, x: this.props.id * 70 };
-		// 	this.animationClass = '';
-		// }
-
-		if (this.props.type === 'pasta' || this.props.type === 'sauce' || this.props.type === 'meet') {
-			this.state.selected = this.props.data[this.props.type] === this.props.info.name;
+		if (this.props.type === 'pasta' || this.props.type === 'sauce') {
+			this.state.selected = this.props.data.placeOrder[this.props.type] && this.props.data.placeOrder[this.props.type].name === this.props.info.name;
 		} else {
-			this.state.selected = this.props.data[this.props.type].includes(this.props.info.name);
+			this.state.selected = this.props.data.placeOrder[this.props.type] && this.props.data.placeOrder[this.props.type].filter(_=>_.name === this.props.info.name).length > 0
 		}
 	}
 
@@ -50,10 +30,14 @@ class Plcomponent extends React.Component {
 
 		if (e.target.classList.contains('myborder')) {
 			if (this.props.type === 'pasta' || this.props.type === 'sauce') {
-				tmp.forEach(el => el.classList.remove('activeborder'));
-				this.props.data[this.props.type] = this.props.info.name;
-				e.target.classList.add('activeborder');
-			} else if (this.props.type === 'veggies') {
+				if(e.target.classList.contains('activeborder')){
+					e.target.classList.remove('activeborder')
+				} else{
+					tmp.forEach(el => el.classList.remove('activeborder'));
+					this.props.data[this.props.type] = this.props.info.name;
+					e.target.classList.add('activeborder');
+				}
+			} else if (this.props.type === 'vegetable') {
 				if (this.props.data[this.props.type].includes(this.props.info.name)) {
 					this.props.data[this.props.type] = this.props.data[this.props.type].replace(
 						`${this.props.info.name}, `,
@@ -79,7 +63,7 @@ class Plcomponent extends React.Component {
 					);
 					e.target.classList.remove('activeborder');
 				}
-			}else if (this.props.type === 'meet') {
+			}else if (this.props.type === 'meat') {
 				if (!this.props.data[this.props.type].includes(this.props.info.name)) {
 					if (this.props.data[this.props.type].split(', ').length < 3) {
 						this.props.data[this.props.type] += this.props.info.name + ', ';

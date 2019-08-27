@@ -29,6 +29,7 @@ class PastaProject extends ComponentHelpers {
 	}
 
 	async componentWillMount() {
+		localStorage.removeItem('order_id')
 		// this.unRegisterApiCalls = false;
 		// this.setState({loading: true})
 		try {

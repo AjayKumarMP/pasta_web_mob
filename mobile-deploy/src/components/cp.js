@@ -4,12 +4,12 @@ class Cp extends React.Component{
         return(
             <div className="cp">
                 <div className="headCont">
-                <img src={this.props.info.src}/>
-                <h3>{this.props.info.name}</h3>
-                <a >Apply</a>
+                {/* <img src={this.props.info.picture}/> */}
+                <h3>{this.props.info.code}</h3>
+                <a onClick={()=>this.props.handler(this.props.info)}>{this.props.selected?'Applied':'Apply'}</a>
                 </div>
-                <p className="p1">{this.props.info.headInfo}</p>
-                <p className="p2">{this.props.info.mainInfo}</p>
+                {/* <p className="p1">{this.props.info.headInfo}</p> */}
+                <p className="p2">{`Use code ${this.props.info.code} and you can get a ${this.props.info.discount} discount.`}</p>
                     <hr/>
             </div>
         )

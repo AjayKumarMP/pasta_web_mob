@@ -19,14 +19,19 @@ function rootReducer(state = initialState, action) {
                 getOrderPrice: () => {
                     var sum = 0
                     Object.keys(action.payload).forEach(key => {
-                        if (isNumber(action.payload[key].price)) {
-                            sum += action.payload[key].price
+                        if (Array.isArray(action.payload[key])) {
+                            action.payload[key].forEach((data, ind) => {
+                                sum += parseInt(data.price)
+                            })
+                        } else {
+                            sum += action.payload[key] && action.payload[key].price
+                                ? parseInt(action.payload[key].price)
+                                : 0
                         }
                     })
                     return sum
-                }
-
-            })
+            }
+        })
         case ADD_BOWLS:
             return Object.assign({}, state, {
                 bowls: action.payload
@@ -51,7 +56,10 @@ const initialState = {
     garnish: '',
     meet: '',
     sauce: '',
+    meet: '',
+    meat: '',
     veggies: '',
+    vegetable:'',
     bowlsNum: 1,
     potatoesNum: 1,
     price: 0,
@@ -59,7 +67,7 @@ const initialState = {
     checkLogout: false,
     kitchen_id: 2,
     getOrderPrice: () => {},
-    placeOrder: { bowl: {}, sauce: {}, pasta: {}, garnish: {}, meat: {}, vegetable: {}, side: {} },
+    placeOrder: { bowl: {}, sauce: {}, pasta: {}, garnish: [], meat: [], vegetable: [], side: [] },
     isUserLoggedIn: () => {
         const user = localStorage.getItem('user')
         const userDetails = user !== 'undefined' && user !== undefined && user !== null && user !== 'null' ? JSON.parse(user) : ''

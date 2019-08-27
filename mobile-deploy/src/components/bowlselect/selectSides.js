@@ -50,7 +50,7 @@ class Bowlselect extends ComponentHelpers {
         }
     }
     componentWillUnmount() {
-        this.source.cancel('unMounted')
+        this.source && this.source.cancel('unMounted')
     }
 
     // addSideToProduct = async () => {
@@ -59,7 +59,7 @@ class Bowlselect extends ComponentHelpers {
     //     this.props.history.push('/congratulations')
     // }
 
-    addItemToCart = async(path) => {
+    addItemToCart = async (path) => {
         this.setState({ loading: true })
         if (this.side.length > 0) {
             localStorage.setItem('sides', JSON.stringify(this.side))
@@ -68,20 +68,24 @@ class Bowlselect extends ComponentHelpers {
         this.setState({ loading: false })
         this.props.history.push(path)
     }
-    
-    myCart = async()=>{
+
+    myCart = async () => {
         await this.addProductToCart(this.props.data.placeOrder);
         this.props.history.push('/cart')
     }
 
     addSide = (side) => {
-        const index = this.side.indexOf(side)
-        if (index > -1) {
-          this.side.splice(index, 1)
-        } else {
-          this.side.push(side)
+        this.side = this.props.data.placeOrder.side
+        if (!this.side) {
+            this.side = []
         }
-      }
+        const index = this.side.map(data => data.name).indexOf(side.name)
+        if (index > -1) {
+            this.side.splice(index, 1)
+        } else {
+            this.side.push(side)
+        }
+    }
 
     render() {
         const cost = this.props.data.getOrderPrice()
@@ -91,7 +95,7 @@ class Bowlselect extends ComponentHelpers {
                 <div className="bowlSelectContainer updatet forSumm">
                     <div className="circle updatetCircle">
                         <Summary />
-                        <Link to="/bowlselect4"><img className="prevBtn" src="./images/prevBtn.png" /></Link>
+                        <Link to="/bowlselect6"><img className="prevBtn" src="./images/prevBtn.png" /></Link>
                         <p hidden={!cost} className="orderTotal">&#8377; {cost}</p>
                         <img onClick={this.cl.bind(this)} className="ordsm" src="./images/ordsm.png"></img>
                         <img className="regMainBowl" src="./images/regularBowl.png" />
@@ -117,7 +121,7 @@ class Bowlselect extends ComponentHelpers {
                         }
                     </div>
                     <button onClick={() => this.addItemToCart('/congratulations')} className="nextBtn wtCart">Next</button>
-                    <button onClick={()=>this.addItemToCart('/cart')} className="cartBtn">Your cart</button>
+                    <button onClick={() => this.addItemToCart('/cart')} className="cartBtn">Your cart</button>
                 </div>
             </div>
         )

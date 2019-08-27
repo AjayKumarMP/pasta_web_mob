@@ -55,11 +55,6 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getGarnishes, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
       this.setState({
         garnishes: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
         loading: false
@@ -75,7 +70,7 @@ class Bowlselect extends ComponentHelpers {
     }
   }
   componentWillUnmount() {
-    this.source.cancel('unMounted')
+    this.source && this.source.cancel('unMounted')
     clearInterval(this.interval);
 
   }
@@ -275,16 +270,16 @@ class Bowlselect extends ComponentHelpers {
   };
 
   addGarnish = (garnish) => {
-    const index = this.garnish.indexOf(garnish)
-    if (index > -1) {
+    this.garnish = this.props.data.placeOrder.garnish
+    if(!this.garnish){
+      this.garnish = []
+    }
+    const index = this.garnish.map(data=>data.name).indexOf(garnish.name)
+    if(index> -1){
       this.garnish.splice(index, 1)
     } else {
       this.garnish.push(garnish)
     }
-  }
-
-  addGarnishToOrder = () => {
-    console.log(this.garnish)
     this.props.placeOrder(Object.assign(this.props.data.placeOrder, { garnish: this.garnish }))
   }
 

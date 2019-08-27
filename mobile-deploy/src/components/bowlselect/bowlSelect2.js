@@ -78,7 +78,7 @@ class Bowlselect extends ComponentHelpers {
     }
   }
   componentWillUnmount() {
-    this.source.cancel('unMounted')
+    this.source && this.source.cancel('unMounted')
     clearInterval(this.interval);
   }
 
@@ -276,6 +276,7 @@ class Bowlselect extends ComponentHelpers {
   }
 
   getSelectedSauce =()=>{
+    console.log(this.sauce)
     this.props.placeOrder(Object.assign(this.props.data.placeOrder,{sauce: this.sauce}))
   }
 
@@ -314,7 +315,7 @@ class Bowlselect extends ComponentHelpers {
           <div className="under-sect plpops">
             {this.state.loading || this.state.sauces.length < 6 ?"": this.renderbtn()}
             {this.state.sauces.map((item, index) => 
-                <Plcomponent type="sauce" handler={(data)=>this.sauce = data} info={item} key={index} id={index} />
+                <Plcomponent type="sauce" handler={(data)=>this.sauce=this.props.data.placeOrder.sauce && this.props.data.placeOrder.sauce.id === data.id?{}: data} info={item} key={index} id={index} />
             )}
           </div>
           <Link onClick={this.getSelectedSauce} to="/bowlselect3" className="nextBtn wtCart">

@@ -13,6 +13,13 @@ class CheffCurated extends React.Component {
             addCartText: "+  Add to cart"
         }
     }
+
+    toggleAddress(){
+        this.setState({
+            addCartText: this.state.addCartText === '+  Add to cart'? 'Addedd': '+  Add to cart'
+        })
+        
+    }
         
     render(){
         return(
@@ -23,7 +30,7 @@ class CheffCurated extends React.Component {
                    <p>{this.props.info.ingr}</p>
                    <div className="undr">
                    <span>₹ {this.props.info.price}</span>
-                   <a onClick={()=>{this.props.handler(this.props.info.id);this.setState({addCartText: 'Added'})}}>{this.state.addCartText}</a>
+                   <a onClick={()=>{this.props.handler(this.props.info);this.toggleAddress()}}>{this.state.addCartText}</a>
                    </div>
                </div> 
             </div>

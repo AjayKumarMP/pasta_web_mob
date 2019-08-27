@@ -26,20 +26,19 @@ class Logout extends React.Component {
 
     logout = async ()=>{
         try {
-            await httpClient.ApiCall('post', APIEndPoints.logout)
+            this.setState({loading: true})
+            httpClient.ApiCall('post', APIEndPoints.logout)
             localStorage.clear()
-            this.setState({ checkLogout: true });
+            this.setState({ checkLogout: true, loading: false });
             this.props.UserDetails({})
-            console.log(this.props.data.userDetails)
+            // this.props.history.push('/')
+            window.location.reload(true)
         } catch (error) {
             console.log(error)            
         }
     }
 
     render(){
-        if(this.state.checkLogout){
-            return (<Redirect to="/login"/>)
-        } else
         return(
             <div className="logoutMainWrap">
                  <div className="popUp">

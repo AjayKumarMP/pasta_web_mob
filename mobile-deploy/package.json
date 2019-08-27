@@ -2,7 +2,7 @@
     "name": "lesson1",
     "version": "0.1.0",
     "private": true,
-    "proxy": "Add proxy backend URL  while working in local",
+    "proxy": "https://siteworx.tk/pasta/api/v1/",
     "dependencies": {
         "@fortawesome/free-solid-svg-icons": "^5.9.0",
         "@fortawesome/react-fontawesome": "^0.1.4",

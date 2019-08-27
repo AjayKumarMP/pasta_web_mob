@@ -23,8 +23,17 @@ class Register extends ComponentHelpers {
   otpVerify= async ()=>{
     this.setState({loading: true})
     await this.verifyOtp(this.state.confirmation_code, this.state.otp)
-    this.setState({loading: false, otpModal: false})
+    this.setState({loading: false})
 }
+
+resendOTP(){
+  this.setState({disabledBtn: true})
+  setTimeout(()=>{
+      this.setState({disabledBtn: false})
+  },30000)
+  this.resendOtp(this.state.phone_no)
+}
+
 
 
   register = async (e) => {
@@ -78,13 +87,14 @@ class Register extends ComponentHelpers {
           <button style={{marginBottom:'6%'}} disabled={this.state.registerBtnText === 'Please Wait'} className="LogindoneBtn" >{this.state.registerBtnText}</button>
         </form>
       </div>
-      <Popup position="right center" open={this.state.otpModal} onClose={() => this.setState({otpModal: false})}>
+      <Popup className="itemCart" position="right center" open={this.state.otpModal} onClose={() => this.setState({otpModal: false})}>
                     <div className="addressHeader">
-                        <h3>Enter OTP, which is sent to {this.state.phone_no}</h3>
+                        <p>Enter OTP, which is sent to {this.state.phone_no}</p>
                         <hr />
-                        <div style={{paddingTop: '4%', paddingBottom: '4%'}}>
-                            <input type='text' style={{border: 'none', borderBottom: '1px solid grey'}} onChange={(e)=>this.setState({otp: e.target.value})}/>
-                            <button type="submit" onClick={()=>this.otpVerify()}>Verify</button>
+                        <div>
+                            <input style={{border: 'none', borderBottom: '1px solid grey'}} type='text' onChange={(e)=>this.setState({otp: e.target.value})}/>
+                            <button className="verifyOtp"  type="submit" onClick={()=>this.otpVerify()}>Verify</button>
+                            <button disabled={this.state.disabledBtn} className="resendOtp"  type="button" onClick={()=>this.resendOTP()}>Resend</button>
                             </div>
                     </div>
                 </Popup>

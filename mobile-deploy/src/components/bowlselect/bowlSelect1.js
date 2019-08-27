@@ -69,7 +69,7 @@ class Bowlselect extends ComponentHelpers {
 	}
 
 	componentWillUnmount() {
-		this.source.cancel("unMounted")
+		this.source && this.source.cancel('unMounted')
 	}
 
 	handler = e => {

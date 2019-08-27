@@ -27,6 +27,8 @@ export default {
     reorder: 'reorder',
     addAddress: 'add-address',
     verifyOtp: 'confirm-account',
-    getStaticPage: 'get-page-details'
+    getStaticPage: 'get-page-details',
+    updateCartItem :'update-cart-item',
+    resendOtp: 'send-otp'
 
 }

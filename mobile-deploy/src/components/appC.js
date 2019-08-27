@@ -41,8 +41,8 @@ class ContactUs extends React.Component {
             this.setState({loading: true})
             const response = await httpClient.ApiCall('post', APIEndPoints.checkCoupon, {coupon_code: coupon.code?coupon.code: coupon})
             if(response.message.toLowerCase() !== 'coupon expired!'){
-                this.setState({coupon_id: coupon.id})
-                localStorage.setItem("coupon_id", coupon.id)
+                this.setState({coupon_id: response.data.id})
+                localStorage.setItem("coupon_id", response.data.id)
             } else {
                 localStorage.removeItem("coupon_id")
             }
@@ -54,7 +54,7 @@ class ContactUs extends React.Component {
     }
         
     render(){
-        const {loading} = this.state
+        const {loading, coupons, coupon_id} = this.state
         return(
             <div className="contactUsWrapp">
             <Loading data={loading} />
@@ -65,15 +65,15 @@ class ContactUs extends React.Component {
                 <div className="appCpMainWrap">
                     <div className="inpWrap">
                         <input onChange={(e)=>this.setState({promoCode: e.target.value})} placeholder="Enter promo code" type="text"></input>
-                        <button onClick={this.checkCoupon(this.state.promoCode)} className="apply">Apply</button>
+                        <button onClick={()=>this.checkCoupon(this.state.promoCode)} className="apply applyCoupon doneBtn">Apply</button>
                     </div>
                     <div className="avbCp">
                         <h5>Available coupons</h5>
                         <hr/>
                         <div className="avbCpwrap">
                             {
-                                this.props.data.availableCoupons.map((item,index)=>{
-                                        return <Cp handler={this.checkCoupon} info = {item}/>
+                                coupons.map((item,index)=>{
+                                        return <Cp selected={coupon_id === item.id} key={index} handler={this.checkCoupon} info = {item}/>
                                 })
                             }
                         </div>

@@ -12,6 +12,7 @@ function val_y(x) {
   return Math.floor(Math.sqrt(y) - 195);
 }
 class Bowlselect extends ComponentHelpers {
+  pasta = {}
   constructor() {
     super();
     this.clicked = false;
@@ -59,12 +60,6 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getPastas, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
       this.setState({
         pastas: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
         loading: false
@@ -80,7 +75,7 @@ class Bowlselect extends ComponentHelpers {
     }
   }
   componentWillUnmount() {
-    this.source.cancel('unMounted')
+    this.source && this.source.cancel('unMounted')
     clearInterval(this.interval);
   }
   btncheck() {
@@ -278,17 +273,8 @@ class Bowlselect extends ComponentHelpers {
     this.btncheck();
   };
 
-  addPastas = (pasta) => {
-    const index = this.pasta.indexOf(pasta)
-    if (index > -1) {
-      this.pasta.splice(index, 1)
-    } else {
-      this.pasta.push(pasta)
-    }
-  }
-
-  addPastaToOrder = () => {
-    this.props.placeOrder(Object.assign(this.props.data.placeOrder, { pasta: this.pasta[0]?this.pasta[0]: {} }))
+  addPastas = () => {
+    this.props.placeOrder(Object.assign(this.props.data.placeOrder, { pasta: this.pasta }))
   }
 
   render() {
@@ -323,11 +309,14 @@ class Bowlselect extends ComponentHelpers {
           <div className="under-sect plpops">
               {this.state.loading || this.state.pastas.length < 6?"": this.renderbtn()}
             {this.state.pastas.map((item, index) => {
-              return <Plcomponent type={'pasta'} handler={this.addPastas} info={item} key={index} id={index} />;
+              return <Plcomponent type={'pasta'} 
+              handler={(data)=>this.pasta = this.props.data.placeOrder.pasta && this.props.data.placeOrder.pasta.id === data.id?
+                {}:
+                 data} info={item} key={index} id={index} />;
             })}
           </div>
 
-          <Link onClick={this.addPastaToOrder} to="/bowlselect4" className="nextBtn wtCart">
+          <Link onClick={this.addPastas} to="/bowlselect4" className="nextBtn wtCart">
             Next
           </Link>
           <Link to="/cart" className="cartBtn">

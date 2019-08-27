@@ -19,8 +19,8 @@ let mapDispatchToProps = (dispatch)=>{
 class Login extends React.Component {
 
   state = {
-    emailId: "asifali_121@mailinator.com",
-    password: "secret",
+    emailId: "", //asifali_121@mailinator.com
+    password: "", //secret
     loggedIn: false,
     loginBtnText: 'Log In'
   }
@@ -36,7 +36,7 @@ class Login extends React.Component {
         })
         if(response &&  response.success === 1){
           this.props.UserDetails(response.data)
-          console.log(this.props.data.userDetails)
+          httpClient.setDefaultHeader('access-token', response.data && response.data.access_token)
           localStorage.setItem("user",JSON.stringify(response.data))
           this.props.history.push('/')
         } else{

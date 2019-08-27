@@ -21,11 +21,11 @@ class Summary extends  ComponentHelpers{
 					</div>
 					<div className='fGarnish'>
 						<h5>Garnish</h5>
-						<p>{order.garnish && order.garnish.name ? order.garnish.name : 'not selected'}</p>
+						<p>{order.garnish && order.garnish.length >0 ? order.garnish.map(_=>_.name).join(', ') : 'not selected'}</p>
 					</div>
 					<div className='fMeet'>
 						<h5>Meat</h5>
-						<p>{order.meat && order.meat.name ? order.meat.name : 'not selected'}</p>
+						<p>{order.meat && order.meat.length > 0 ? order.meat.map(_=>_.name).join(', ') : 'not selected'}</p>
 					</div>
 				</div>
 				<div className='rightSideb'>
@@ -35,7 +35,7 @@ class Summary extends  ComponentHelpers{
 					</div>
 					<div className='fVeggies'>
 						<h5>Veggies</h5>
-						<p>{order.vegetable && order.vegetable.name ? order.vegetable.name : 'not selected'}</p>
+						<p>{order.vegetable && order.vegetable.length ? order.vegetable.map(_=>_.name).join(', ') : 'not selected'}</p>
 					</div>
 					<div className='fInfo' />
 				</div>

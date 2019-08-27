@@ -5,6 +5,7 @@ import httpClient from '../utils/httpClient';
 import APIEndPoints from '../utils/APIEndPoints';
 import Loading from './loader'
 import { ComponentHelpers, connect } from '../utils/componentHelper';
+import Popup from 'reactjs-popup'
 
 
 class Crtitem extends ComponentHelpers {
@@ -13,11 +14,13 @@ class Crtitem extends ComponentHelpers {
         this.state = {
             showPopup: false,
             numChanged: false,
-            cartItem:  Object.assign({}, this.props.cartData)
+            popupData: '',
+            cartItem: {}
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
+        this.setState({cartItem: Object.assign({}, this.props.cartData)})
     }
 
     handler = () => {
@@ -29,7 +32,7 @@ class Crtitem extends ComponentHelpers {
     };
 
     updateCartQuantity = async (quantity, cart_id) => {
-        console.log(cart_id, quantity)
+        // console.log(cart_id, quantity)
         this.setState({ loading: true })
 
         try {
@@ -47,26 +50,26 @@ class Crtitem extends ComponentHelpers {
         }
     }
 
-    updateCartItem = async (id)=>{
+    updateCartItem = async (id) => {
         const cartItems = this.props.cartData
-        cartItems['name'] = id === 1? "Mini": 'Regular'
-                this.setState({
-                    loading: true,
-                    showPopup: false,
-                    cartItem: cartItems
-                })
-        await this.addProductToCart({bowl: {id}})
-        this.setState({loading: false})
+        cartItems['bowl'].name = id === 1 ? "Mini" : 'Regular'
+        this.setState({
+            loading: true,
+            showPopup: false,
+            cartItem: cartItems
+        })
+        await this.updateItemInCart({ bowl: { id } }, this.state.cartItem && this.state.cartItem.id)
+        this.setState({ loading: false })
     }
 
     render() {
-        const cartItem = this.state.cartItem
+        const {cartData:cartItem} = this.props
         return (
             <div>
-                <Loading data={this.state.loading} /> 
-                {this.state.showPopup
+                <Loading data={this.state.loading} />
+                {/* {this.state.showPopup
                     ? <Popuprp handler={this.updateCartItem()} />
-                    : null}
+                    : null} */}
 
                 <div className='crtItemWrap'>
                     <div className='infoSect'>
@@ -75,7 +78,7 @@ class Crtitem extends ComponentHelpers {
                         <div className='tmpWrap'>
                             <span>&#8377; {this.props.details.price}</span>{
                                 cartItem['bowl'] ?
-                                    <div onClick={this.handler} className='plType'>
+                                    <div onClick={() => this.setState({ popupData: cartItem['bowl'], showPopup: true })} className='plType'>
                                         {cartItem['bowl']
                                             ? cartItem['bowl']
                                                 .name
@@ -83,38 +86,35 @@ class Crtitem extends ComponentHelpers {
                                             : 'None'}
                                     </div> : ""
                             }
-                            {
-                                !cartItem['extra'] ?
-                                    <div className='changeBtn'>
-                                        <span
-                                            onClick={() => {
-                                                if (cartItem['quantity'] > 1) {
-                                                    cartItem['quantity']--;
-                                                    this.updateCartQuantity(cartItem.quantity, cartItem.id)
-                                                }
-                                            }}>
-                                            -
+
+                            <div className='changeBtn'>
+                                <span
+                                    onClick={() => {
+                                        if (cartItem['quantity'] > 1) {
+                                            cartItem['quantity']--;
+                                            this.updateCartQuantity(cartItem.quantity, cartItem.id)
+                                        }
+                                    }}>
+                                    -
                                         </span>
-                                        <div>{cartItem['quantity']}</div>
-                                        <span
-                                            onClick={() => {
-                                                if (cartItem['quantity'] < 50) {
-                                                    cartItem['quantity']++;
-                                                    this.updateCartQuantity(cartItem.quantity, cartItem.id)
-                                                }
-                                            }}>
-                                            +
+                                <div>{cartItem['quantity']}</div>
+                                <span
+                                    onClick={() => {
+                                        if (cartItem['quantity'] < 50) {
+                                            cartItem['quantity']++;
+                                            this.updateCartQuantity(cartItem.quantity, cartItem.id)
+                                        }
+                                    }}>
+                                    +
                                 </span>
-                                    </div>
-                                    : ''
-                            }
+                            </div>
                         </div>
                     </div>
                     <div className='imgSect'>
                         <img
                             alt=""
                             className='cartImg'
-                            src={cartItem.bowl !== null
+                            src={cartItem.bowl
                                 ? cartItem.bowl.picture
                                 : (cartItem.side
                                     ? cartItem.side.picture
@@ -131,6 +131,18 @@ class Crtitem extends ComponentHelpers {
                         </Link>
                     </div>
                 </div>
+                <Popup className="itemCartIterator" open={this.state.showPopup}>
+                    <div className='pastaRepeatWrap'>
+                        {/* <div className='backgroundClickable' ref={wrapper => (this.wrapper = wrapper)} /> */}
+                        <div className='cntr'>
+                            <h5>Select Bowl</h5>
+                            <p>Your previous customisation</p>
+                            <span>{this.state.popupData === '' ? 'None' : this.state.popupData.name}</span>
+                            <button onClick={() => this.updateCartItem(1)}>Mini bowl</button>
+                            <button onClick={() => this.updateCartItem(2)}>Regular bowl</button>
+                        </div>
+                    </div>
+                </Popup>
             </div>
         );
     }

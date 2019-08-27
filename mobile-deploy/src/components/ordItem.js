@@ -14,6 +14,7 @@ class ContactUs extends ComponentHelpers {
 
         this.state = {
             check:false,
+            orderText:'Re-order'
         }
 
     }
@@ -36,8 +37,24 @@ class ContactUs extends ComponentHelpers {
         }
     }
 
+    
+    reOrder = async (order)=>{
+        try {
+          this.setState({loading: true})
+          
+          await httpClient.ApiCall('post', APIEndPoints.reorder, {
+            order_id: order.id,
+            kitchen_id: this.props.data.kitchen_id
+          })
+          this.setState({loading: false, orderText: 'Ordered'})
+        } catch (error) {
+          this.setState({loading: false})
+          console.log(error)
+        }
+      }
+
     componentWillUnmount(){
-        this.source.cancel("unMounted")
+        this.source && this.source.cancel('unMounted')
     }
 
     render(){
@@ -70,7 +87,7 @@ class ContactUs extends ComponentHelpers {
               </div>
               <div className="Ordfooter">
                   <h5>{this.props.info.customer_status}</h5>
-                  <Link to="">Reorder</Link>
+                  <button  onClick={()=>this.reOrder(this.props.info)} disabled={this.state.loading}>{this.state.orderText}</button>
               </div>
             </div>
         )

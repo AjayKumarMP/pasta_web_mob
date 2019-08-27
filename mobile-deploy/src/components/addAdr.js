@@ -21,7 +21,8 @@ class AddAdr extends ComponentHelpers {
         loading: false,
         confirmation_code: '',
         otp: 0,
-        otpModal: false
+        otpModal: false,
+        disabledBtn: false
     }
 
     componentDidMount() {
@@ -59,7 +60,7 @@ class AddAdr extends ComponentHelpers {
                 locality,
                 city,
                 phone_no,
-                email
+                email,
             } = this.state
             const response = await httpClient.ApiCall('post', APIEndPoints.addAddress, {
                 address_name,
@@ -86,6 +87,14 @@ class AddAdr extends ComponentHelpers {
         this.setState({loading: true})
         await this.verifyOtp(this.state.confirmation_code, this.state.otp)
         this.setState({loading: false, otpModal: false})
+    }
+
+    resendOTP(){
+        this.setState({disabledBtn: true})
+        setTimeout(()=>{
+            this.setState({disabledBtn: false})
+        },30000)
+        this.resendOtp(this.state.phone_no)
     }
 
     render() {
@@ -117,53 +126,53 @@ class AddAdr extends ComponentHelpers {
                         <form onSubmit={(e) => this.addAddress(e)}>
                             <div className='inpCont'>
                                 <p>Flat no./ Building no.</p>
-                                <input
+                                <input required
                                     type="text"
-                                    value={flat_no}
+                                    value={flat_no?flat_no: ''}
                                     onChange={(e) => this.setState({flat_no: e.target.value})}/>
                             </div>
                             <div className='inpCont'>
                                 <p>Street</p>
-                                <input
+                                <input required
                                     type="text"
-                                    value={street}
+                                    value={street?street: ''}
                                     onChange={(e) => this.setState({street: e.target.value})}/>
                             </div>
                             <div className='inpCont'>
                                 <p>Locality</p>
-                                <input
+                                <input required
                                     type="text"
-                                    value={locality}
+                                    value={locality?locality: ''}
                                     onChange={(e) => this.setState({locality: e.target.value})}/>
                             </div>
                             <div className='inpCont'>
                                 <p>City</p>
-                                <input
+                                <input required
                                     type="text"
-                                    value={city}
+                                    value={city?city: ''}
                                     onChange={(e) => this.setState({city: e.target.value})}/>
                             </div>
                             <div className='inpCont'>
                                 <p>Email</p>
-                                <input
+                                <input required
                                     type="text"
-                                    value={email}
+                                    value={email?email: ''}
                                     onChange={(e) => this.setState({email: e.target.value})}/>
                             </div>
                             <div className='inpCont'>
                                 <p>Phone Number</p>
-                                <input
+                                <input required
                                     type="number"
-                                    value={phone_no}
+                                    value={phone_no?phone_no: ''}
                                     onChange={(e) => this.setState({phone_no: e.target.value})}/>
                             </div>
                             <div className='inpCont' style={{marginBottom: '16%'}}>
                                 <p>Address nickname</p>
-                                <input onChange={() => this.setState({address_name: 'Home'})} name="address" type="radio" value="Home" // checked={address_name && address
-                             checked={address_name.toLowerCase() === `home`}/>
+                                <input required onChange={() => this.setState({address_name: 'Home'})} name="address" type="radio" value="Home" // checked={address_name && address
+                                checked={address_name.toLowerCase() === `home`}/>
                                 <label htmlFor="address">Home</label>
-                                <input onChange={() => this.setState({address_name: 'Work'})} name="address" type="radio" // value="Work"
-                                    checked={address_name.toLowerCase() === `work`} />
+                                <input required onChange={() => this.setState({address_name: 'Work'})} name="address" type="radio" // value="Work"
+                                   checked={address_name.toLowerCase() === `work`} />
                                 <label htmlFor="address">Work</label>
                             </div>
                             <button
@@ -174,20 +183,14 @@ class AddAdr extends ComponentHelpers {
                                     : 'Add'}</button>
                         </form>
                     </div>
-                <Popup position="right center" open={otpModal} onClose={() => this.setState({otpModal: false})}>
+                <Popup className="itemCart" position="right center" open={otpModal} onClose={() => this.setState({otpModal: false})}>
                     <div className="addressHeader">
-                        <h3>Enter OTP, which is sent to {this.state.phone_no}</h3>
+                        <p>Enter OTP, which is sent to {this.state.phone_no}</p>
                         <hr />
-                        <div style={{paddingTop: '4%', paddingBottom: '4%'}}>
+                        <div>
                             <input style={{border: 'none', borderBottom: '1px solid grey'}} type='text' onChange={(e)=>this.setState({otp: e.target.value})}/>
-                            <button 
-                            style={{
-                                width: '16%',
-                                borderRadius: '40px',
-                                marginLeft: '6%',
-                                fontSize: '17px',
-								fontWeight: 600
-                            }} className="doneBtn" type="submit" onClick={()=>this.otpVerify()}>Verify</button>
+                            <button className="verifyOtp"  type="submit" onClick={()=>this.otpVerify()}>Verify</button>
+                            <button disabled={this.state.disabledBtn} className="resendOtp"  type="button" onClick={()=>this.resendOTP()}>Resend</button>
                             </div>
                     </div>
                 </Popup>

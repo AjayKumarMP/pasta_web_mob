@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {Route,Link,BrowserRouter as Router} from 'react-router-dom'
+import httpClient from '../utils/httpClient';
+import APIEndPoints from '../utils/APIEndPoints';
 
  let mapStateToProps=(state)=>{
     return {data:state}
@@ -8,9 +10,27 @@ import {Route,Link,BrowserRouter as Router} from 'react-router-dom'
    
 
 class ContactUs extends React.Component {
-    constructor(props){
-        super(props);
-    }
+    async componentDidMount(){
+        try {
+          const response = await httpClient.ApiCall('post', APIEndPoints.getStaticPage, {
+            page_id: 1
+          })
+          this.setState({html: response.data.content, loading: false})
+        } catch (error) {
+          this.setState({loading: false})
+          console.log(error)
+        }
+      }
+      
+
+      state ={
+        loading: true,
+        html: ''
+      }
+
+      getHtlml(){
+        return {__html : this.state.html}
+      }
         
     render(){
         return(
@@ -28,8 +48,9 @@ class ContactUs extends React.Component {
                     </div>
                     <div className="live-supp-wrapp">
                         <h5>Talk to us</h5>
-                        <p>Click here and talk to our 
-                           customer support right away</p>
+                        <MyComponent markup={this.getHtlml()}/>
+                        {/* <p>Click here and talk to our 
+                           customer support right away</p> */}
                            <a href={this.props.data.contactUsInfo[0].link}><img src="./images/help.png"></img></a>
                     </div>
                 </div>
@@ -38,4 +59,10 @@ class ContactUs extends React.Component {
     }
 
 } 
+
+var MyComponent = ({markup})=>(
+    // var markup = {__html: this.props.htmlToRender}
+      <div dangerouslySetInnerHTML={markup}></div>
+    );
+
 export default connect(mapStateToProps)(ContactUs);

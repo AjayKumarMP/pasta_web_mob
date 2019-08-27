@@ -51,7 +51,7 @@ class AboutUs extends ComponentHelpers {
                         <h4>Name your pasta</h4>
                         <input required onChange={(e)=>this.setState({pastaName: e.target.value})} placeholder="For eg- 'Sam's pasta'" type='name' />
                         <button onClick={()=>this.myCart()} className="congratsCartBtn">Checkout</button>
-                        <Link to='/thanksfororder' className="sWfBtn">Share with friends</Link>
+                        {/* <Link to='/thanksfororder' className="sWfBtn">Share with friends</Link> */}
                     </div>
                   </div>
         )

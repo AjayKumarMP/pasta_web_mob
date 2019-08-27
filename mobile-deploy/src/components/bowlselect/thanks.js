@@ -9,8 +9,13 @@ class AboutUs extends React.Component {
     constructor(props){
         super(props);
     }
+
+    componentDidMount(){
+      
+    }
          
     render(){
+      const order = JSON.parse(localStorage.getItem("order_id"))
         return(
             <div className="contactUsWrapp">
               <div className="cnt-nav">  
@@ -19,10 +24,9 @@ class AboutUs extends React.Component {
               <div className="thanksMainWrapp">
                   <img className="thImg" src='./images/th.png' />
                   <h5>Thank you for ordering with us</h5>
-                  <p>Your order #123456 has been placed. 
-                    It will be delivered by 11:47</p>
+                  <p>Your order {order && order.unique_order_id} has been placed. </p>
                 <Link to='/ordertracker' className="ordTrack">Track order</Link>
-                <Link to="" className="suppOnl" >Customer support</Link>
+                <Link to="/contactus" className="suppOnl" >Customer support</Link>
               </div>
             </div>
         )

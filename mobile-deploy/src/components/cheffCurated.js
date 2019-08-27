@@ -17,7 +17,8 @@ class CheffCurated extends React.Component {
         this.state = {
             kitchen_id: 2,
             CheffCurated: [],
-            loading: true
+            loading: true,
+            itemsInCart: []
         }
     }
 
@@ -37,42 +38,30 @@ class CheffCurated extends React.Component {
         }
     }
 
-    addToCart = async (data)=>{
-        console.log(data)
-        try {
-            this.setState({loading: true})
-            const requestObject = {
-                kitchen_id: this.props.data.kitchen_id,
-                side_id: 0,
-                bowl_id: 0,
-                sauce_id: 0,
-                pasta_id: 0,
-                garnish_id: 0,
-                meat_id: 0,
-                vegetable_id: 0,
-                extra_id: 0,
-                quantity: 1,
-                curated_id: data
-            }
-            this.source = httpClient.getSource()
-            await httpClient.ApiCall('post', APIEndPoints.addToCart, requestObject, this.source.token)
-            this.setState({loading: false})
-        } catch (error) {
-            if(error.message !== 'UnMounted'){
-                this.setState({loading: false})
-            }
-            console.log(error)
-        }
+    addToCart = () => {
+        localStorage.setItem('curated', JSON.stringify(this.state.itemsInCart))
+        this.props.history.push('/cart')
     }
 
-    componentWillUnmount(){
+    selectItems = (data) => {
+        const index = this.state.itemsInCart.indexOf(data.id)
+        const cartItems = this.state.itemsInCart
+        if (index > -1) {
+            cartItems.splice(index, 1)
+        } else {
+            cartItems.push(data.id)
+        }
+        this.setState({ itemsInCart: cartItems })
+    }
+
+    componentWillUnmount() {
         this.source && this.source.cancel("unMounted")
     }
 
     render() {
         return (
-            <div style={{paddingBottom: this.state.loading?'60%':'0%'}}>
-                <Loading data={this.state.loading} />    
+            <div style={{ paddingBottom: this.state.loading ? '60%' : '0%' }}>
+                <Loading data={this.state.loading} />
                 <div className="cheffCurMainWrap">
                     <div className="headContCheff">
                         <Link to="/"><img className="btnPr" src="./images/prevBtn.png" /></Link>
@@ -82,10 +71,13 @@ class CheffCurated extends React.Component {
                     <div className="cheffCuratedMainCont">
                         {
                             this.state.CheffCurated.map((item, index) => {
-                                return <CheffItem handler={this.addToCart} info={item} key={index} />
+                                return <CheffItem handler={this.selectItems} info={item} key={index} />
                             })
                         }
                     </div>
+                    <div hidden={this.state.itemsInCart.length <= 0} onClick={()=>this.addToCart()} style={{alignContent: 'baseline',marginLeft: '33%'}}>
+                  <p className="couponBtn chefCheckBtn">Checkout</p>
+                </div>
                 </div>
             </div>
         )

@@ -56,12 +56,6 @@ class Bowlselect extends ComponentHelpers {
           const response = await httpClient.ApiCall('post', APIEndPoints.getVeggies, {
             kitchen_id: this.props.data.kitchen_id
           }, this.source.token)
-          response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
-      response.data.push(response.data[0])
           this.setState({
             veggies: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
             loading: false
@@ -77,7 +71,7 @@ class Bowlselect extends ComponentHelpers {
         }
     }
     componentWillUnmount(){
-      this.source.cancel('unMounted')
+      this.source && this.source.cancel('unMounted')
         clearInterval(this.interval);
         
     }
@@ -314,16 +308,16 @@ class Bowlselect extends ComponentHelpers {
     };
 
     addVeggies = (veggie) => {
-      const index = this.veggie.indexOf(veggie)
-      if (index > -1) {
+      this.veggie = this.props.data.placeOrder.vegetable
+      if(!this.veggie){
+        this.veggie = []
+      }
+      const index = this.veggie.map(data=>data.name).indexOf(veggie.name)
+      if(index> -1){
         this.veggie.splice(index, 1)
       } else {
         this.veggie.push(veggie)
       }
-    }
-  
-    addVeggieToOrder = () => {
-      console.log(this.veggie)
       this.props.placeOrder(Object.assign(this.props.data.placeOrder, { vegetable: this.veggie }))
     }
 
@@ -356,7 +350,7 @@ class Bowlselect extends ComponentHelpers {
                 {this.state.loading || this.state.veggies.length < 6?"": this.renderbtn()}
                     {
                         this.state.veggies.map((item , index) => {
-                           return  <Plcomponent handler={this.addVeggies} type={'veggies'} info = {item} key= {index} id={index}/>
+                           return  <Plcomponent handler={this.addVeggies} type={'vegetable'} info = {item} key= {index} id={index}/>
                         })
                     }
                 </div>

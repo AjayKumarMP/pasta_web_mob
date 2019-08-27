@@ -98,8 +98,8 @@ class ContactUs extends ComponentHelpers {
                                                         : 0 + parseInt(cartItems.charges[0]
                                                             ? cartItems.charges[0].amount
                                                             : 0)))}</p>
-                                <p className="p3">{cartItems.charges && parseInt(cartItems.charges[1] && cartItems.charges[1].amount)}</p>
-                                <p className="p2">{cartItems.discount}</p>
+                                <p className="p2">{cartItems.charges && parseInt(cartItems.charges[1] && cartItems.charges[1].amount)}</p>
+                                <p className="p3">{cartItems.discount}</p>
                                 <h5>{cartItems.grand_total}</h5>
                             </div>  
                     </div>
