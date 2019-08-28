@@ -108,8 +108,10 @@ export class ComponentHelpers extends Component {
                     this.props.history.push(url)
                 }
             }
+            return true
         } catch (error) {
             console.log(error)
+            return false
         }
     }
 

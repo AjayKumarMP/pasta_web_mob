@@ -4,13 +4,13 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 import APIEndPoints from '../utils/APIEndPoints'
 import httpClient from '../utils/httpClient'
-import {addUserDetails} from '../actions/actions'
+import { addUserDetails } from '../actions/actions'
 
 let mapStateToProps = (state) => {
   return { data: state }
 }
 
-let mapDispatchToProps = (dispatch)=>{
+let mapDispatchToProps = (dispatch) => {
   return {
     UserDetails: user => dispatch(addUserDetails(user))
   }
@@ -19,8 +19,8 @@ let mapDispatchToProps = (dispatch)=>{
 class Login extends React.Component {
 
   state = {
-    emailId: "", //asifali_121@mailinator.com
-    password: "", //secret
+    emailId: "asifali_121@mailinator.com", //asifali_121@mailinator.com
+    password: "secret", //secret
     loggedIn: false,
     loginBtnText: 'Log In'
   }
@@ -28,22 +28,27 @@ class Login extends React.Component {
 
   login = async () => {
     try {
-      this.setState({loginBtnText: 'Please Wait'})
+      this.setState({ loginBtnText: 'Please Wait' })
       const response = await httpClient.ApiCall('post', APIEndPoints.login,
         {
           login_name: this.state.emailId,
           password: this.state.password
         })
-        if(response &&  response.success === 1){
-          this.props.UserDetails(response.data)
-          httpClient.setDefaultHeader('access-token', response.data && response.data.access_token)
-          localStorage.setItem("user",JSON.stringify(response.data))
+      if (response && response.success === 1) {
+        this.props.UserDetails(response.data)
+        httpClient.setDefaultHeader('access-token', response.data && response.data.access_token)
+        localStorage.setItem("user", JSON.stringify(response.data))
+        const url = localStorage.getItem('URL')
+        if (url) {
+          this.props.history.push(url)
+        } else {
           this.props.history.push('/')
-        } else{
-          this.setState({loginBtnText: 'Log In'})
         }
+      } else {
+        this.setState({ loginBtnText: 'Log In' })
+      }
     } catch (error) {
-      this.setState({loginBtnText: 'Log In'})
+      this.setState({ loginBtnText: 'Log In' })
       console.log(error)
     }
 
@@ -63,7 +68,7 @@ class Login extends React.Component {
             <input type="password" onChange={(e) => this.setState({ password: e.target.value })}></input>
           </div>
           <Link className="fPassLink" to="/login">Forget password?</Link>
-          <button disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn" onClick={()=>this.login()}>{this.state.loginBtnText}</button>
+          <button disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn" onClick={() => this.login()}>{this.state.loginBtnText}</button>
         </div>
       </div>
     )

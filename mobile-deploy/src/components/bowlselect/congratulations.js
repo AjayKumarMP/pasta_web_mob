@@ -12,9 +12,6 @@ class AboutUs extends ComponentHelpers {
 
     myCart = async()=>{
       try {
-        if(this.state.pastaName === ''){
-          return
-        }
         this.setState({loading: true})
         let item = JSON.parse(localStorage.getItem('cartItem'))
         if(item !== null){
@@ -49,7 +46,7 @@ class AboutUs extends ComponentHelpers {
                    </div>
                    <div className="congrUnderSect">
                         <h4>Name your pasta</h4>
-                        <input required onChange={(e)=>this.setState({pastaName: e.target.value})} placeholder="For eg- 'Sam's pasta'" type='name' />
+                        <input onChange={(e)=>this.setState({pastaName: e.target.value})} placeholder="For eg- 'Sam's pasta'" type='name' />
                         <button onClick={()=>this.myCart()} className="congratsCartBtn">Checkout</button>
                         {/* <Link to='/thanksfororder' className="sWfBtn">Share with friends</Link> */}
                     </div>

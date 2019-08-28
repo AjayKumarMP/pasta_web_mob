@@ -20,18 +20,28 @@ class Register extends ComponentHelpers {
     otpModal: false
   }
 
-  otpVerify= async ()=>{
-    this.setState({loading: true})
-    await this.verifyOtp(this.state.confirmation_code, this.state.otp)
-    this.setState({loading: false})
-}
+  otpVerify = async () => {
+    this.setState({ loading: true })
+    const respomse = await this.verifyOtp(this.state.confirmation_code, this.state.otp)
+    if(!respomse){
+      return
+    }
+    this.setState({ loading: false })
+    const url = localStorage.getItem('URL')
+    if (url) {
+      localStorage.removeItem('URL')
+      this.props.history.push(url)
+    } else {
+      this.props.history.push('/')
+    }
+  }
 
-resendOTP(){
+resendOTP = async()=>{
+  await this.resendOtp(this.state.phone_no)
   this.setState({disabledBtn: true})
   setTimeout(()=>{
       this.setState({disabledBtn: false})
   },30000)
-  this.resendOtp(this.state.phone_no)
 }
 
 
@@ -74,7 +84,7 @@ resendOTP(){
           </div>
           <div className="inpWrap">
             <p>Phone Number</p>
-            <input type="text" required onChange={(e) => this.setState({ phone_no: e.target.value })}></input>
+            <input max="10" min="10" type="text" required onChange={(e) => this.setState({ phone_no: e.target.value })}></input>
           </div>
           <div className="inpWrap">
             <p>E-mail ID</p>

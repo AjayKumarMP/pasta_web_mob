@@ -83,18 +83,29 @@ class AddAdr extends ComponentHelpers {
         }
     }
 
-    otpVerify= async ()=>{
-        this.setState({loading: true})
-        await this.verifyOtp(this.state.confirmation_code, this.state.otp)
-        this.setState({loading: false, otpModal: false})
-    }
+    otpVerify = async () => {
+        this.setState({ loading: true })
+        const respomse = await this.verifyOtp(this.state.confirmation_code, this.state.otp)
+        if(!respomse){
+          return
+        }
+        this.setState({ loading: false })
+        const url = localStorage.getItem('URL')
+        if (url) {
+          localStorage.removeItem('URL')
+          this.props.history.push(url)
+        } else {
+          this.props.history.push('/')
+        }
+      }
 
-    resendOTP(){
-        this.setState({disabledBtn: true})
+    resendOTP=async()=>{
+        this.setState({disabledBtn: true, loading: true})
         setTimeout(()=>{
             this.setState({disabledBtn: false})
         },30000)
-        this.resendOtp(this.state.phone_no)
+        await this.resendOtp(this.state.phone_no)
+        this.setState({loading: false})
     }
 
     render() {
@@ -162,6 +173,8 @@ class AddAdr extends ComponentHelpers {
                             <div className='inpCont'>
                                 <p>Phone Number</p>
                                 <input required
+                                    max='10'
+                                    min="10"
                                     type="number"
                                     value={phone_no?phone_no: ''}
                                     onChange={(e) => this.setState({phone_no: e.target.value})}/>

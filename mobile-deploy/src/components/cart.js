@@ -32,7 +32,7 @@ class Cart extends ComponentHelpers {
 				return this.setState({ guestPopup: true, loading: false });
 				// return this.props.history.push('/login')
 			} else {
-				const curated =  JSON.parse(localStorage.getItem('curated'))
+				const curated = JSON.parse(localStorage.getItem('curated'))
 				if (curated && curated.length > 0) {
 					Promise.all(
 						curated.map(data => this.addProductToCart({}, 0, 0, 1, data))
@@ -59,17 +59,20 @@ class Cart extends ComponentHelpers {
 			httpClient
 				.ApiCall('post', APIEndPoints.myAddressList, undefined, this.source.token)
 				.then(response => {
-					this.setState({
-						address: response.data,
-						selectedAddress: this.formatAddress(response.data[0])
-					})
+					if (response.data) {
+						this.setState({
+							address: response.data,
+							selectedAddress: this.formatAddress(response.data[0])
+						})
+					}
 				}, err => {
 					console.log(err)
 				})
 			const extras = await httpClient.ApiCall('post', APIEndPoints.getExtras, {
 				kitchen_id: this.props.data.kitchen_id
 			}, this.source.token)
-			this.setState({ extras: extras.data, loading: false })
+			if (extras.data)
+				this.setState({ extras: extras.data, loading: false })
 
 		} catch (error) {
 			if (error.message !== "unMounted") {
@@ -78,55 +81,56 @@ class Cart extends ComponentHelpers {
 			console.log(error)
 		}
 	}
-	
-	getMyCartItems = async ()=>{
+
+	getMyCartItems = async () => {
 		this.source = httpClient.getSource()
-		const coupon_id = parseInt(localStorage.getItem('coupon_id')) ? {coupon_id: parseInt(localStorage.getItem('coupon_id'))} : undefined
+		const coupon_id = parseInt(localStorage.getItem('coupon_id')) ? { coupon_id: parseInt(localStorage.getItem('coupon_id')) } : undefined
 		try {
 			const data = await httpClient
 				.ApiCall('post', APIEndPoints.getCartItems, coupon_id, this.source.token)
-				this.cartPrices = []
-				this.names = ""
-				this.price = 0
-				data
-					.data
-					.items
-					.forEach((cartItem) => {
-						Object
-							.keys(cartItem)
-							.forEach((key, index) => {
-								if (Array.isArray(cartItem[key])) {
-									cartItem[key].forEach((data, ind) => {
-										this.names += data.name
-										this.price += parseInt(data.price)
-										this.names += ', '
-									})
-								} else {
-									this.names += cartItem[key] && cartItem[key].name
-										? cartItem[key].name
-										: ''
-									this.price += cartItem[key] && cartItem[key].price
-										? parseInt(cartItem[key].price)
-										: 0
-								}
-								if (index + 1 !== Object.keys(cartItem).length && cartItem[key] && cartItem[key].name) {
-									this.names += ", "
-								}
-							})
-						this.names = this
-							.names
-							.replace(/,\s*$/, "");
-						this
-							.cartPrices
-							.push({ names: this.names, price: this.price })
-						this.names = ""
-						this.price = 0
-					})
-				this.setState({ cartItems: data.data, prices: this.cartPrices, loading: false })
-			
+			this.cartPrices = []
+			this.names = ""
+			this.price = 0
+			if(data.data){
+			data
+				.data
+				.items
+				.forEach((cartItem) => {
+					Object
+						.keys(cartItem)
+						.forEach((key, index) => {
+							if (Array.isArray(cartItem[key])) {
+								cartItem[key].forEach((data, ind) => {
+									this.names += data.name
+									this.price += parseInt(data.price)
+									this.names += ', '
+								})
+							} else {
+								this.names += cartItem[key] && cartItem[key].name
+									? cartItem[key].name
+									: ''
+								this.price += cartItem[key] && cartItem[key].price
+									? parseInt(cartItem[key].price)
+									: 0
+							}
+							if (index + 1 !== Object.keys(cartItem).length && cartItem[key] && cartItem[key].name) {
+								this.names += ", "
+							}
+						})
+					this.names = this
+						.names
+						.replace(/,\s*$/, "");
+					this
+						.cartPrices
+						.push({ names: this.names, price: this.price })
+					this.names = ""
+					this.price = 0
+				})
+			this.setState({ cartItems: data.data, prices: this.cartPrices, loading: false })
+			}
 		} catch (error) {
 			console.log(error)
-			this.setState({loading: false})
+			this.setState({ loading: false })
 		}
 	}
 
@@ -201,7 +205,7 @@ class Cart extends ComponentHelpers {
 					this.state.cartItems.items && this.state.cartItems.items.map((cart, index) =>
 						<div key={index}>
 							<Crtitem
-								details = {prices[index]}
+								details={prices[index]}
 								key={index}
 								cartData={cart}
 							/>
@@ -226,18 +230,18 @@ class Cart extends ComponentHelpers {
 					<div className="addressHeader" style={{ padding: '2%' }}>
 						<h3>Select Adress</h3><hr />
 						{/* <ul> */}
-						{this.state.address.map((addres, index) => 
-						<div key={index} className="row" style={{alignItems: 'baseline'}}  onClick={() => this.addAddress(addres)}>
-							<input onChange={()=>{}} checked={this.state.selectedAddress === this.formatAddress(addres)} type="radio" name="address"  style={{cursor: 'pointer'}}/>
-							<label style={{cursor: 'pointer'}}>{this.formatAddress(addres)}</label>
-							<br />
-						</div>)
+						{this.state.address.map((addres, index) =>
+							<div key={index} className="row" style={{ alignItems: 'baseline' }} onClick={() => this.addAddress(addres)}>
+								<input onChange={() => { }} checked={this.state.selectedAddress === this.formatAddress(addres)} type="radio" name="address" style={{ cursor: 'pointer' }} />
+								<label style={{ cursor: 'pointer' }}>{this.formatAddress(addres)}</label>
+								<br />
+							</div>)
 						}
 					</div>
 				</Popup>
 				<Popup className="itemCart" position="right center" open={guestPopup} onClose={() => this.setState({ guestPopup: false })}>
 					<div className="addressHeader" >
-						<a className="close" onClick={()=>this.setState({ guestPopup: false })}>
+						<a className="close" onClick={() => this.setState({ guestPopup: false })}>
 							&times;
         				</a>
 						<h3>How you like to proceed?</h3>
