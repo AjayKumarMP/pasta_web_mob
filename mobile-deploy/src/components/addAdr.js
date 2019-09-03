@@ -72,10 +72,17 @@ class AddAdr extends ComponentHelpers {
                 email
             })
             this.setState({loading: false})
-            console.log(response)
             if(!this.props.data.isUserLoggedIn()){
                 this.setState({confirmation_code: response.data.confirmation_code, otpModal: true})
                 // 
+            } else {
+                const url = localStorage.getItem('URL')
+                if (url) {
+                    localStorage.removeItem('URL')
+                    this.props.history.push(url)
+                  } else {
+                    this.props.history.push('/manageaddress')
+                  }
             }
         } catch (error) {
             console.log(error)
@@ -84,19 +91,38 @@ class AddAdr extends ComponentHelpers {
     }
 
     otpVerify = async () => {
-        this.setState({ loading: true })
-        const respomse = await this.verifyOtp(this.state.confirmation_code, this.state.otp)
-        if(!respomse){
-          return
-        }
-        this.setState({ loading: false })
-        const url = localStorage.getItem('URL')
-        if (url) {
-          localStorage.removeItem('URL')
-          this.props.history.push(url)
-        } else {
-          this.props.history.push('/')
-        }
+
+        if (this.state.otp === '') {
+            return this.NotificationManager.info('Please enter OTP', 'Warning!!')
+          }
+          if (this.state.confirmation_code === '') {
+            return this.NotificationManager.info('Please register again', 'Lost Connection!!')
+          }
+          this.setState({ loading: true })
+          try {
+            const response = await httpClient.ApiCall('post', APIEndPoints.verifyOtp, {
+              confirmation_code: this.state.confirmation_code,
+              otp: this.state.otp
+            })
+            this.setState({ loading: false })
+            if (response.data && response.data !== null) {
+              localStorage.setItem('user', JSON.stringify(response.data))
+              httpClient.setDefaultHeader('access-token', response.data ? response.data.access_token : "")
+              const url = localStorage.getItem('URL')
+              if (url) {
+                localStorage.removeItem('URL')
+                this.props.history.push(url)
+              } else {
+                this.props.history.push('/')
+              }
+              return this.NotificationManager.success(response.message, 'Success')
+            }
+            this.NotificationManager.error(response.message, 'Error')
+
+          } catch (error) {
+            this.setState({ loading: false })
+            this.NotificationManager.error(error.response.data.message, 'Error')
+          }
       }
 
     resendOTP=async()=>{
@@ -122,7 +148,7 @@ class AddAdr extends ComponentHelpers {
             otpModal
         } = this.state
         return (
-            <div className="appContainer">
+            <div className="appContainer" style={{overflowY: 'scroll'}}>
                 <Spinner data={loading} />
                 <div className='contactUsWrapp'>
                     <div className='cnt-nav'>
@@ -166,18 +192,19 @@ class AddAdr extends ComponentHelpers {
                             <div className='inpCont'>
                                 <p>Email</p>
                                 <input required
-                                    type="text"
+                                    type="email"
                                     value={email?email: ''}
                                     onChange={(e) => this.setState({email: e.target.value})}/>
                             </div>
                             <div className='inpCont'>
                                 <p>Phone Number</p>
                                 <input required
-                                    max='10'
-                                    min="10"
-                                    type="number"
+                                    maxLength="10"
+                                    minLength="10"
+                                    pattern="[0-9]*"
+                                    type="text"
                                     value={phone_no?phone_no: ''}
-                                    onChange={(e) => this.setState({phone_no: e.target.value})}/>
+                                    onChange={(e) =>  +e.target.value === +e.target.value?this.setState({phone_no: e.target.value}):''}/>
                             </div>
                             <div className='inpCont' style={{marginBottom: '16%'}}>
                                 <p>Address nickname</p>
@@ -201,8 +228,8 @@ class AddAdr extends ComponentHelpers {
                         <p>Enter OTP, which is sent to {this.state.phone_no}</p>
                         <hr />
                         <div>
-                            <input style={{border: 'none', borderBottom: '1px solid grey'}} type='text' onChange={(e)=>this.setState({otp: e.target.value})}/>
-                            <button className="verifyOtp"  type="submit" onClick={()=>this.otpVerify()}>Verify</button>
+                            <input placeholder="Enter OTP" style={{}} type='text' onChange={(e)=>this.setState({otp: e.target.value})}/>
+                            <button style={{width: '60%', marginLeft: '20%'}} className="verifyOtp"  type="submit" onClick={()=>this.otpVerify()}>Verify</button>
                             <button disabled={this.state.disabledBtn} className="resendOtp"  type="button" onClick={()=>this.resendOTP()}>Resend</button>
                             </div>
                     </div>

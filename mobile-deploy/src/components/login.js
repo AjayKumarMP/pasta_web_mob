@@ -1,34 +1,27 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 import APIEndPoints from '../utils/APIEndPoints'
 import httpClient from '../utils/httpClient'
-import { addUserDetails } from '../actions/actions'
+import Loader from './loader';
+import { ComponentHelpers, connect } from '../utils/componentHelper';
 
-let mapStateToProps = (state) => {
-  return { data: state }
-}
 
-let mapDispatchToProps = (dispatch) => {
-  return {
-    UserDetails: user => dispatch(addUserDetails(user))
-  }
-}
-
-class Login extends React.Component {
+class Login extends ComponentHelpers {
 
   state = {
-    emailId: "asifali_121@mailinator.com", //asifali_121@mailinator.com
+    emailId: "", //asifali_121@mailinator.com
     password: "secret", //secret
     loggedIn: false,
-    loginBtnText: 'Log In'
+    loginBtnText: 'Log In',
+    loading: false
   }
 
 
-  login = async () => {
+  login = async (e) => {
+    e.preventDefault()
     try {
-      this.setState({ loginBtnText: 'Please Wait' })
+      this.setState({ loginBtnText: 'Please Wait', loading: true })
       const response = await httpClient.ApiCall('post', APIEndPoints.login,
         {
           login_name: this.state.emailId,
@@ -45,34 +38,52 @@ class Login extends React.Component {
           this.props.history.push('/')
         }
       } else {
-        this.setState({ loginBtnText: 'Log In' })
+        this.NotificationManager.error(response.message, 'Error')
+        this.setState({ loginBtnText: 'Log In', loading: false })
       }
     } catch (error) {
-      this.setState({ loginBtnText: 'Log In' })
-      console.log(error)
+      error.response.data && this.NotificationManager.error(error.response.data.message, 'Error')
+      this.setState({ loginBtnText: 'Log In', loading: false })
     }
-
     return false
   }
 
   render() {
     return (
-      <div className="LoginWrapp">
-        <div className="forCenter">
-          <div className="inpWrap">
-            <p>E-mail ID/ Phone number</p>
-            <input type="email" onChange={(e) => this.setState({ emailId: e.target.value })}></input>
-          </div>
-          <div className="inpWrap">
-            <p>Password</p>
-            <input type="password" onChange={(e) => this.setState({ password: e.target.value })}></input>
-          </div>
-          <Link className="fPassLink" to="/login">Forget password?</Link>
-          <button disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn" onClick={() => this.login()}>{this.state.loginBtnText}</button>
+      <>
+        <div className="contactUsWrapp">
+        <div className='cnt-nav'>
+          <Link to={localStorage.getItem('URL') === null ? '/' : '/cart'}>
+            <img className='prevBtn' alt="loading.." src='./images/prevBtn.png' />
+          </Link>
+          <h4 style={{ marginLeft: '1%' }}>Login</h4>
         </div>
-      </div>
+        </div>
+        <div className="LoginWrapp">
+          <Loader data={this.state.loading} />
+          <form onSubmit={(e) => this.login(e)} className="forCenter">
+            <div className="inpWrap">
+              <p>E-mail ID/ Phone number</p>
+              <input
+                required
+                type="text"
+                onChange={(e) => this.setState({ emailId: e.target.value })} />
+            </div>
+            <div className="inpWrap">
+              <p>Password</p>
+              <input
+                type="password"
+                required
+                onChange={(e) => this.setState({ password: e.target.value })} />
+            </div>
+            <Link className="fPassLink" to="/login">Forget password?</Link>
+            <button disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn">{this.state.loginBtnText}</button>
+            <Link to="/register"><button style={{marginTop: '4%'}} className="LogindoneBtn">Register</button></Link>
+          </form>
+        </div>
+      </>
     )
   }
 
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(Login);

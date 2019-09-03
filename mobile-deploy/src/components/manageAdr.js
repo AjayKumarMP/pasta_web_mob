@@ -42,7 +42,7 @@ class ManageAdressess extends ComponentHelpers {
 
     render() {
         return (
-            <div className="contactUsWrapp" style={{paddingBottom: this.state.loading?'70%':'0%'}}>
+            <section className="contactUsWrapp" style={{paddingBottom: this.state.loading?'70%':'0%',marginLeft: '3%',marginRight: '3%', overflowY:'auto'}}>
                 <Loading data={this.state.loading} />    
                 <div className="cnt-nav">
                     <Link to="/"><img className="prevBtn" src="./images/prevBtn.png" /></Link>
@@ -65,7 +65,7 @@ class ManageAdressess extends ComponentHelpers {
                     }
                 </div>
                 <Link to="" className="doneBtn" >Done</Link>
-            </div>
+            </section>
         )
     }
 

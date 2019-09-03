@@ -32,14 +32,14 @@ class Editpasta extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', url, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
-      if(response.data){
+      if (response.data) {
         this.setState({
           popupData: response.data,
           loading: false,
           showPopup: true
         })
       } else {
-        this.setState({loading: false})
+        this.setState({ loading: false })
       }
     } catch (error) {
       this.setState({ loading: false })
@@ -48,49 +48,48 @@ class Editpasta extends ComponentHelpers {
 
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     this.source && this.source.cancel()
   }
 
-  selectData(event, data){
-    if(!this.order[this.state.currentKey]){
+  selectData(event, data) {
+    if (!this.order[this.state.currentKey]) {
       this.order[this.state.currentKey] = []
     }
-    if(this.state.currentKey === 'pastas' || this.state.currentKey === 'sauces'){
-      this.order[this.state.currentKey] =[]
-      document.querySelectorAll('.activeborder') && 
-      document.querySelectorAll('.activeborder').forEach(data=>data.classList.remove('activeborder'))
+    if (this.state.currentKey === 'pastas' || this.state.currentKey === 'sauces') {
+      this.order[this.state.currentKey] = []
+      document.querySelectorAll('.activeborder') &&
+        document.querySelectorAll('.activeborder').forEach(data => data.classList.remove('activeborder'))
     }
-    if(event.target.classList.contains('activeborder')){
-      const index = this.order[this.state.currentKey].map(_=>_.id).indexOf(data.id)
-      this.order[this.state.currentKey].splice(index , 1)
+    if (event.target.classList.contains('activeborder')) {
+      const index = this.order[this.state.currentKey].map(_ => _.id).indexOf(data.id)
+      this.order[this.state.currentKey].splice(index, 1)
       event.target.classList.remove('activeborder')
     } else {
-      this.order[this.state.currentKey].push({id:data.id})
+      this.order[this.state.currentKey].push({ id: data.id })
       event.target.classList.add('activeborder')
     }
   }
 
-  updateItem = async ()=>{
-    if(Object.keys(this.order).length ===0 || 
-    (this.order[this.state.currentKey] && Object.keys(this.order[this.state.currentKey]).length === 0)){
+  updateItem = async () => {
+    if (Object.keys(this.order).length === 0 ||
+      (this.order[this.state.currentKey] && Object.keys(this.order[this.state.currentKey]).length === 0)) {
       return
     }
-    this.setState({loading: true})
-    const reqObj = {bowl: {id: this.props.location.state.bowl && this.props.location.state.bowl.id}}
-    if(this.state.currentKey =='garnishes')
-    reqObj['garnish'] = this.order[this.state.currentKey]
-    else if(this.state.currentKey =='meats')
-    reqObj['meat'] = this.order[this.state.currentKey]
-    else if(this.state.currentKey =='pastas')
-    reqObj['pasta'] = this.order[this.state.currentKey][0]
-    else if(this.state.currentKey =='sauces')
-    reqObj['sauce'] = this.order[this.state.currentKey][0]
-    else if(this.state.currentKey =='vegetables')
-    reqObj['veggies'] = this.order[this.state.currentKey]
-    console.log(reqObj, this.props.location.state.id)
+    this.setState({ loading: true })
+    const reqObj = { bowl: { id: this.props.location.state.bowl && this.props.location.state.bowl.id } }
+    if (this.state.currentKey == 'garnishes')
+      reqObj['garnish'] = this.order[this.state.currentKey]
+    else if (this.state.currentKey == 'meats')
+      reqObj['meat'] = this.order[this.state.currentKey]
+    else if (this.state.currentKey == 'pastas')
+      reqObj['pasta'] = this.order[this.state.currentKey][0]
+    else if (this.state.currentKey == 'sauces')
+      reqObj['sauce'] = this.order[this.state.currentKey][0]
+    else if (this.state.currentKey == 'vegetables')
+      reqObj['veggies'] = this.order[this.state.currentKey]
     await this.updateItemInCart(reqObj, this.props.location.state.id)
-    this.setState({loading: false, showPopup: false})
+    this.setState({ loading: false, showPopup: false })
   }
 
   render() {
@@ -112,7 +111,11 @@ class Editpasta extends ComponentHelpers {
                 <div key={index} className="editPastaItem">
                   <div className="editPastaItemLeft">
                     <h5>{key}</h5>
-                    {/* <p>{cartItem[key] ?cartItem[key].name: 'Not selected'}</p> */}
+                    {/* <p>{cartItem[key].name ?
+                      cartItem[key].name:
+                      (Array.isArray(cartItem[key]) && cartItem[key].length > 0 ?
+                        cartItem[key].flatMap(data => data.name).join(', ') 
+                      : 'Not selected')}</p> */}
                   </div>
                   <div className="editPastaItemRight">
                     <button onClick={() => this.getItems(this.options[key], key)}>
@@ -126,25 +129,25 @@ class Editpasta extends ComponentHelpers {
           }
 
         </div>
-        <Popup onClose={()=>this.setState({showPopup: false})} className="modal" open={this.state.showPopup}>
+        <Popup onClose={() => this.setState({ showPopup: false })} className="modal" open={this.state.showPopup}>
           <div className='editPastaPopup modalContent'>
             <div className="modal-header">
-              <h2>Choose Item</h2>
-              <span onClick={()=>this.setState({showPopup: false})} className="close">&times;</span>
+              <span onClick={() => this.setState({ showPopup: false })} className="close">&#x2714;</span>
+              <h2>Choose {this.state.currentKey}</h2>
             </div>
             <div className='modal-body'>
-              <div style={{maxHeight: '220px',overflowY: 'auto'}}>
-              {
-                popupData.map((data, index) =>
-                <section key={index} style={{display: 'flex', alignItems: 'center',marginBottom: '4%'}}>
-                  <div onClick={(e)=>this.selectData(e, data)} key={index} style={{ position: 'relative' }} className="choosePl">
+              <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
+                {
+                  popupData.map((data, index) =>
+                    <section key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '4%' }}>
+                      <div onClick={(e) => this.selectData(e, data)} key={index} style={{ position: 'relative' }} className="choosePl">
 
-                    <img  style={{ animation: 'auto',background: 'lightgray' }} className="myborder" src={data.picture} />
-                  </div>
-                    <span style={{marginLeft:'20%'}}>{data.name}</span>
-                  </section>
-                )
-              }
+                        <img style={{ animation: 'auto', background: 'lightgray' }} className="myborder" src={data.picture} />
+                      </div>
+                      <span style={{ marginLeft: '20%' }}>{data.name}</span>
+                    </section>
+                  )
+                }
               </div>
               <button className="editPopupBtn" onClick={() => this.updateItem()}>Update</button>
             </div>

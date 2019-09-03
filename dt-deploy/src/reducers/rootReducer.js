@@ -19,7 +19,6 @@ function rootReducer(state = initialState, action) {
                 getOrderPrice: () => {
                     var sum = 0
                     Object.keys(action.payload).forEach(key => {
-                        console.log(action.payload[key], key)
                         if (isNumber(action.payload[key].price)) {
                             sum += action.payload[key].price
                         }

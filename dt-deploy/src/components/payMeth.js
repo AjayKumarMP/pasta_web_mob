@@ -2,7 +2,6 @@ import React from 'react'
 class Method extends React.Component {
 
     handler =(e)=>{
-        console.log(e.target.checked)
     }
     render(){
         return(

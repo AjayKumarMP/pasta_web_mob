@@ -117,13 +117,13 @@
 .favoritesItemsContainer {
     display: grid;
     grid-auto-flow: column;
-    grid-gap: 2%;
+    grid-gap: 0%;
     padding-bottom: 2%;
 }
 
 .favouritesItem {
     text-align: center;
-    width: 100%;
+    width: 85%;
     height: auto;
     border-radius: 10px;
     background: #fff;
@@ -139,6 +139,9 @@
     }
     img {
         width: 100%;
+        object-fit: contain;
+        max-width: 65%;
+        height: 69%;
     }
 }
 
@@ -164,8 +167,14 @@
     margin: 0 auto;
 }
 
+@media screen and (max-width: 800px){
+    .curatedItem{
+        width: 45%
+    }
+}
+
 .curatedItem {
-    width: 30%;
+    // width: 30%;
     position: relative;
     padding-bottom: 8%;
     img {
@@ -203,7 +212,7 @@
         border-radius: 4px;
         color: #67023F;
         font-weight: 600;
-        padding: 1% 2%;
+        padding: 1% 3%;
     }
 }
 
@@ -216,6 +225,11 @@
     top: 0;
     width: 28%;
     height: 100%;
+    transform: translateX(-400px);
+    ­-webkit-­transition: all 0.5s ease; 
+    ­-moz-­transition: all 0.5s ease; 
+    -­o-­transition: all 0.5s ease; 
+    transition: all 0.5s ease;
 }
 
 .hambMenu .hambHeader {
@@ -242,7 +256,7 @@
 
 .hambMenu .hambHeader .userArea .userInfo {
     padding-top: 13px;
-    padding-left: 30%;
+    padding-left: 34%;
     width: 100%;
 }
 
@@ -284,6 +298,7 @@
 
 .hambMenu .hambMain ul li a {
     margin-left: 16%;
+    color: white;
 }
 
 .hambMenu .hambMain ul li p {

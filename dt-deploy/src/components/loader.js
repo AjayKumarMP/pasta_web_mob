@@ -1,5 +1,5 @@
 import React from "react";
-import { FaSpinner } from 'react-icons/fa'
+import { FaCog } from 'react-icons/fa'
 import { IconContext } from 'react-icons'
 
 const Loader = ({ data }) => {
@@ -7,7 +7,8 @@ const Loader = ({ data }) => {
         <>
             <div hidden={!data} className="loading">
                 <IconContext.Provider value={{ className: 'react-icons' }}>
-                    <FaSpinner className="fa-spin" size="5em" />
+                    {/* <FaCog className="fa-spin" size="5em" /> */}
+                    <img src="./images/loader.gif" style={{ width: '13%' }} alt="" />
                 </IconContext.Provider>
             </div>
         </>
@@ -19,13 +20,18 @@ export const Spinner = ({ data }) => {
         <>
             <div hidden={!data} style={{
                 position: 'fixed',
-                left: '40%',
-                paddingTop: '13%',
-                top: '10%',
-                zIndex: 9999
+                left: '0',
+                paddingTop: '20%',
+                top: '0',
+                paddingLeft: '50%',
+                width: '100%',
+                zIndex: 99999,
+                backgroundColor: 'rgba(255,255,255,0.7)',
+                height: '100%',
             }}>
                 <IconContext.Provider value={{ className: 'react-icons' }}>
-                    <FaSpinner className="fa-spin" size="5em" />
+                    {/* <FaCog className="fa-spin" size="5em" /> */}
+                    <img src="./images/loader.gif" style={{ width: '13%' }} alt="" />
                 </IconContext.Provider>
             </div>
         </>
@@ -33,4 +39,3 @@ export const Spinner = ({ data }) => {
 }
 
 export default Loader;
-

@@ -21,12 +21,14 @@ class Bowlselect extends ComponentHelpers {
         if (this.clicked == false) {
             document.querySelector('.forSumm').style.transform = 'translateY(190px)'
             this.clicked = true;
+            e.target.style.bottom = '33px'
             e.target.style.transform = 'translateY(-145px)'
             e.target.src = './images/summ1.png'
         } else {
             document.querySelector('.forSumm').style.transform = 'translateY(0px)'
             this.clicked = false;
             e.target.style.transform = 'translateY(0px)'
+            e.target.style.bottom = '120px'
             e.target.src = './images/ordsm.png'
         }
     }
@@ -85,10 +87,12 @@ class Bowlselect extends ComponentHelpers {
         } else {
             this.side.push(side)
         }
+        this.props.placeOrder(Object.assign(this.props.data.placeOrder, { side: this.side }))
     }
 
     render() {
         const cost = this.props.data.getOrderPrice()
+        const { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
         return (
             <div className="mainWrapForSect">
                 <Loading data={this.state.loading} />
@@ -98,14 +102,36 @@ class Bowlselect extends ComponentHelpers {
                         <Link to="/bowlselect6"><img className="prevBtn" src="./images/prevBtn.png" /></Link>
                         <p hidden={!cost} className="orderTotal">&#8377; {cost}</p>
                         <img onClick={this.cl.bind(this)} className="ordsm" src="./images/ordsm.png"></img>
-                        <img className="regMainBowl" src="./images/regularBowl.png" />
+                        {/* <img className="regMainBowl" src="./images/regularBowl.png" /> */}
+                        <div style={{opacity: 0}} className="selectCont regCont">
+              <span className="entered"></span>
+              <span className="entered"></span>
+              <span className="entered"></span>
+              <span className="entered"></span>
+              <span className="entered"></span>
+              <span className="active"></span>
+            </div>
+                        <div className="sauceBowl">
+                            <img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
+                            {sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
+                            {pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
+                            {vegetable && vegetable.map((el, index) => {
+                                return (<img key={index} className={`sauceInbowlVeggie${index}`} alt={`veggie${index}`} src={el.src} />)
+                            })}
+                            {garnish && garnish.map((el, index) => {
+                                return (<img key={index} className={`sauceInbowlGarnish${index}`} alt={`garnish${index}`} src={el.src} />)
+                            })}
+                            {meat && meat.map((data, index) => {
+                                return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
+                            })}
+                        </div>
                         <div className="slectSideSect">
                             <h5>Congratulations!</h5>
                             <p>You have made your pasta</p>
                         </div>
                     </div>
                     <div className="under-section">
-                        <p>Select yor <span>sides</span> </p>
+                        <p>Select your <span>sides</span> </p>
                     </div>
                     <div className='selectSide'>
                         {
@@ -120,8 +146,8 @@ class Bowlselect extends ComponentHelpers {
                             })
                         }
                     </div>
-                    <button onClick={() => this.addItemToCart('/congratulations')} className="nextBtn wtCart">Next</button>
                     <button onClick={() => this.addItemToCart('/cart')} className="cartBtn">Your cart</button>
+                    <button onClick={() => this.addItemToCart('/congratulations')} className="nextBtn wtCart">Next</button>
                 </div>
             </div>
         )

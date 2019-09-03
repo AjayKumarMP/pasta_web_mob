@@ -31,7 +31,7 @@ class Thanks extends React.Component {
     render() {
         const { loading, orderDetails } = this.state
         return (
-            <div className="contactUsWrapp">
+            <div className="contactUsWrapp" style={{marginLeft: '4%'}}>
                 <Loading data={loading} />
                 <div className="cnt-nav">
                     <Link to="/"><img className="prevBtn" src="./images/prevBtn.png" /></Link>
@@ -73,14 +73,14 @@ class Thanks extends React.Component {
                             <div className="wrapForItm">
                                 <p></p>
                                 <div className="wr">
-                                    <div className={["wrDot", orderDetails.customer_status && orderDetails.customer_status.toLowerCase() === 'out for delivery' ? 'activeDot' : ''].join(' ')}></div>
+                                    <div className={["wrDot", orderDetails.customer_status && orderDetails.customer_status.toLowerCase() === 'on the way' ? 'activeDot' : ''].join(' ')}></div>
                                     <div className="wrPl"></div>
                                 </div>
                             </div>
                         </div>
                         <div className="rightSide">
-                            <p className={orderDetails.customer_status && orderDetails.customer_status.toLowerCase() === 'out for delivery' ? 'activeText' : ''}>Out for delivery</p>
-                            <span className={orderDetails.customer_status && orderDetails.customer_status.toLowerCase() === 'out for delivery' ? 'activeText' : ''}>Delivery is on it's way</span>
+                            <p className={orderDetails.customer_status && orderDetails.customer_status.toLowerCase() === 'on the way' ? 'activeText' : ''}>Out for delivery</p>
+                            <span className={orderDetails.customer_status && orderDetails.customer_status.toLowerCase() === 'on the way' ? 'activeText' : ''}>Delivery is on it's way</span>
                         </div>
                     </div>
                     <div className="ordTrackerMainWrap">
@@ -106,8 +106,8 @@ class Thanks extends React.Component {
                         {/* <p>Delivery address</p> */}
                     </div>
                     <div className="rightSide">
-                        <p>{orderDetails.id}</p>
-                        <p>1912, Greenwood city, Sector-45,Gurgaon, Haryana.</p>
+                        <p>{orderDetails.unique_order_id}</p>
+                        <p>{orderDetails.address && orderDetails.address.address_text}</p>
                         {/* <p>x2 Alfredo Spagetti</p>
                     <p>x2 Alfredo Spagetti</p>
                     <p>x2 Alfredo Spagetti</p> */}

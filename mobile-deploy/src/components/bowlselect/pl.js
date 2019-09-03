@@ -9,7 +9,6 @@ let mapStateToProps = state => {
 class Plcomponent extends React.Component {
 	constructor(props) {
 		super(props);
-		debugger
 		if(this.props.id > 4){
 			this.state = { y: -130, x: this.props.id * 70 };
 			this.animationClass = '';
@@ -84,15 +83,15 @@ class Plcomponent extends React.Component {
 		const borderStyle = {
 			border: '2px dashed #67023F',
 		};
-
 		return (
 			<div
-				onClick={(e)=>{this.handler(e);this.props.handler({name:this.props.info.name, id:this.props.info.id, price: parseInt(this.props.info.price) })}}
 				style={{ transform: `translate(${this.state.x}px, ${this.state.y}px) scale(0)`, marginLeft: 10 }}
 				className='choosePl'
 				id={this.props.id}
 			>
-				<div className={this.state.selected ? 'myborder' + ' activeborder' : 'myborder'} />
+				<div onClick={(e)=>{this.handler(e);this.props.handler({name:this.props.info.name, id:this.props.info.id, 
+					price: parseInt(this.props.info.price), src: this.props.info.inbowl_src })}}
+				 className={this.state.selected ? 'myborder' + ' activeborder' : 'myborder'} />
 				{this.props.info.kk ? <img className='decForPl' src={this.props.info.kk} /> : null}
 				<img src={this.props.info.src} />
 				<div className='nameSection'>

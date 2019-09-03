@@ -24,10 +24,10 @@ class CheffCurated extends React.Component {
     render(){
         return(
             <div className="chfPlMainWrap">
-               <img src={this.props.info.src}></img>
+               <img style={{width: '90%'}} src={this.props.info.src}></img>
                <div className="underDescription">
                    <h5>{this.props.info.name}</h5>
-                   <p>{this.props.info.ingr}</p>
+                   <p>{this.props.info.description}</p>
                    <div className="undr">
                    <span>₹ {this.props.info.price}</span>
                    <a onClick={()=>{this.props.handler(this.props.info);this.toggleAddress()}}>{this.state.addCartText}</a>

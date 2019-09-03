@@ -36,10 +36,15 @@
         font-weight: 700;
     }
     .loading {
+        width: 100%;
         position: fixed;
-        top: 42%;
-        left: 50%;
+        left: 0;
+        top: 0;
+        padding-left: 46%;
+        padding-top: 18%;
         z-index: 9999;
+        height: 100%;
+        background-color: rgba(255,255,255,0.7);
     }
     .bowl {
         display: flex;
@@ -100,6 +105,7 @@
     .selectSection {
         font-family: 'Poppins', sans-serif;
         height: 100vh;
+        margin-right: 10%;
         display: grid;
         grid-template-rows: 1fr 1fr 0.5fr;
         text-align: center;
@@ -128,7 +134,7 @@
         }
     }
     .bottomButton {
-        width: 72%;
+        width: 67%;
         display: flex;
         justify-content: space-between;
         button {
@@ -143,6 +149,7 @@
             }
             &:nth-child(2) {
                 color: #fff;
+                width: 185px;
                 background: #67023f;
                 border: #67023f;
             }
@@ -157,10 +164,10 @@
     .sauce {
         &Bowl {
             position: relative;
-            left: -67%;
+            left: -77%;
             top: 27%;
-            img {
-                // width: 86%;
+            img:nth-child(1) {
+                width: 290px;
             }
         }
         &Inbowl {
@@ -172,54 +179,54 @@
             }
             &Pasta {
                 position: absolute;
-                width: 25%;
-                left: 36%;
-                top: 37%;
+                width: 43%;
+                left: 30%;
+                top: 27%;
             }
             &Veggie {
                 &0 {
                     position: absolute;
                     width: 20%;
-                    left: 18%;
-                    top: 25%;
+                    left: 40%;
+                    top: 38%;
                 }
                 &1 {
                     position: absolute;
                     width: 20%;
                     left: 40%;
-                    top: 15%;
+                    top: 38%;
                 }
                 &2 {
                     position: absolute;
                     width: 20%;
-                    left: 64%;
-                    top: 25%;
+                    left: 40%;
+                    top: 38%;
                 }
             }
             &Garnish {
                 &0 {
                     position: absolute;
                     width: 20%;
-                    left: 21%;
-                    top: 51%;
+                    left: 40%;
+                    top: 42%;
                 }
                 &1 {
                     position: absolute;
                     width: 20%;
-                    left: 63%;
-                    top: 51%;
+                    left: 40%;
+                    top: 38%;
                 }
             }
             &Meat {
                 position: absolute;
                 left: 34%;
-                top: 63%;
+                top: 34%;
                 width: 30%;
             }
         }
         &One {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             position: absolute;
             cursor: pointer;
@@ -227,7 +234,13 @@
             justify-content: center;
             text-align: center;
             left: calc((85vw / 3) - 12vh);
-            top: 3%;
+            top: 7%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -236,15 +249,21 @@
         }
         &Two {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
             display: flex;
             justify-content: center;
             text-align: center;
-            left: calc((79vw / 2.9) + 5.02vh);
-            top: 17%;
+            left: calc((77vw / 2.9) + 5.02vh);
+            top: 22%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -253,15 +272,21 @@
         }
         &Three {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
             display: flex;
             justify-content: center;
             text-align: center;
-            left: calc(31vw - -3vh);
-            top: 39%;
+            left: calc(30vw - -3vh);
+            top: 41%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -270,15 +295,21 @@
         }
         &Four {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
             display: flex;
             justify-content: center;
             text-align: center;
-            left: calc((83vw / 2.9) + 5.02vh);
-            top: 59%;
+            left: calc((79vw / 2.9) + 5.02vh);
+            top: 62%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -287,7 +318,7 @@
         }
         &Five {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
@@ -296,6 +327,12 @@
             text-align: center;
             left: calc((84vw / 3) - 11vh);
             top: 75%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -304,15 +341,21 @@
         }
         &Six {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
             display: flex;
             justify-content: center;
             text-align: center;
-            left: calc((123vw / 3) - 12vh);
-            top: 1%;
+            left: calc((121vw / 3) - 12vh);
+            top: 2%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -321,15 +364,21 @@
         }
         &Seven {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
             display: flex;
             justify-content: center;
             text-align: center;
-            left: calc((115vw / 2.9) + 5.02vh);
-            top: 20%;
+            left: calc((110vw / 2.9) + 5.02vh);
+            top: 19%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -338,7 +387,7 @@
         }
         &Eight {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
@@ -347,6 +396,12 @@
             text-align: center;
             left: calc((118vw / 2.9) + 5.02vh);
             top: 43%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -355,7 +410,7 @@
         }
         &Nine {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
@@ -363,7 +418,13 @@
             justify-content: center;
             text-align: center;
             left: calc((110vw / 2.9) + 5.02vh);
-            top: 65%;
+            top: 64%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;
@@ -372,7 +433,7 @@
         }
         &Ten {
             background: white;
-            border-radius: 40px;
+            border-radius: 51px;
             padding: 15px;
             cursor: pointer;
             position: absolute;
@@ -380,7 +441,13 @@
             justify-content: center;
             text-align: center;
             left: calc((91vw / 2.9) + 5.02vh);
-            top: 81%;
+            top: 80%;
+            width: 12%;
+            height: 13%;
+            img{
+                width: 100%;
+                object-fit: contain;
+            }
             p {
                 margin: 0;
                 position: absolute;

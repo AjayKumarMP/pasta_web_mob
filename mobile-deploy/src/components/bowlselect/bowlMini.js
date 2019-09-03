@@ -64,14 +64,14 @@ class Bowlselect extends ComponentHelpers {
                         <div className="mainSelectedBowl">
                             <h5>Mini bowl</h5>
                             <p>350 ml</p>
-                            <span>Starting from 100</span>
+                            <span>Starting from &#8377; 100</span>
                         </div>
                     </div>
                     <div className="miniBowlArea1 rightSide1">
                         <div><p>Regular bowl</p>
                         <span>650ml</span></div>
-                        <div style={{cursor: this.props.location.state?'auto':'pointer' }} onClick={()=>this.switchBowl()}>
-                            <img style={{opacity: this.props.location.state?0.4: 1}} className="regBowlImg1" src="./images/miniBowl.png" /></div>
+                        <Link to={this.props.location.state?'/minibowl':'/regularbowl'} style={{cursor: this.props.location.state?'auto':'pointer' }} >
+                            <img style={{opacity: this.props.location.state?0.4: 1}} className="regBowlImg1" src="./images/miniBowl.png" /></Link>
                     </div>
                     <Link onClick={this.handler} to="/bowlselect2" className="nextBtn">Next</Link>
                 </div>

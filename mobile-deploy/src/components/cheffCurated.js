@@ -1,17 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import CheffItem from './chfPl'
 import httpClient from '../utils/httpClient';
 import APIEndPoints from '../utils/APIEndPoints';
 import Loading from './loader'
-
-let mapStateToProps = (state) => {
-    return { data: state }
-}
+import { ComponentHelpers, connect } from '../utils/componentHelper';
 
 
-class CheffCurated extends React.Component {
+
+class CheffCurated extends ComponentHelpers{
     constructor(props) {
         super(props);
         this.state = {
@@ -38,9 +35,19 @@ class CheffCurated extends React.Component {
         }
     }
 
-    addToCart = () => {
-        localStorage.setItem('curated', JSON.stringify(this.state.itemsInCart))
-        this.props.history.push('/cart')
+    addToCart = async () => {
+        this.setState({loading: true})
+        if(this.props.data.isUserLoggedIn()){
+            if (this.state.itemsInCart.length > 0) {
+                await Promise.all(
+                    this.state.itemsInCart.map(data => this.addProductToCart({}, 0, 0, 1, data))
+                )
+            }
+            this.props.history.push('/cart')
+        } else {
+            localStorage.setItem('curated', JSON.stringify(this.state.itemsInCart))
+            this.props.history.push('/cart')
+        }
     }
 
     selectItems = (data) => {
@@ -60,23 +67,23 @@ class CheffCurated extends React.Component {
 
     render() {
         return (
-            <div style={{ paddingBottom: this.state.loading ? '60%' : '0%' }}>
+            <div style={{ paddingBottom: this.state.loading ? '60%' : '0%', overflowY: 'auto'}}>
                 <Loading data={this.state.loading} />
                 <div className="cheffCurMainWrap">
                     <div className="headContCheff">
                         <Link to="/"><img className="btnPr" src="./images/prevBtn.png" /></Link>
-                        <h5 className="srch">Search</h5>
+                        {/* <h5 className="srch">Search</h5> */}
                         <h2 className="headH2">Chef curated</h2>
                     </div>
-                    <div className="cheffCuratedMainCont">
+                    <div className="cheffCuratedMainCont" style={{textAlign: 'center'}}>
                         {
                             this.state.CheffCurated.map((item, index) => {
                                 return <CheffItem handler={this.selectItems} info={item} key={index} />
                             })
                         }
                     </div>
-                    <div hidden={this.state.itemsInCart.length <= 0} onClick={()=>this.addToCart()} style={{alignContent: 'baseline',marginLeft: '33%'}}>
-                  <p className="couponBtn chefCheckBtn">Checkout</p>
+                    <div >
+                  <button hidden={this.state.itemsInCart.length <= 0} onClick={()=>this.addToCart()} className="couponBtn chefCheckBtn">Checkout</button>
                 </div>
                 </div>
             </div>
@@ -84,4 +91,4 @@ class CheffCurated extends React.Component {
     }
 
 }
-export default connect(mapStateToProps)(CheffCurated);
+export default connect(CheffCurated);

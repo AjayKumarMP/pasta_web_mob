@@ -37,7 +37,9 @@
 
 .orderDetails {
     display: grid;
-    margin-top: 2%;
+    // margin-top: 2%;
+    grid-column: 5 / 12;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     padding-bottom: 10px;
     div {
@@ -73,6 +75,11 @@
     color: #0cb800 !important;
 }
 
+.ordrightSide{
+    display: grid;
+    border-bottom: 2px solid darkgrey;
+}
+
 // order summary
 .orderSummary {
     padding-top: 50px;
@@ -98,6 +105,7 @@
     width: 619px;
     background: #67023f;
     border-radius: 10px;
+    margin-bottom: 2%;
     display: flex;
     justify-content: space-between;
     label {

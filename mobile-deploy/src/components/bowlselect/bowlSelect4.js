@@ -37,12 +37,14 @@ class Bowlselect extends ComponentHelpers {
           document.querySelector('.forSumm').style.transform = 'translateY(190px)';
           document.querySelector('.mainSummaryWrap').classList.add("circle_animation1");
           this.clicked = true;
+          e.target.style.bottom = '33px'
           e.target.style.transform = 'translateY(-145px)';
           e.target.src = './images/summ1.png';
         } else {
           document.querySelector('.forSumm').style.transform = 'translateY(0px)';
           document.querySelector('.mainSummaryWrap').classList.add("circle_animation2");
           this.clicked = false;
+          e.target.style.bottom = '120px'
           e.target.style.transform = 'translateY(0px)';
           e.target.src = './images/ordsm.png';
         }
@@ -312,17 +314,22 @@ class Bowlselect extends ComponentHelpers {
       if(!this.veggie){
         this.veggie = []
       }
-      const index = this.veggie.map(data=>data.name).indexOf(veggie.name)
+      const index = this.veggie.map(data=>data.id).indexOf(veggie.id)
+      if(index === -1 && this.veggie.length >=3){
+        return
+      }
       if(index> -1){
         this.veggie.splice(index, 1)
-      } else {
+      } else if(this.veggie.length < 3){
         this.veggie.push(veggie)
       }
       this.props.placeOrder(Object.assign(this.props.data.placeOrder, { vegetable: this.veggie }))
+      this.setState({loading: false})
     }
 
     render(){
       const cost = this.props.data.getOrderPrice()
+      const { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
         return(
             <div className="mainWrapForSect">
               <Loading data={this.state.loading} />
@@ -340,7 +347,21 @@ class Bowlselect extends ComponentHelpers {
                         <span></span>
                         <span></span>
                     </div>
-                    <img className="regMainBowl" src="./images/regularBowl.png" />
+                    {/* <img className="regMainBowl" src="./images/regularBowl.png" /> */}
+                    <div className="sauceBowl">
+										<img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
+										{sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
+										{pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
+										{vegetable && vegetable.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlVeggie${index}`} alt={`veggie${index}`} src={el.src} />)
+										})}
+										{garnish && garnish.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlGarnish${index}`} alt={`garnish${index}`} src={el.src} />)
+										})}
+										{meat && meat.map((data, index) => {
+											return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
+										})}
+									</div>
                     
                     <div className="textArea updatetTextarea">
                         <p>Select your</p> <span>veggies</span> <h2 style={{fontSize:"8px",textAlign:'center'}}>(choose any 3)</h2>

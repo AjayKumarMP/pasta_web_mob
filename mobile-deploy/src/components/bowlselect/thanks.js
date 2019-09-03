@@ -26,6 +26,7 @@ class AboutUs extends React.Component {
                   <h5>Thank you for ordering with us</h5>
                   <p>Your order {order && order.unique_order_id} has been placed. </p>
                 <Link to='/ordertracker' className="ordTrack">Track order</Link>
+                <span style={{padding: '1%'}}></span>
                 <Link to="/contactus" className="suppOnl" >Customer support</Link>
               </div>
             </div>

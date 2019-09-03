@@ -1,10 +1,11 @@
 import React from 'react';
-import {Route, Link, BrowserRouter as Router} from 'react-router-dom';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import httpClient from '../utils/httpClient';
 import APIEndPoints from '../utils/APIEndPoints';
 import { ComponentHelpers, connect } from '../utils/componentHelper';
-import {Spinner} from './loader'
+import { Spinner } from './loader'
 import Popup from 'reactjs-popup';
+import { ReactComponent as BackLogo } from  '../assets/icons/back2.svg';
 
 class AddAdr extends ComponentHelpers {
 
@@ -44,12 +45,16 @@ class AddAdr extends ComponentHelpers {
                 locality,
                 city,
                 phone_no,
-                email})
+                email
+            })
         }
     }
 
     addAddress = async(e) => {
         e.preventDefault()
+        if(!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.state.email)){
+            return this.NotificationManager.error('Enter valid Email', 'Error', 1500)
+        }
         try {
             this.setState({loading: true})
             const {
@@ -59,7 +64,7 @@ class AddAdr extends ComponentHelpers {
                 locality,
                 city,
                 phone_no,
-                email
+                email,
             } = this.state
             const response = await httpClient.ApiCall('post', APIEndPoints.addAddress, {
                 address_name,
@@ -71,21 +76,70 @@ class AddAdr extends ComponentHelpers {
                 email
             })
             this.setState({loading: false})
-            console.log(response)
             if(!this.props.data.isUserLoggedIn()){
                 this.setState({confirmation_code: response.data.confirmation_code, otpModal: true})
                 // 
+            } else {
+                const url = localStorage.getItem('URL')
+                if (url) {
+                    localStorage.removeItem('URL')
+                    this.props.history.push(url)
+                  } else {
+                    this.props.history.push('/manageaddress')
+                  }
             }
         } catch (error) {
             console.log(error)
+            this.NotificationManager.error(error.response.data && error.response.data.message, 'Error', 1500)
             this.setState({loading: false})
         }
     }
 
-    otpVerify= async ()=>{
-        this.setState({loading: true})
-        await this.verifyOtp(this.state.confirmation_code, this.state.otp)
-        this.setState({loading: false, otpModal: false})
+    otpVerify = async () => {
+
+        if (this.state.otp === '') {
+            return this.NotificationManager.info('Please enter OTP', 'Warning!!')
+          }
+          if (this.state.confirmation_code === '') {
+            return this.NotificationManager.info('Please register again', 'Lost Connection!!')
+          }
+          this.setState({ loading: true })
+          try {
+            const response = await httpClient.ApiCall('post', APIEndPoints.verifyOtp, {
+              confirmation_code: this.state.confirmation_code,
+              otp: this.state.otp
+            })
+            this.setState({ loading: false })
+            if (response.data && response.data !== null) {
+              localStorage.setItem('user', JSON.stringify(response.data))
+              httpClient.setDefaultHeader('access-token', response.data ? response.data.access_token : "")
+              const url = localStorage.getItem('URL')
+              if (url) {
+                localStorage.removeItem('URL')
+                this.props.history.push(url)
+              } else {
+                this.props.history.push('/')
+              }
+              return this.NotificationManager.success(response.message, 'Success')
+            }
+            this.NotificationManager.error(response.message, 'Error')
+
+          } catch (error) {
+            this.setState({ loading: false })
+            this.NotificationManager.error(error.response.data.message, 'Error')
+          }
+      }
+
+    resendOTP = async () => {
+        if (this.state.confirmation_code === '') {
+            return this.NotificationManager.info('Please register again', 'Lost Connection!!')
+        }
+        this.setState({ loading: true })
+        await this.resendOtp(this.state.phone_no)
+        this.setState({ disabledBtn: true, loading: false })
+        setTimeout(() => {
+            this.setState({ loading: false, disabledBtn: false })
+        }, 30000)
     }
 
     render() {
@@ -105,66 +159,75 @@ class AddAdr extends ComponentHelpers {
             <div className="appContainer">
                 <Spinner data={loading} />
                 <div className='contactUsWrapp'>
-                    <div className='cnt-nav'>
-                        <Link to='/manageaddress'>
-                            <img  className='prevBtn' alt="loading.." src='./images/prevBtn.png'/>
-                        </Link>
-                        <h4 style={{marginLeft: '1%'}}>Add address</h4>
-                    </div>
+                <div className='header'>
+                            <Link to={localStorage.getItem('URL') === null ? '/manageaddress' : '/cart'}>
+                                <BackLogo />
+                            </Link>
+                            Add address
+                        </div>
                     <div
                         className='mainFormWrap'
                         style={{
-                        marginLeft: '10%'
-                    }}>
+                            marginLeft: '10%'
+                        }}>
                         <form onSubmit={(e) => this.addAddress(e)}>
                             <div className='inpCont'>
                                 <p>Flat no./ Building no.</p>
                                 <input
                                     type="text"
-                                    value={flat_no}
-                                    onChange={(e) => this.setState({flat_no: e.target.value})}/>
+                                    value={flat_no ? flat_no : ''}
+                                    required
+                                    onChange={(e) => this.setState({ flat_no: e.target.value })} />
                             </div>
                             <div className='inpCont'>
                                 <p>Street</p>
                                 <input
                                     type="text"
-                                    value={street}
-                                    onChange={(e) => this.setState({street: e.target.value})}/>
+                                    required
+                                    value={street ? street : ''}
+                                    onChange={(e) => this.setState({ street: e.target.value })} />
                             </div>
                             <div className='inpCont'>
                                 <p>Locality</p>
                                 <input
                                     type="text"
-                                    value={locality}
-                                    onChange={(e) => this.setState({locality: e.target.value})}/>
+                                    value={locality ? locality : ''}
+                                    required
+                                    onChange={(e) => this.setState({ locality: e.target.value })} />
                             </div>
                             <div className='inpCont'>
                                 <p>City</p>
                                 <input
                                     type="text"
-                                    value={city}
-                                    onChange={(e) => this.setState({city: e.target.value})}/>
+                                    value={city ? city : ''}
+                                    required
+                                    onChange={(e) => this.setState({ city: e.target.value })} />
                             </div>
                             <div className='inpCont'>
                                 <p>Email</p>
                                 <input
-                                    type="text"
-                                    value={email}
-                                    onChange={(e) => this.setState({email: e.target.value})}/>
+                                    required
+                                    type="email"
+                                    value={email ? email : ''}
+                                    onChange={(e) => this.setState({ email: e.target.value })} />
                             </div>
                             <div className='inpCont'>
                                 <p>Phone Number</p>
                                 <input
-                                    type="number"
-                                    value={phone_no}
-                                    onChange={(e) => this.setState({phone_no: e.target.value})}/>
+                                    required
+                                    maxLength="10"
+                                    minLength="10"
+                                    pattern="[0-9]*"
+                                    type="text"
+                                    value={phone_no ? phone_no : ''}
+                                    onChange={(e) => +e.target.value === +e.target.value ? this.setState({ phone_no: e.target.value }) : ''} />
                             </div>
                             <div className='inpCont'>
                                 <p>Address nickname</p>
-                                <input onChange={() => this.setState({address_name: 'Home'})} name="address" type="radio" value="Home" // checked={address_name && address
-                             checked={address_name.toLowerCase() === `home`}/>
+                                <input required onChange={() => this.setState({ address_name: 'Home' })} name="address" type="radio" value="Home" // checked={address_name && address
+                                    checked={address_name.toLowerCase() === `home`} />
                                 <label htmlFor="address">Home</label>
-                                <input onChange={() => this.setState({address_name: 'Work'})} name="address" type="radio" // value="Work"
+                                <input required onChange={() => this.setState({ address_name: 'Work' })} name="address" type="radio" // value="Work"
                                     checked={address_name.toLowerCase() === `work`} />
                                 <label htmlFor="address">Work</label>
                             </div>
@@ -172,32 +235,32 @@ class AddAdr extends ComponentHelpers {
                                 disabled={loading}
                                 type="submit"
                                 style={{
-                                width: '28%',
-                                fontSize: '17px',
-                                fontWeight: 600
-                            }}
+                                    width: '28%',
+                                    fontSize: '17px',
+                                    fontWeight: 600
+                                }}
                                 className="doneBtn">{isEdit
                                     ? 'Update'
                                     : 'Add'}</button>
                         </form>
                     </div>
-                <Popup position="right center" open={otpModal} onClose={() => this.setState({otpModal: false})}>
-                    <div className="addressHeader">
-                        <h3>Enter OTP, which is sent to {this.state.phone_no}</h3>
-                        <hr />
-                        <div style={{paddingTop: '4%', paddingBottom: '4%'}}>
-                            <input style={{border: 'none', borderBottom: '1px solid grey'}} type='text' onChange={(e)=>this.setState({otp: e.target.value})}/>
-                            <button 
-                            style={{
-                                width: '16%',
-                                borderRadius: '40px',
-                                marginLeft: '6%',
-                                fontSize: '17px',
-                                fontWeight: 600
-                            }} className="doneBtn" type="submit" onClick={()=>this.otpVerify()}>Verify</button>
+                    <Popup className="itemCart otp" position="right center" open={otpModal} onClose={() => this.setState({ otpModal: false })}>
+
+                        <div className='editPastaPopup  modalContent'>
+                            <div className="modal-header">
+                                <span onClick={() => this.setState({ otpModal: false })} className="close">&times;</span>
+                                <h2>OTP Verification</h2>
                             </div>
-                    </div>
-                </Popup>
+                            <div className='modal-body'>
+                                <p style={{ textAlign: 'center' }}>An OTP has been sent to  <b>{this.state.phone_no}</b> </p>
+                                <div>
+                                    <input className="OtpInput" type='number' onChange={(e) => this.setState({ otp: e.target.value })} /><br /><br />
+                                    <button className="LogindoneBtn" style={{ marginLeft: '12%', position: 'relative' }} type="submit" onClick={() => this.otpVerify()}>Verify</button><br />
+                                    <button disabled={this.state.disabledBtn} className="resendOtp" type="button" onClick={() => this.resendOTP()}> Resend OTP</button>
+                                </div>
+                            </div>
+                        </div>
+                    </Popup>
                 </div>
             </div>
         )

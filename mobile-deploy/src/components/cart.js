@@ -64,6 +64,7 @@ class Cart extends ComponentHelpers {
 							address: response.data,
 							selectedAddress: this.formatAddress(response.data[0])
 						})
+						localStorage.setItem('address',response.data[0] && response.data[0].id)
 					}
 				}, err => {
 					console.log(err)
@@ -91,42 +92,42 @@ class Cart extends ComponentHelpers {
 			this.cartPrices = []
 			this.names = ""
 			this.price = 0
-			if(data.data){
-			data
-				.data
-				.items
-				.forEach((cartItem) => {
-					Object
-						.keys(cartItem)
-						.forEach((key, index) => {
-							if (Array.isArray(cartItem[key])) {
-								cartItem[key].forEach((data, ind) => {
-									this.names += data.name
-									this.price += parseInt(data.price)
-									this.names += ', '
-								})
-							} else {
-								this.names += cartItem[key] && cartItem[key].name
-									? cartItem[key].name
-									: ''
-								this.price += cartItem[key] && cartItem[key].price
-									? parseInt(cartItem[key].price)
-									: 0
-							}
-							if (index + 1 !== Object.keys(cartItem).length && cartItem[key] && cartItem[key].name) {
-								this.names += ", "
-							}
-						})
-					this.names = this
-						.names
-						.replace(/,\s*$/, "");
-					this
-						.cartPrices
-						.push({ names: this.names, price: this.price })
-					this.names = ""
-					this.price = 0
-				})
-			this.setState({ cartItems: data.data, prices: this.cartPrices, loading: false })
+			if (data.data) {
+				data
+					.data
+					.items
+					.forEach((cartItem) => {
+						Object
+							.keys(cartItem)
+							.forEach((key, index) => {
+								if (Array.isArray(cartItem[key])) {
+									cartItem[key].forEach((data, ind) => {
+										this.names += data.name
+										this.price += parseInt(data.price)
+										this.names += ', '
+									})
+								} else {
+									this.names += cartItem[key] && cartItem[key].name
+										? cartItem[key].name
+										: ''
+									this.price += cartItem[key] && cartItem[key].price
+										? parseInt(cartItem[key].price)
+										: 0
+								}
+								if (index + 1 !== Object.keys(cartItem).length && cartItem[key] && cartItem[key].name) {
+									this.names += ", "
+								}
+							})
+						this.names = this
+							.names
+							.replace(/,\s*$/, "");
+						this
+							.cartPrices
+							.push({ names: this.names, price: this.price })
+						this.names = ""
+						this.price = 0
+					})
+				this.setState({ cartItems: data.data, prices: this.cartPrices, loading: false })
 			}
 		} catch (error) {
 			console.log(error)
@@ -156,7 +157,7 @@ class Cart extends ComponentHelpers {
 				quantity,
 				kitchen_id: this.props.data.kitchen_id
 			}, this.source.token)
-			this.setState({ loading: false })
+			// this.setState({ loading: false })
 		} catch (error) {
 			if (error.message !== "unMounted") {
 				this.setState({ loading: false })
@@ -190,55 +191,70 @@ class Cart extends ComponentHelpers {
 	render() {
 		const { guestPopup, prices } = this.state
 		return (
-			<div className='contactUsWrapp' style={{ paddingBottom: this.state.loading ? '70%' : '0%' }}>
+			<div className='contactUsWrapp' style={{ overflowY: 'scroll', height: '82%', paddingBottom: this.state.loading ? '70%' : '0%', display: 'block' }}>
 				<Loading data={this.state.loading} />
 				<div className='cnt-nav'>
 					<Link to='/'>
 						<img className='prevBtn' src='./images/prevBtn.png' />
 					</Link>
-					<h4>Cart</h4>
+					<h4>Your Cart</h4>
 				</div>
-				<Link to='/bowlselect1' className='btCartS'>
+				<Link to='/bowlselect1' className='proccedLinkCrt' style={{ marginLeft: '63%', position: 'relative', width: '34%', borderRadius: '7px', padding: '9px 20px 9px 20px' }}>
 					Add pasta
 				</Link>
-				<div className='mainWrappForCart'>{
-					this.state.cartItems.items && this.state.cartItems.items.map((cart, index) =>
+				<div className='mainWrappForCart'>
+					{this.state.cartItems.items && this.state.cartItems.items.map((cart, index) =>
 						<div key={index}>
 							<Crtitem
+								handleFun={() => this.getMyCartItems()}
 								details={prices[index]}
 								key={index}
 								cartData={cart}
 							/>
+		
 						</div>
 					)
-				}
+					}
 
 					<div className='addDesertSect'>
 						<h4>Add drinks &amp; desserts</h4>
 						<Slider handlerFunc={this.selectExtras} info={this.state.extras} />
 					</div>
 					<div className='delivAddrChange'>
-						<h5>ENTER DELIVERY ADDRESS</h5>
+						<h5>ENTER DELIVERY ADDRESS
 						<span onClick={() => this.setState({ addressModal: true })} className='changeAddrBtn'>Change</span>
+						</h5>
 						<p>{this.state.selectedAddress}</p>
 					</div>
-					<button disabled={this.state.selectedAddress === ''} onClick={() => this.props.history.push('/payment')} className='proccedLinkCrt'>PROCEED</button>
+					<button style={{ zIndex: '998' }} disabled={this.state.selectedAddress === '' || this.state.cartItems && Object.keys(this.state.cartItems).length === 0}
+						onClick={() => this.props.history.push('/payment')} className='proccedLinkCrt'>PROCEED</button>
 				</div>
-				<Popup
-					open={this.state.addressModal}
-					onClose={() => this.setState({ addressModal: false })}>
-					<div className="addressHeader" style={{ padding: '2%' }}>
-						<h3>Select Adress</h3><hr />
-						{/* <ul> */}
-						{this.state.address.map((addres, index) =>
-							<div key={index} className="row" style={{ alignItems: 'baseline' }} onClick={() => this.addAddress(addres)}>
-								<input onChange={() => { }} checked={this.state.selectedAddress === this.formatAddress(addres)} type="radio" name="address" style={{ cursor: 'pointer' }} />
-								<label style={{ cursor: 'pointer' }}>{this.formatAddress(addres)}</label>
-								<br />
-							</div>)
-						}
+
+				<Popup className="itemCart" position="right center" open={this.state.addressModal} onClose={() => this.setState({ addressModal: false })}>
+
+					<div className='editPastaPopup modalContent'>
+						<div className="modal-header" style={{ display: 'flex' }}>
+							<Link onClick={() => localStorage.setItem('URL', '/cart')} to="/addaddress" style={{ color: '#67023f', marginTop: '1.5%', position: 'relative', width: '23%', left: '-10px' }}>+ Address</Link>
+							<h2 style={{ fontSize: '1.6rem' }}>Select Address</h2>
+							<span onClick={() => this.setState({ addressModal: false })} className="close">&#x2714;</span> {/*&times; 	*/}
+						</div>
+						<div className='modal-body'>
+							<ul className="addressHead" >
+								{this.state.address.map((addres, index) =>
+									<li key={index} className="row" style={{ alignItems: 'baseline' }} onClick={() => this.addAddress(addres)}>
+										<input type="radio" id="f-option" name="selector"
+											onChange={() => { }} checked={this.state.selectedAddress === this.formatAddress(addres)} />
+										<label htmlFor="f-option">{this.formatAddress(addres)}</label>
+										<div className="check"></div>
+
+									</li>
+								)
+								}
+							</ul>
+						</div>
 					</div>
 				</Popup>
+
 				<Popup className="itemCart" position="right center" open={guestPopup} onClose={() => this.setState({ guestPopup: false })}>
 					<div className="addressHeader" >
 						<a className="close" onClick={() => this.setState({ guestPopup: false })}>

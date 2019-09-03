@@ -13,7 +13,7 @@ function rootReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 cartItems: state.cartItems.concat(action.payload)
             })
-        case PLACE_ORDER:
+        case PLACE_ORDER:{
             return Object.assign({}, state, {
                 placeOrder: action.payload,
                 getOrderPrice: () => {
@@ -32,6 +32,8 @@ function rootReducer(state = initialState, action) {
                     return sum
             }
         })
+        break
+    }
         case ADD_BOWLS:
             return Object.assign({}, state, {
                 bowls: action.payload
@@ -221,7 +223,7 @@ const initialState = {
         },
     ],
     paymentMethod: [
-        { name: 'Razor Pay', val: 'razorPay', src: '' },
+        { name: 'Razor Pay', val: 'razorPay', src: './images/razorpay.svg' },
         // { name: 'Google Pay', src: './images/google.png' },
         // { name: 'Amazon Pay', src: './images/amazon.png' },
         // { name: 'Cash on Delivery', src: '' },

@@ -37,19 +37,20 @@ class Bowlselect extends ComponentHelpers {
       document.querySelector('.forSumm').style.transform = 'translateY(190px)';
       document.querySelector('.mainSummaryWrap').classList.add("circle_animation1");
       this.clicked = true;
+      e.target.style.bottom = '33px'
       e.target.style.transform = 'translateY(-145px)';
       e.target.src = './images/summ1.png';
     } else {
       document.querySelector('.forSumm').style.transform = 'translateY(0px)';
       document.querySelector('.mainSummaryWrap').classList.add("circle_animation2");
       this.clicked = false;
+      e.target.style.bottom = '120px'
       e.target.style.transform = 'translateY(0px)';
       e.target.src = './images/ordsm.png';
     }
   };
 
   cle = () => {
-    console.log(140);
   };
   async componentDidMount() {
     this.startanimation = 0;
@@ -274,11 +275,23 @@ class Bowlselect extends ComponentHelpers {
   };
 
   addPastas = () => {
+    if((!this.pasta || (this.pasta && Object.keys(this.pasta).length <= 0))
+  && Object.keys(this.props.data.placeOrder.pasta).length === 0){
+    this.NotificationManager.warning('Please select one Pasta', 'Warning', 1500)
+      return 
+    }
+    this.props.history.push('/bowlselect4')
+  }
+  
+  SelectPasta=(data)=>{
+    this.pasta=(this.props.data.placeOrder.pasta && this.props.data.placeOrder.pasta.id === data.id)||
+    (this.pasta&& this.pasta.id === data.id)?{}: data
     this.props.placeOrder(Object.assign(this.props.data.placeOrder, { pasta: this.pasta }))
   }
 
   render() {
     const cost = this.props.data.getOrderPrice()
+    const { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
     return (
       <div className="mainWrapForSect">
         <Loading data={this.state.loading} />
@@ -300,7 +313,21 @@ class Bowlselect extends ComponentHelpers {
               <span />
             </div>
             <h4 />
-            <img className="regMainBowl" src="./images/regularBowl.png" />
+            {/* <img className="regMainBowl" src="./images/regularBowl.png" /> */}
+            <div className="sauceBowl">
+										<img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
+										{sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
+										{pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
+										{vegetable && vegetable.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlVeggie${index}`} alt={`veggie${index}`} src={el.src} />)
+										})}
+										{garnish && garnish.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlGarnish${index}`} alt={`garnish${index}`} src={el.src} />)
+										})}
+										{meat && meat.map((data, index) => {
+											return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
+										})}
+									</div>
             <div className="textArea updatetTextarea">
               <p>Select your</p> <span>pasta</span>
             </div>
@@ -310,15 +337,13 @@ class Bowlselect extends ComponentHelpers {
               {this.state.loading || this.state.pastas.length < 6?"": this.renderbtn()}
             {this.state.pastas.map((item, index) => {
               return <Plcomponent type={'pasta'} 
-              handler={(data)=>this.pasta = this.props.data.placeOrder.pasta && this.props.data.placeOrder.pasta.id === data.id?
-                {}:
-                 data} info={item} key={index} id={index} />;
+              handler={(data)=>this.SelectPasta(data)} info={item} key={index} id={index} />;
             })}
           </div>
 
-          <Link onClick={this.addPastas} to="/bowlselect4" className="nextBtn wtCart">
+          <button onClick={()=>this.addPastas()} className="nextBtn wtCart">
             Next
-          </Link>
+          </button>
           <Link to="/cart" className="cartBtn">
             Your cart
           </Link>

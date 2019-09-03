@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect as reduxConnect } from 'react-redux'
-import { addBowls, addMyAddress, addMyfavourites, placeOrder } from '../actions/actions'
+import { addBowls, addMyAddress, addMyfavourites, placeOrder, addUserDetails } from '../actions/actions'
 import httpClient from './httpClient';
 import APIEndPoints from './APIEndPoints';
+import {NotificationManager} from 'react-notifications';
 
 let mapStateToProps = (state) => {
     return { data: state }
@@ -13,12 +14,13 @@ let mapDispatchToProps = (dispatch) => {
         addBowls: bowls => dispatch(addBowls(bowls)),
         addMyAddAddress: addresses => dispatch(addMyAddress(addresses)),
         addMyFavourites: favourites => dispatch(addMyfavourites(favourites)),
-        placeOrder: order => dispatch(placeOrder(order))
+        placeOrder: order => dispatch(placeOrder(order)),
+        UserDetails: user => dispatch(addUserDetails(user))
     }
 }
 
 export class ComponentHelpers extends Component {
-
+    NotificationManager = NotificationManager
     constructor(props) {
         super(props)
         this.state = {
@@ -52,7 +54,7 @@ export class ComponentHelpers extends Component {
                 pasta_id: order.pasta ? order.pasta.id : 0,
                 garnish_id: order.garnish && order.garnish.length > 0 ? order.garnish.flatMap(_ => _.id).toString() : 0,
                 meat_id: order.meat && order.meat.length > 0 ? order.meat.flatMap(_ => _.id).toString() : 0,
-                vegetable_id: order.veggies && order.veggies.length > 0 ? order.veggies.flatMap(_ => _.id).toString() : 0,
+                vegetable_id: order.vegetable && order.vegetable.length > 0 ? order.vegetable.flatMap(_ => _.id).toString() : 0,
                 side_id,
                 extra_id,
                 quantity,
@@ -102,11 +104,6 @@ export class ComponentHelpers extends Component {
             if (response.data && response.data !== null) {
                 localStorage.setItem('user', JSON.stringify(response.data))
                 httpClient.setDefaultHeader('access-token', response.data ? response.data.access_token : "")
-                const url = localStorage.getItem('URL')
-                if (url) {
-                    localStorage.removeItem('URL')
-                    this.props.history.push(url)
-                }
             }
             return true
         } catch (error) {

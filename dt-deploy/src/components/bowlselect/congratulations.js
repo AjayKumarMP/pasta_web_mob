@@ -24,9 +24,6 @@ class AboutUs extends ComponentHelpers {
 
 checkoutItems = async ()=>{
     try {
-        if(this.state.pastaName === ''){
-          return
-        }
         this.setState({loading: true})
         let item = JSON.parse(localStorage.getItem('cartItem'))
         if(item !== null){
@@ -52,6 +49,7 @@ checkoutItems = async ()=>{
   }
         
     render(){
+      const { sauce, pasta, garnish, veggies, meat} = JSON.parse(localStorage.getItem('cartItem'))
         return (
             <div className='container'>
               <div className='wrapper'>
@@ -63,9 +61,21 @@ checkoutItems = async ()=>{
                 <div className='congratText'>Congratulations</div>
         
                 <div className='cartWrapper' style={{ marginLeft: '1%' }}>
-                  <div>
+                  <div className="inBowl">
         
                     <img style={{position: 'absolute',marginTop: '-12%',left: '57%'}} alt='bowl' src={bowlImage} />
+										{/* <img style={{position: 'absolute',marginTop: '-12%',left: '57%'}} alt='bowl' src={bowlImage} /> */}
+										{sauce && Object.keys(sauce).length > 0 && (<img className="inBowlSauce" alt='sauce' src={sauce.inbowl_picture} />)}
+										{pasta && Object.keys(pasta).length > 0 && (<img className="inBowlPasta" alt='pasta' src={pasta.inbowl_picture} />)}
+										{veggies && veggies.map((veg, index) => {
+											return (<img key={index} className={`inBowlveggie${index}`} alt={`veggie${index}`} src={veg.inbowl_picture} />)
+										})}
+										{garnish && garnish.map((gar, index) => {
+											return (<img key={index} className={`inBowlgarnish${index}`} alt={`garnish${index}`} src={gar.inbowl_picture} />)
+										})}
+										{meat && meat.map((data, index) => {
+											return (<img key={index} className={`inBowlmeat${index}`} alt={`meat${index}`} src={data.inbowl_picture} />)
+										})}
                     <div>You have made your pasta</div>
         
                     <div style={{marginTop: '17%'}}>NAME YOUR PASTA</div>
@@ -74,7 +84,7 @@ checkoutItems = async ()=>{
                     </div>
                     <br />
                     <div>
-                      <button type="submit" disabled={this.state.pastaName === ''} onClick={()=>this.checkoutItems()} className='shareWithFriendBtn'>Checkout</button>
+                      <button type="submit" onClick={()=>this.checkoutItems()} style={{background: '#67023f'}} className='shareWithFriendBtn'>Checkout</button>
                       <button className='shareWithFriendBtn'>Share with friends</button>
                     </div>
                   </div>

@@ -41,6 +41,7 @@ class Bowlselect extends ComponentHelpers {
         .querySelector(".mainSummaryWrap")
         .classList.add("circle_animation1");
       this.clicked = true;
+      e.target.style.bottom = '33px'
       e.target.style.transform = "translateY(-145px)";
       e.target.src = "./images/summ1.png";
     } else {
@@ -49,6 +50,7 @@ class Bowlselect extends ComponentHelpers {
         .querySelector(".mainSummaryWrap")
         .classList.add("circle_animation2");
       this.clicked = false;
+      e.target.style.bottom = '120px'
       e.target.style.transform = "translateY(0px)";
       e.target.src = "./images/ordsm.png";
     }
@@ -276,12 +278,23 @@ class Bowlselect extends ComponentHelpers {
   }
 
   getSelectedSauce =()=>{
-    console.log(this.sauce)
+    if((!this.sauce || (this.sauce && Object.keys(this.sauce).length <= 0))
+  && Object.keys(this.props.data.placeOrder.sauce).length === 0){
+    this.NotificationManager.warning('Please select one Sauce', 'Warning', 1500)
+      return 
+    }
+    this.props.history.push('/bowlselect3')
+  }
+  
+  getSelectSause=(data)=>{
+    this.sauce=(this.props.data.placeOrder.sauce && this.props.data.placeOrder.sauce.id === data.id)||
+    (this.sauce&& this.sauce.id === data.id)?{}: data
     this.props.placeOrder(Object.assign(this.props.data.placeOrder,{sauce: this.sauce}))
   }
 
   render() {
     const cost = this.props.data.getOrderPrice()
+    const { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
     return (
       <div className="mainWrapForSect">
         <Loading data={this.state.loading}/>
@@ -306,7 +319,21 @@ class Bowlselect extends ComponentHelpers {
               <span />
               <span />
             </div>
-            <img className="regMainBowl" src="./images/regularBowl.png" />
+            {/* <img className="regMainBowl" src="./images/regularBowl.png" /> */}
+            <div className="sauceBowl">
+										<img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
+										{sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
+										{pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
+										{vegetable && vegetable.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlVeggie${index}`} alt={`veggie${index}`} src={el.src} />)
+										})}
+										{garnish && garnish.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlGarnish${index}`} alt={`garnish${index}`} src={el.src} />)
+										})}
+										{meat && meat.map((data, index) => {
+											return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
+										})}
+									</div>
             <div className="textArea updatetTextarea">
               <p>Select your</p> <span>sauce</span>
             </div>
@@ -315,12 +342,12 @@ class Bowlselect extends ComponentHelpers {
           <div className="under-sect plpops">
             {this.state.loading || this.state.sauces.length < 6 ?"": this.renderbtn()}
             {this.state.sauces.map((item, index) => 
-                <Plcomponent type="sauce" handler={(data)=>this.sauce=this.props.data.placeOrder.sauce && this.props.data.placeOrder.sauce.id === data.id?{}: data} info={item} key={index} id={index} />
+                <Plcomponent type="sauce" handler={(data)=> this.getSelectSause(data)} info={item} key={index} id={index} />
             )}
           </div>
-          <Link onClick={this.getSelectedSauce} to="/bowlselect3" className="nextBtn wtCart">
+          <button onClick={()=> this.getSelectedSauce()} className="nextBtn wtCart">
             Next
-          </Link>
+          </button>
           <Link  to="/cart" className="cartBtn">
             Your cart
           </Link>

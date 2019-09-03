@@ -47,7 +47,7 @@ class ContactUs extends React.Component {
                         <a href={"mailto:"+this.props.data.contactUsInfo[0].email}><img src="./images/email.png"></img></a>
                     </div>
                     <div className="live-supp-wrapp">
-                        <h5>Talk to us</h5>
+                        {/* <h5>Talk to us</h5> */}
                         <MyComponent markup={this.getHtlml()}/>
                         {/* <p>Click here and talk to our 
                            customer support right away</p> */}

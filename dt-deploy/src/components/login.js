@@ -3,8 +3,10 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 import APIEndPoints from '../utils/APIEndPoints'
 import httpClient from '../utils/httpClient'
-import {addUserDetails} from '../actions/actions'
+import { addUserDetails } from '../actions/actions'
 import { ComponentHelpers, connect } from '../utils/componentHelper';
+import Loading from './loader'
+import { ReactComponent as BackLogo } from '../assets/icons/back2.svg';
 
 class Login extends ComponentHelpers {
 
@@ -12,34 +14,37 @@ class Login extends ComponentHelpers {
     emailId: "", //asifali_121@mailinator.com
     password: "", //secret
     loggedIn: false,
-    loginBtnText: 'Log In'
+    loginBtnText: 'Log In',
+    loading: false
   }
 
 
-  login = async () => {
+  login = async (e) => {
+    e.preventDefault()
     try {
-      this.setState({loginBtnText: 'Please Wait'})
+      this.setState({ loginBtnText: 'Please Wait', loading: true })
       const response = await httpClient.ApiCall('post', APIEndPoints.login,
         {
           login_name: this.state.emailId,
           password: this.state.password
         })
-        if(response &&  response.success === 1){
-          this.props.UserDetails(response.data)
-				  httpClient.setDefaultHeader('access-token', response.data.access_token)
-          const url = localStorage.getItem('URL')
-          localStorage.removeItem('URL')
-          if(url === null){
-            this.props.history.push('/')
-          } else{
-            this.props.history.push(url)
-          }
-        } else{
-          this.setState({loginBtnText: 'Log In'})
+      if (response && response.success === 1) {
+        this.props.UserDetails(response.data)
+        httpClient.setDefaultHeader('access-token', response.data.access_token)
+        const url = localStorage.getItem('URL')
+        localStorage.removeItem('URL')
+        if (url === null) {
+          this.props.history.push('/')
+        } else {
+          this.props.history.push(url)
         }
+      } else {
+        this.NotificationManager.error(response.message, 'Error')
+        this.setState({ loginBtnText: 'Log In', loading: false })
+      }
     } catch (error) {
-      this.setState({loginBtnText: 'Log In'})
-      console.log(error)
+      error.response.data && this.NotificationManager.error(error.response.data.message, 'Error')
+      this.setState({ loginBtnText: 'Log In', loading: false })
     }
 
     return false
@@ -48,20 +53,28 @@ class Login extends ComponentHelpers {
   render() {
     return (
       <div className="appContainer">
-      <div className="LoginWrapp">
-        <div className="forCenter">
-          <div className="inpWrap">
-            <p>E-mail ID/ Phone number</p>
-            <input type="email" onChange={(e) => this.setState({ emailId: e.target.value })}></input>
-          </div>
-          <div className="inpWrap">
-            <p>Password</p>
-            <input type="password" onChange={(e) => this.setState({ password: e.target.value })}></input>
-          </div>
-          <Link className="fPassLink" to="/login">Forget password?</Link>
-          <button style={{marginBottom:'6%'}} disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn" onClick={()=>this.login()}>{this.state.loginBtnText}</button>
+        <Loading data={this.state.loading} />
+        <div className='header'>
+          <Link to={localStorage.getItem('URL') === null ? '/' : '/cart'}>
+            <BackLogo />
+            Login
+          </Link>
         </div>
-      </div>
+        <div className="LoginWrapp">
+          <form className="forCenter" onSubmit={(e) => this.login(e)}>
+            <div className="inpWrap">
+              <p>E-mail ID/ Phone number</p>
+              <input required type="text" onChange={(e) => this.setState({ emailId: e.target.value })}></input>
+            </div>
+            <div className="inpWrap">
+              <p>Password</p>
+              <input required type="password" onChange={(e) => this.setState({ password: e.target.value })}></input>
+            </div>
+            <Link className="fPassLink" to="/login">Forget password?</Link>
+            <button type="submit" style={{ marginBottom: '10%', fontSize: '16px' }} disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn" >{this.state.loginBtnText}</button>
+            <Link to="/register" type="submit" style={{ marginBottom: '6%' }} className="LogindoneBtn" >Register</Link>
+          </form>
+        </div>
       </div>
     )
   }

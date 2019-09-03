@@ -317,7 +317,6 @@ class Bowlselect extends ComponentHelpers {
     }
   
     addVeggieToOrder = () => {
-      console.log(this.veggie[0])
       this.props.placeOrder(Object.assign(this.props.data.placeOrder, { vegetable: this.veggie[0] }))
     }
 

@@ -40,7 +40,7 @@ class ContactUs extends React.Component {
 
   render() {
     return (
-      <div style={{paddingBottom: this.state.loading?'70%':'0%'}}>
+      <div style={{paddingBottom: this.state.loading?'70%':'0%',overflowY: 'auto'}}>
 
         <Loading data={this.state.loading}/>
       <div className="contactUsWrapp">

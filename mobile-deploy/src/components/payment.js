@@ -63,13 +63,17 @@ class ContactUs extends ComponentHelpers {
 		}
     }
 
+    proceedNext =async ()=>{
+        this.props.history.push('/paymentmethods')
+    }
+
     render(){
         const {cartItems, loading} = this.state
         return(
             <div className="contactUsWrapp">
             <Loading data={loading}/>
               <div className="cnt-nav">
-                <Link to="/"><img className="prevBtn" src="./images/prevBtn.png"/></Link>
+                <Link to="/cart"><img className="prevBtn" src="./images/prevBtn.png"/></Link>
                 <h4>Payment</h4>
               </div>
                 <div className="pmntMainWrapp" style={{marginBottom:'67%'}}>
@@ -112,7 +116,7 @@ class ContactUs extends ComponentHelpers {
                         } */}
                     </div>
                 </div>
-                <Link onClick={()=>localStorage.setItem('payment', cartItems.grand_total)} to="/paymentmethods" className='proccedLinkCrt'>PROCEED</Link>
+                <button onClick={()=>this.proceedNext()} className='proccedLinkCrt'>PROCEED</button>
             </div>
         )
     }

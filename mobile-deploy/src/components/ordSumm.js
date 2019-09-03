@@ -12,33 +12,33 @@ class Summary extends React.Component {
 
 	render() {
 		return (
-			<div className='mainSummaryWrap forOrd'>
+			<div className='mainSummaryWrap forOrd' style={{margin: '1%'}}>
 				<div className='leftSideb'>
 					<div className='fBowl'>
 						<h5>Bowl</h5>
-						<p>{this.props.data.bow ? this.props.data.bow : 'not selected'}</p>
+						<p>{this.props.details.bowl ? this.props.details.bowl.name : 'not selected'}</p>
 					</div>
 					<div className='fPasta'>
 						<h5>Pasta</h5>
-						<p>{this.props.data.pasta ? this.props.data.pasta : 'not selected'} </p>
+						<p>{this.props.details.pastas ? this.props.details.pastas.map(_=>_.name).join(', ') : 'not selected'} </p>
 					</div>
 					<div className='fGarnish'>
 						<h5>Garnish</h5>
-						<p>{this.props.data.garnish ? this.props.data.garnish : 'not selected'}</p>
+						<p>{this.props.details.garnishes ? this.props.details.garnishes.map(_=>_.name).join(', ') : 'not selected'}</p>
 					</div>
 					<div className='fMeet'>
 						<h5>Meat</h5>
-						<p>{this.props.data.meet ? this.props.data.meet : 'not selected'}</p>
+						<p>{this.props.details.meats ? this.props.details.meats.map(_=>_.name).join(', ') : 'not selected'}</p>
 					</div>
 				</div>
 				<div className='rightSideb'>
 					<div className='fSauce'>
 						<h5>Sauce</h5>
-						<p>{this.props.data.sauce ? this.props.data.sauce : 'not selected'}</p>
+						<p>{this.props.details.sauces ? this.props.details.sauces.map(_=>_.name).join(', ') : 'not selected'}</p>
 					</div>
 					<div className='fVeggies'>
 						<h5>Veggies</h5>
-						<p>{this.props.data.veggies ? this.props.data.veggies : 'not selected'}</p>
+						<p style={{width: '35%'}}>{this.props.details.vegetables ? this.props.details.vegetables.map(_=>_.name).join(', ') : 'not selected'}</p>
 					</div>
 					<div className='fInfo'>
 						<p>*(Parmesan and basil will always be included)</p>

@@ -37,12 +37,14 @@ class Bowlselect extends ComponentHelpers {
       document.querySelector('.forSumm').style.transform = 'translateY(190px)';
       document.querySelector('.mainSummaryWrap').classList.add("circle_animation1");
       this.clicked = true;
+      e.target.style.bottom = '33px'
       e.target.style.transform = 'translateY(-145px)';
       e.target.src = './images/summ1.png';
     } else {
       document.querySelector('.forSumm').style.transform = 'translateY(0px)';
       document.querySelector('.mainSummaryWrap').classList.add("circle_animation2");
       this.clicked = false;
+      e.target.style.bottom = '120px'
       e.target.style.transform = 'translateY(0px)';
       e.target.src = './images/ordsm.png';
     }
@@ -275,11 +277,13 @@ class Bowlselect extends ComponentHelpers {
     if(!this.meat){
       this.meat = []
     }
-
     const index = this.meat.map(data=>data.name).indexOf(meat.name)
+    if(index === -1 &&this.meat.length >=2){
+      return
+    }
     if (index > -1) {
       this.meat.splice(index, 1)
-    } else {
+    } else if(this.meat.length < 2){
       this.meat.push(meat)
     }
     this.props.placeOrder(Object.assign(this.props.data.placeOrder, { meat: this.meat }))
@@ -287,6 +291,7 @@ class Bowlselect extends ComponentHelpers {
 
   render() {
     const cost = this.props.data.getOrderPrice()
+    const { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
     return (
       <div className="mainWrapForSect">
         <Loading data={this.state.loading} />
@@ -296,7 +301,7 @@ class Bowlselect extends ComponentHelpers {
             <Link to="/bowlselect5"><img className="prevBtn" src="./images/prevBtn.png" /></Link>
             <p hidden={!cost} className="orderTotal">&#8377; {cost}</p>
             <img onClick={this.cl.bind(this)} className="ordsm" src="./images/ordsm.png"></img>
-
+            
             <div className="selectCont regCont">
               <span className="entered"></span>
               <span className="entered"></span>
@@ -305,8 +310,22 @@ class Bowlselect extends ComponentHelpers {
               <span className="entered"></span>
               <span className="active"></span>
             </div>
-            <img className="regMainBowl" src="./images/regularBowl.png" />
-            <div className="textArea updatetTextarea"><p>Select your</p> <span>meat</span></div>
+            {/* <img className="regMainBowl" src="./images/regularBowl.png" /> */}
+            <div className="sauceBowl">
+										<img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
+										{sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
+										{pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
+										{vegetable && vegetable.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlVeggie${index}`} alt={`veggie${index}`} src={el.src} />)
+										})}
+										{garnish && garnish.map((el, index) => {
+											return (<img key={index} className={`sauceInbowlGarnish${index}`} alt={`garnish${index}`} src={el.src} />)
+										})}
+										{meat && meat.map((data, index) => {
+											return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
+										})}
+									</div>
+            <div className="textArea updatetTextarea"><p>Select your</p> <span>meat</span><h2 style={{ fontSize: "8px", textAlign: 'center' }}>(choose any 2)</h2></div>
           </div>
           <div className="under-sect plpops">
             {this.state.loading || this.state.meats.length <  6 ? "" : this.renderbtn()}
@@ -316,7 +335,7 @@ class Bowlselect extends ComponentHelpers {
               })
             }
           </div>
-          <Link to="" className="skpBtn">Skip >></Link>
+          <Link to="/selectsides" className="skpBtn">Skip >></Link>
           <Link onClick={this.addMeatToOrder} to="/selectsides" className="nextBtn wtCart">Next</Link>
           <Link to="/cart" className="cartBtn">Your cart</Link>
         </div>

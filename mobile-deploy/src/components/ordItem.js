@@ -14,7 +14,8 @@ class ContactUs extends ComponentHelpers {
 
         this.state = {
             check:false,
-            orderText:'Re-order'
+            orderText:'Re-order',
+            orderDetails: []
         }
 
     }
@@ -28,7 +29,7 @@ class ContactUs extends ComponentHelpers {
             const response = await httpClient.ApiCall('post', APIEndPoints.getOrderDetails, {
                 order_id
             }, this.source.token)
-            this.setState({ check: true, loading: false });
+            this.setState({ check: true, loading: false, orderDetails: response.data });
         } catch (error) {
             if(error.message !== 'unMounted'){
                 this.setState({loading: false})
@@ -58,6 +59,7 @@ class ContactUs extends ComponentHelpers {
     }
 
     render(){
+        const { check, orderDetails}= this.state
         return(
             <div className="ordItemCont">
                 <Loading data={this.state.loading} />
@@ -65,7 +67,7 @@ class ContactUs extends ComponentHelpers {
                   <div className="leftSide">
                       <span>
                           <p>ORDER DELIVERED TO</p>
-                          <h5>{this.props.info.address.address_text}</h5>
+                          <h5>{this.props.info.address && this.props.info.address.address_text}</h5>
                       </span>
                       <span>
                           <p>ORDER NUMBER</p>
@@ -81,9 +83,13 @@ class ContactUs extends ComponentHelpers {
                           <p>ORDERED ON</p>
                           <h5>{this.props.info.created_at.split(' ')[0]}</h5>
                       </span>
-                      <p onClick={()=>this.handlerCheck(this.props.info.id)} className="summOpenbtn"><img src="./images/eye.png" />VIEW ORDER SUMMARY</p>
+                      <p onClick={()=>this.handlerCheck(this.props.info && this.props.info.id)} className="summOpenbtn"><img src="./images/eye.png" />VIEW ORDER SUMMARY</p>
                   </div>
-                { this.state.check ? <Summary /> : null }
+                { check ?
+                orderDetails.items && orderDetails.items.user_pasta && orderDetails.items.user_pasta.map((data, index)=>
+                <Summary key={index} details={data} /> 
+                )
+                : null }
               </div>
               <div className="Ordfooter">
                   <h5>{this.props.info.customer_status}</h5>

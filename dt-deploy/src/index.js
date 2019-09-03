@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css'
 // bowl select components
 import Bowlselect1 from './components/bowlselect/bowlSelect1';
 import Bowlselect2 from './components/bowlselect/bowlSelect2';
@@ -51,6 +52,7 @@ import Register from './components/Register/register'
 const routing = (
 	<Provider store={store}>
 		<Router>
+		<NotificationContainer />
 			<div className='homePage-wrapper'>
 				<Route path='/cheff' component={CheffC} />
 				<Route path='/regularbowl' component={RegBowl} />

@@ -24,12 +24,107 @@
     font-size: 16px !important;
     font-weight: lighter !important;
     margin-bottom: 15px;
+    background: #67023f;
+    border-color:#67023f;
+    color: white;
+    width: 10%; 
     border-radius: 10px !important;
 }
+
+.deleteIcon{
+    position: absolute;
+    bottom: 16%;
+    left: 26%;
+}
+
+.modal-body ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+      overflow: auto;
+  }
+  
+  
+  .addressHead li input[type=radio]{
+    position: absolute;
+    visibility: hidden;
+  }
+  
+  .addressHead li label{
+    font-size: 1.35em;
+    margin: 10px auto;
+    margin-left: 20%;
+    width: 70%;
+    height: 30px;
+    -webkit-transition: all 0.25s linear;
+    width: 90%;
+    line-height: 22px;
+  }
+
+  .button:hover,a:hover, input[type=radio] :hover{
+      cursor: pointer;
+  }
+  
+  .addressHead li .check{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    border: 5px solid #67023f;
+    border-radius: 100%;
+    height: 25px;
+    margin-top: 8px;
+    width: 25px;
+    /* top: 30px; */
+    left: 20px;
+      z-index: 5;
+      transition: border .25s linear;
+      -webkit-transition: border .25s linear;
+  }
+  
+  
+  .addressHead li .check::before {
+    display: block;
+    position: absolute;
+      content: '';
+    border-radius: 100%;
+    height:10px;
+    width: 10px;
+    top: 3px;
+      left: 3px;
+    margin: auto;
+      transition: background 0.25s linear;
+      -webkit-transition: background 0.25s linear;
+  }
+  
+  .addressHead input[type=radio]:checked ~ .check {
+    border: 4px solid #67023f;
+  }
+  
+  .addressHead input[type=radio]:checked ~ .check::before{
+    background: #67023f;
+  }
+
+  .addressHeader div>input{
+    border-radius: 10px;
+    margin-left: 23%;
+    margin-bottom: 4%;
+    box-shadow: 1px 1px 5px 0px;
+    height: 35px;
+    text-align: center;
+  }
+
+  .addressHeader>p{
+    margin-left: 3%;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 3%;
+  }
 
 .cartCard {
     padding: 25px;
     width: 90%;
+    height: 333px;
+    margin-bottom: -169px;
     background: #fff;
     filter: drop-shadow(0px 2px 20px rgba(0, 0, 0, 0.08));
     h4 {
@@ -47,8 +142,11 @@
         opacity: 0.8;
     }
     &Money {
-        display: grid;
+        display: flex;
         justify-content: space-between;
+        position: absolute;
+        top: 50%;
+        width: 22%;
     }
     &Wrap {
         display: flex;
@@ -58,19 +156,80 @@
         img {
             min-width: 200px;
             min-height: 200px;
-            width: 100%;
+            object-fit: contain;
+            width: 70%;
             height: 100%;
             max-width: 400px;
             max-height: 400px;
+            float: right;
         }
     }
 }
+.inBowl{
+    &sauce{
+        position: absolute;
+        right: 12%;
+        width: 12%;
+        top: 27%;
+    }
+    &pasta{
+        position: absolute;
+        right: 14%;
+        width: 8%;
+        top: 32%;
+    }
+    &veggie00{
+        position: absolute;
+        right: 14%;
+        width: 7%;
+        top: 34%;
+    }
+    &veggie01{
+        position: absolute;
+        right: 14%;
+        width: 7%;
+        top: 34%;
+    }
+    &veggie02{
+        position: absolute;
+        right: 14%;
+        width: 7%;
+        top: 34%;
+    }
+    &meat00{
+        position: absolute;
+        right: 13%;
+        width: 8%;
+        top: 33%;
+    }
+    &meat01{
+        position: absolute;
+        right: 13%;
+        width: 9%;
+        top: 32%;
+    }
+    &garnish00{
+        position: absolute;
+        right: 13%;
+        width: 10%;
+        top: 30%;
+        
+    }
+    &garnish01{
+        position: absolute;
+        right: 13%;
+        width: 10%;
+        top: 30%;
+    }
+    }
 
 .cartCardFullBtn {
     // width: 78%;
-    padding: 5px;
+    padding: 6px;
+    width: 52%;
+    text-align: center;
     height: 29px;
-    border-radius: 2px;
+    border-radius: 6px;
     background: #000;
     color: #ffffff;
     box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.1);
@@ -109,7 +268,7 @@
 
 // drink card
 .drinkCard {
-    width: 100%;
+    width: 30%;
     height: auto;
     border-radius: 10px;
     background: #fff;
@@ -123,7 +282,7 @@
         margin: 0;
     }
     img {
-        width: 100%;
+        width: 187px;
     }
 }
 
@@ -239,6 +398,19 @@
     color: #fff;
 }
 
+.bownBtn{
+    text-align: center;
+    color: #fff;
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.25);
+    font-family: Montserrat;
+    font-weight: 600;
+    background: #67023f;
+    font-size: 14px;
+    width: 27%;
+    height: 26px;
+    margin: 2%;
+}
+
 .couponsItems {
     display: flex;
     justify-content: space-between;
@@ -282,18 +454,21 @@
 }
 
 .credBtn {
-    position: initial;
-    bottom: 0;
-    margin-top: 2% !important;
-    background: #67023f;
-    color: #fff;
     border: none;
-    height: 39px;
+    background: none;
+    color: #67023f;
+    text-decoration: underline;
+    position: initial;
+    font-weight: 800;
+    bottom: 0;
     line-height: 36px;
     text-align: center;
-    text-decoration: none;
     text-transform: uppercase;
     width: 22%;
-    border-radius: 7%;
     margin: 1%;
+    margin-right: 10%;
+}
+
+.access-content{
+    width: 28% !important;
 }

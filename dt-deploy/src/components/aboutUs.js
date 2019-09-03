@@ -46,7 +46,7 @@ class AboutUs extends ComponentHelpers {
                   </Link>
                   About Pasta Project
                 </div>
-                <div className='wrapper'>
+                <div className='wrapper' style={{width: '50%', margin: 'inherit'}}>
                 <MyComponent markup={this.getHtlml()} />
                   {/* <h2>Heading</h2>
                   <p>
@@ -59,7 +59,7 @@ class AboutUs extends ComponentHelpers {
                     background fill so the icon is exported with transparent background. Now go to File / Export and export all
                     artboards either as PNG files resolutions
                   </p> */}
-                  <div className='footer' style={{paddingTop: '181px'}}>
+                  <div className='footer' style={{paddingTop: '66px'}}>
                     <div className='footerLinks'>
                       <a href='#'> News</a>
                       <a href='#'> Privacy policy</a>

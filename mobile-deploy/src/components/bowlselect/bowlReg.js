@@ -53,13 +53,13 @@ class Bowlselect extends ComponentHelpers {
                         <div className="mainSelectedBowl">
                             <h5>Regular bowl</h5>
                             <p>650 ml</p>
-                            <span>Starting from 250$</span>
+                            <span>Starting from &#8377; 250</span>
                         </div>
                     </div>
                     <div className="miniBowlArea area1">
                         
-                        <div style={{cursor: this.props.location.state?'auto':'pointer' }} onClick={()=>this.switchBowl}>
-                            <img style={{opacity: this.props.location.state?0.4: 1}} src="./images/miniBowl.png" /></div>
+                        <Link to={this.props.location.state?'/regularbowl':'/minibowl'} style={{cursor: this.props.location.state?'auto':'pointer' }}>
+                            <img style={{opacity: this.props.location.state?0.4: 1}} src="./images/miniBowl.png" /></Link>
                         <p>Mini bowl</p>
                         <span>350ml</span>
                     </div>

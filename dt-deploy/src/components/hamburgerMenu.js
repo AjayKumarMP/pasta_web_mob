@@ -48,7 +48,7 @@ class Hamburger extends ComponentHelpers {
                 {this.state.checkLogout
                     ? <LogoutComponent handlFun={this.handlerCheckLogout}/>
                     : null}
-                <div className='hambMenu'>
+                <div className='hambMenu' style={{ transform: this.props.translate }}>
                     <div className='hambHeader'>
                         <div className='userArea'>
                             <div className='circle'/>
@@ -101,6 +101,10 @@ class Hamburger extends ComponentHelpers {
                                 <img src='/images/logout.png' alt='contact us'/>
                                 <Link to='/login'>Login</Link>
                             </li>
+                            <li hidden={userLoggedIn}>
+								<img src='/images/logout.png' alt='contact us' />
+								<Link to='/register'>Register</Link>
+							</li>
                         </ul>
                     </div>
                 </div>

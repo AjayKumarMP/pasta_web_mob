@@ -25,7 +25,6 @@ httpClient.interceptors.response.use(function(response) {
     // Do something with response data
     return response.data;
 }, function(error) { // TODO: handle global server errors
-    debugger
     if (error.response && error.response.status === 401) {
         Promise.reject(error);
         return <Redirect to = "/login" / >

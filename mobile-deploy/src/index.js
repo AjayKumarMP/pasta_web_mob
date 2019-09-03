@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css'
 
 // bowl select components
 import Bowlselect1 from './components/bowlselect/bowlSelect1';
@@ -51,6 +53,7 @@ import httpClient from './utils/httpClient';
 const routing = (
 	<Provider store={store}>
 		<Router>
+		<NotificationContainer />
 			<div className='homePage-wrapper'>
 				<Route path='/cheff' component={CheffC} />
 				<Route path='/register' component={Register} />
@@ -83,6 +86,14 @@ const routing = (
 		</Router>
 	</Provider>
 );
+
+// setTimeout(()=>{
+// 	var element = document.querySelector('.homePage-wrapper>div')
+// 	element.style.display = 'grid'
+// 	element = document.querySelector('.homePage-wrapper')
+// 	element.style.display = 'grid'
+// },100)
+
 const user = localStorage.getItem('user')
 const userDetails = user !== 'undefined' ? JSON.parse(user) : ''
 if (userDetails && userDetails !== "" && userDetails.access_token !== undefined) {

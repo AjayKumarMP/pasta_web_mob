@@ -24,6 +24,10 @@
   overflow: hidden;
 } */
 
+button, a{
+    border: none;
+}
+
 .appContainer {
     .header-section {
         display: flex;
@@ -96,7 +100,7 @@
     }
     .wrap-txt-area h3 {
         font-size: 20px;
-        font-weight: bold;
+        font-weight: 800;
         margin-left: 20px;
     }
     .wrap-txt-area h5 {
@@ -122,7 +126,7 @@
         color: #67023f;
         font-size: 18px;
         padding-top: 20px;
-        font-weight: bold;
+        font-weight: 800;
         margin-left: 20px;
     }
     .ownPastaMakeSection h5 {
@@ -141,7 +145,7 @@
         border: none;
         color: #fff;
         margin-left: 20px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .section3 {
         margin-top: 10px;
@@ -170,7 +174,7 @@
     .section3 .leftSide h3 {
         margin-top: 30px;
         margin-left: 20px;
-        font-weight: bold;
+        font-weight: 800;
         font-size: 18px;
     }
     .section3 .leftSide p {
@@ -193,7 +197,7 @@
         padding-bottom: 20px;
     }
     .section4 h3 {
-        font-weight: bold;
+        font-weight: 800;
         font-size: 18px;
         color: #67023f;
     }
@@ -285,11 +289,11 @@
     .hambMenu .hambHeader .userArea h3 {
         color: #000;
         font-size: 22px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .hambMenu .hambHeader .userArea .userInfo {
         padding-top: 13px;
-        padding-left: 40px;
+        padding-left: 34%;
         width: 100%;
     }
     .hambMenu .hambHeader .userArea .userInfo p {
@@ -321,6 +325,10 @@
     }
     .hambMenu .hambMain ul li p {
         margin-left: 35px;
+    }
+
+    .hambMenu .hambMain ul li {
+       color: white;
     }
     .bowlSelectContainer {
         position: relative;
@@ -463,7 +471,7 @@
     }
     .circle .textArea span {
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
         font-size: 20;
     }
     .circle .textArea p {
@@ -491,7 +499,7 @@
         padding: 6px 56px;
         color: #fff;
         background: #67023f;
-        font-weight: bold;
+        font-weight: 800;
     }
     .bowlSelectContainer .cartBtn {
         position: absolute;
@@ -501,7 +509,7 @@
         padding: 6px 37px;
         color: #67023f;
         background: #fff;
-        font-weight: bold;
+        font-weight: 800;
     }
     .bowlSelectContainer .cartBtn:hover {
         text-decoration: none;
@@ -524,7 +532,7 @@
     .bowlSelectContainer .leftSide h5 {
         margin: 10px 100px;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .bowlSelectContainer .leftSide p {
         margin-left: 120px;
@@ -544,7 +552,7 @@
     }
     .bowlSelectContainer .rightSide h5 {
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .bowlSelectContainer .rightSide p {
         margin-left: 30px;
@@ -571,7 +579,7 @@
         font-size: 16px;
         text-align: center;
         margin-left: -50px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .updatet .mainSelectedBowl p {
         font-size: 12px;
@@ -646,11 +654,15 @@
         bottom: 38%;
     }
     .loading {
+        width: 100%;
         position: fixed;
-        padding-top: 60%;
-        top: 10%;
-        left: 40%;
+        left: 0;
+        top: 0;
+        padding-left: 46%;
+        padding-top: 18%;
         z-index: 9999;
+        height: 100%;
+        background-color: rgba(255,255,255,0.7);
     }
     .orderTotal {
         position: absolute;
@@ -836,7 +848,7 @@
     .choosePl .nameSection {
         margin-top: 10px;
         font-size: 10px;
-        font-weight: bold;
+        font-weight: 800;
         text-align: center;
     }
     .choosePl img {
@@ -918,7 +930,7 @@
     }
     .contactUsWrapp .cnt-nav h4 {
         font-size: 20px;
-        font-weight: bold;
+        font-weight: 800;
         display: inline;
         margin-left: 5px;
     }
@@ -927,7 +939,7 @@
     }
     .contactUsWrapp .heading h3 {
         font-size: 20px;
-        font-weight: bold;
+        font-weight: 800;
         color: #67023f;
         margin: 40px 0 7px 10px;
     }
@@ -946,7 +958,7 @@
         margin: 15px;
         cursor: pointer;
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
         line-height: 25px;
     }
     .contactUsWrapp .cnt-main-wrap .email-wrapp {
@@ -970,21 +982,21 @@
     }
     .contactUsWrapp .cnt-main-wrap .email-wrapp h5 {
         font-size: 15px;
-        font-weight: bold;
+        font-weight: 800;
         padding-top: 20px;
         margin-bottom: 25px;
         color: #67023f;
     }
     .contactUsWrapp .cnt-main-wrap .live-supp-wrapp h5 {
         font-size: 15px;
-        font-weight: bold;
+        font-weight: 800;
         padding-top: 20px;
         color: #67023f;
     }
     .contactUsWrapp .cnt-main-wrap .email-wrapp p {
         font-size: 10px;
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
         margin: 0;
     }
     .contactUsWrapp .cnt-main-wrap .live-supp-wrapp p {
@@ -1036,7 +1048,7 @@
         display: inline;
         cursor: pointer;
         font-size: 12px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .logoutMainWrap .popUp ul {
         // margin-top: 30px;
@@ -1044,7 +1056,7 @@
     .logoutMainWrap .popUp h5 {
         margin-top: 20px;
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .logoutMainWrap .popUp ul li:nth-child(1) {
         color: grey;
@@ -1058,7 +1070,7 @@
         top: -28px;
     }
     .slectSideSect h5 {
-        font-weight: bold;
+        font-weight: 800;
         color: #67023f;
         font-size: 13px;
     }
@@ -1083,7 +1095,7 @@
     }
     .forSumm .under-section span {
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
     }
     .skpBtn {
         position: absolute;
@@ -1144,7 +1156,7 @@
         width: 120px;
         height: 36px;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 800;
         color: #fff;
         background: #67023f;
         border-radius: 5%;
@@ -1164,7 +1176,7 @@
     button {
         outline: none !important;
     }
-    .mainContF .undr-cont .wrok-home-cont a {
+    .mainContF .undr-cont .wrok-home-cont button {
         width: 50%;
         background: #67023f;
         color: #fff;
@@ -1212,7 +1224,7 @@
         margin-top: 20px;
         text-align: center;
         font-size: 10px;
-        font-weight: bold;
+        font-weight: 800;
         border-radius: 5.5%;
         text-transform: capitalize;
     }
@@ -1221,7 +1233,7 @@
     }
     .addresDiv .mainInfo h3 {
         font-size: 20px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .addresDiv .mainInfo .phSct {
         font-size: 13px;
@@ -1239,7 +1251,7 @@
         width: 120px;
         height: 36px;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 800;
         color: #fff;
         background: #67023f;
         border-radius: 5%;
@@ -1282,6 +1294,7 @@
         margin-top: 1rem;
     }
     .mainFormWrap .inpCont input[type="text"],
+    .mainFormWrap .inpCont input[type="email"],
     .mainFormWrap .inpCont [ type="number"] {
         outline: none;
         width: 320px;
@@ -1326,7 +1339,7 @@
     .crtItemWrap .infoSect h4 {
         padding-top: 20px;
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .crtItemWrap .infoSect p {
         font-size: 10px;
@@ -1378,7 +1391,7 @@
         bottom: 5px;
         right: 10px;
         border-radius: 100px;
-        font-weight: bold;
+        font-weight: 800;
         box-shadow: 1px 2px 8px 0 rgba(0, 0, 0, 0.1);
     }
     .edtPastaBtn:hover {
@@ -1497,7 +1510,7 @@
     .ordItemCont .Ordfooter h5 {
         color: #0cb800;
         font-size: 10px;
-        font-weight: bold;
+        font-weight: 800;
         line-height: 50px;
         text-transform: uppercase;
     }
@@ -1507,7 +1520,7 @@
         width: 72px;
         height: 21px;
         font-size: 10px;
-        font-weight: bold;
+        font-weight: 800;
         text-align: center;
         line-height: 20px;
         border-radius: 3px;
@@ -1515,7 +1528,7 @@
     }
     .ordItemCont .headCont .rightSide .summOpenbtn {
         font-size: 8px;
-        font-weight: bold;
+        font-weight: 800;
         position: absolute;
         top: 100px;
         cursor: pointer;
@@ -1585,7 +1598,7 @@
         text-align: end;
     }
     .grTotWrapp .p1 {
-        font-weight: bold;
+        font-weight: 800;
         color: #707070;
         font-size: 11px;
         margin-bottom: 5px;
@@ -1645,7 +1658,7 @@
         position: absolute;
         right: 40px;
         font-size: 12px;
-        font-weight: bold;
+        font-weight: 800;
         text-transform: uppercase;
         color: #67023f;
         bottom: 28.5px;
@@ -1661,8 +1674,7 @@
     }
     .cp h3 {
         font-size: 14px;
-        font-weight: bold;
-        margin-right: 80%;
+        font-weight: 800;
     }
     .cp p {
         cursor: pointer;
@@ -1681,7 +1693,7 @@
     }
     .cp .headCont a {
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
         font-size: 12px;
         position: absolute;
         right: 0;
@@ -1809,7 +1821,7 @@
     }
     .LoginWrapp {
         width: 100%;
-        height: 600px;
+        // height: 600px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1823,7 +1835,7 @@
         color: #67023f;
         opacity: 0.87;
         font-size: 12px;
-        font-weight: bold;
+        font-weight: 800;
         margin: 20px 0 0;
     }
     .LogindoneBtn {
@@ -1837,7 +1849,7 @@
         text-align: center;
         line-height: 40px;
         border-radius: 6px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .LogindoneBtn:hover {
         color: #fff;
@@ -1858,7 +1870,7 @@
     .congrMainWrapp .head h5 {
         color: #67023f;
         font-size: 22px;
-        font-weight: bold;
+        font-weight: 800;
         margin-top: 40px;
     }
     .congrMainWrapp .head p {
@@ -1880,7 +1892,7 @@
     }
     .congrUnderSect h4 {
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 800;
         text-transform: uppercase;
     }
     .congrUnderSect input {
@@ -1924,15 +1936,19 @@
     .sWfBtn:hover {
         color: #fff;
     }
-    .thanksMainWrapp img {
+    .thanksMainWrapp {
+        width: 38%;
+        margin-top: 3%;
+    img {
         width: 100%;
         height: 300px;
         object-fit: none;
     }
-    .thanksMainWrapp h5 {
+}
+    .thanksMainWrapp h1 {
         color: #67023f;
-        font-size: 24px;
-        font-weight: bold;
+        // font-size: 24px;
+        font-weight: 800;
         width: 60%;
         letter-spacing: 1px;
     }
@@ -1989,18 +2005,25 @@
         margin-top: 8px;
     }
     .ordTrackerMainWrap .leftSide {
-        width: 40%;
+        width: 28%;
     }
     .ordTrackerMainWrap .rightSide p {
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 800;
         margin: 0;
     }
     .ordTrackerMainWrap .rightSide span {
         font-size: 11px;
     }
     .ordTrWr {
-        margin-top: 40px;
+        position: absolute;
+        top: 27%;
+        right: 19%;
+        width: 23%;
+        h2{
+            color: #67023f;
+            margin-bottom: 7%;
+        }
     }
     .activeDot {
         background: #67023f !important;
@@ -2025,16 +2048,17 @@
     }
     .summaryOrd .leftSide p {
         font-size: 12px;
-        font-weight: bold;
+        font-weight: 800;
         margin-bottom: 25px;
     }
     .summaryOrd .rightSide p {
         font-size: 12px;
+        margin-top: 5%;
     }
     .tmptst p:nth-child(1) {
         font-size: 12px;
-        font-weight: bold;
-        width: 35%;
+        font-weight: 800;
+        width: 13.2%;
     }
     .tmptst p:nth-child(2) {
         font-size: 12px;
@@ -2043,7 +2067,7 @@
     .ordSmrH4 {
         font-size: 16px;
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
         margin-bottom: 20px;
         margin-top: 50px;
     }
@@ -2096,7 +2120,7 @@
     .addDesertSect h4 {
         color: #67023f;
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 800;
     }
     .addDesertSect {
         width: 100%;
@@ -2104,7 +2128,7 @@
     .delivAddrChange h5 {
         font-size: 10px;
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
     }
     .changeAddrBtn {
         position: absolute;
@@ -2169,7 +2193,7 @@
     .pastaRepeatWrap .cntr h5 {
         text-align: center;
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 800;
         margin-top: 20px;
     }
     .pastaRepeatWrap .cntr p {
@@ -2254,16 +2278,151 @@
         text-transform: uppercase;
         font-size: 0.85rem;
         color: #67023f;
-        font-weight: bold;
+        font-weight: 800;
     }
     .editPastaItemLeft p {
         margin: 0;
         padding-left: 4px;
-        font-weight: bold;
+        font-weight: 800;
         font-size: 0.9rem;
     }
     .editPastaItemLeft h5 {
         margin: 0;
         font-weight: 800;
     }
+
+    
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modalContent {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: none !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+.selectCities{
+    height: 42px;
+    margin-top: 4%;
+    // border: 1px solid #67023f;
+    margin-left: 31%;
+    width: 38%;
+    padding-left: 4%;
+    border-radius: 10px;
+    background: white;
+    // box-shadow: 1px 1px 1px 1px dimgrey;
+}
+
+.selectLocation{
+    height: 42px;
+    background: white;
+    // border: 1px solid #67023f;
+    // box-shadow: 1px 1px 1px 1px dimgrey;
+    margin-left: 20%;
+    width: 59%;
+    margin-top: 4%;
+    margin-bottom: 6%;
+    padding-left: 17%;
+    border-radius: 10px
+}
+
+.otp-content{
+    background: rgb(255, 255, 255);
+    width: 32% !important;
+    top: 0;
+    border: 1px solid rgb(187, 187, 187);
+    padding: 5px;
+    left: 32%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    position: absolute !important;
+    border-radius: 21px;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+
+  .resendOtp{
+    bottom: 0;
+    margin-left: 23%;
+    width: 53%;
+    background: none;
+    color: #67023f;
+    height: 39px;
+    line-height: 36px;
+    text-align: center;
+    text-decoration: underline;
+}
+  
+  /* Add Animation */
+  @keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+  }
+  
+  /* The Close Button */
+  .modalContent .close {
+    color: #aaa;
+    font-size: 28px;
+    position: absolute;
+    font-weight: 800;
+    right: 4%;
+  }
+
+  button{
+      border: none;
+  }
+
+  .editPopupBtn{
+    padding: 2%;
+    border: none;
+    border-radius: 7px;
+    width: 30%;
+    margin-left: 35%;
+    background: #2196f3;
+  }
+  
+  .modalContent .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .modal .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+  }
+
+  .OtpInput{
+    width: 70%;
+    text-align: center;
+    border-radius: 17px;
+    height: 40px;
+    margin-left: 15%;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  
+  .modalContent .modal-header{
+    display: block;
+    border-bottom: 1px solid #67023f !important;
+    text-align: center;
+  }
+
+  .modal .modal-body {padding: 2px 16px;}
 }

@@ -62,7 +62,7 @@ class CheffCurated extends ComponentHelpers
     render() {
         const {loading, CheffCurated, itemsInCart} = this.state
         return (
-            <div className='container'>
+            <div className='container' style={{width: '90%'}}>
             <Loading data={loading}/>
               <div className='wrapper'>
                 <div className='header'>
@@ -70,7 +70,9 @@ class CheffCurated extends ComponentHelpers
                     <BackLogo />
                   </Link>
                   Chef curated
-                
+                  <div hidden={itemsInCart.length <= 0} onClick={()=>this.addToCart()} style={{marginLeft: '52%'}}>
+                  <p style={{width: '130%', paddingTop:'7%' ,height: '52px',borderRadius: '21px'}} className="couponBtn">Checkout</p>
+                </div>
                 </div>
                 <div className='curatedItemsContainer'>
 
@@ -87,9 +89,7 @@ class CheffCurated extends ComponentHelpers
                     </div>
                 )}
                 </div>
-                <div hidden={itemsInCart.length <= 0} onClick={()=>this.addToCart()} style={{alignContent: 'baseline',marginLeft: '40%'}}>
-                  <p style={{width: '22%', paddingTop:'2%', background: 'black'}} className="couponBtn">Checkout</p>
-                </div>
+                
              </div>
             </div>
           );

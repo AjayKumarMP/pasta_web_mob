@@ -45,7 +45,7 @@ class ContactUs extends ComponentHelpers {
         this
             .props
             .history
-            .push('/order-summary')
+                .push('/order-summary')
     }
 
     reOrder = async (order)=>{
@@ -79,7 +79,9 @@ class ContactUs extends ComponentHelpers {
                     <div
                         className='cartWrapper'
                         style={{
-                        display: 'block'
+                        display: 'block',
+                        width: '67%',
+                        marginLeft: '14%'
                     }}>
                         {myOrders.map((data, index) => <div key={index} className='orderCard'>
                             <div
@@ -87,7 +89,8 @@ class ContactUs extends ComponentHelpers {
                                 style={{
                                 display: 'grid',
                                 gridRowStart: 1,
-                                gridRowEnd: 100
+                                gridRowEnd: 100,
+                                padding: '3%'
                             }}>
                                 <div
                                     style={{
@@ -100,18 +103,13 @@ class ContactUs extends ComponentHelpers {
                         }}
                                     src={regularBowl}
                                     alt="loading"/></div>
-                                <div
-                                    style={{
-                                    gridColumn: 5 / 12,
-                                    display: 'grid',
-                                    justifyContent: 'center'
-                                }}>
+                                <div className="ordrightSide">
                                     <div
                                         style={{
                                         gridColumn: 1 / 6
                                     }}>
                                         <label>ORDER DELIVERED TO</label>
-                                        <p>{data.address.address_text}</p>
+                                        <p>{data.address && data.address.address_text}</p>
 
                                         <div className='break' style={{flexDirection: 'row'}}>
                                         <div>
@@ -152,7 +150,6 @@ class ContactUs extends ComponentHelpers {
                                 </div>
                             </div>
 
-                            <hr/>
                             <div className='orderDetails'>
                                 <p className='deliveryText'>{data.payment_status}</p>
                                 <button onClick={()=>this.reOrder(data)} disabled={loading} className='orderbtn'>REORDER</button>
