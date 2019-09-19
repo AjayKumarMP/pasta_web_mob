@@ -42,7 +42,10 @@ class PastaProject extends ComponentHelpers {
 	}
 
 	async componentWillMount() {
-		const kitche_id = localStorage.getItem('kitchn_id')
+		localStorage.removeItem('sides')
+		localStorage.removeItem('cartItem')
+		localStorage.getItem('chefCurated')
+		const kitche_id = localStorage.getItem('kitchen_id')
 		if (kitche_id !== null) {
 			this.setState({ kitche_id })
 		} else {
@@ -98,7 +101,8 @@ class PastaProject extends ComponentHelpers {
 				return this.getCities()
 				// return this.NotificationManager.error(response.message, "Errror")
 			}
-			localStorage.setItem('kitchn_id', response.data && response.data.id)
+			localStorage.setItem('kitchen_id', response.data && response.data.id)
+			this.props.addKitchenId(response.data.id)
 			this.setState({ locationModal: false, loading: false })
 		} catch (error) {
 			this.getCities()
@@ -219,7 +223,7 @@ render() {
 				</div>
 			</div>
 			<div className="appContainer">
-			<Popup className="itemCart otp" position="right center" open={this.state.locationModal} onClose={() => this.setState({ locationModal: false })}>
+			<Popup className="itemCart loc" position="right center" open={this.state.locationModal} onClose={() => this.setState({ locationModal: false })}>
 
 					<div className='editPastaPopup modalContent'>
 						<div className="modal-header" style={{padding: '10px'}}>

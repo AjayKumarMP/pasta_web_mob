@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {NotificationContainer} from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css'
 // bowl select components
 import Bowlselect1 from './components/bowlselect/bowlSelect1';
@@ -44,15 +44,15 @@ import Urcollection from './components/Urcollection';
 import store from './store/reduxStore'
 import httpClient from './utils/httpClient';
 import Register from './components/Register/register'
+import { isMobileOnly } from 'react-device-detect';
 
-// store.subscribe(() => {
-// 	console.log(store.getState());
-// });
-
+if (isMobileOnly) {
+	window.location.href = `${window.location.href}mobile`
+} else {
 const routing = (
 	<Provider store={store}>
 		<Router>
-		<NotificationContainer />
+			<NotificationContainer />
 			<div className='homePage-wrapper'>
 				<Route path='/cheff' component={CheffC} />
 				<Route path='/regularbowl' component={RegBowl} />
@@ -96,3 +96,4 @@ ReactDOM.render(routing, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+}

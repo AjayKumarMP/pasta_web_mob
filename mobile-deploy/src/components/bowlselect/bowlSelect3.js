@@ -26,7 +26,8 @@ class Bowlselect extends ComponentHelpers {
       leftbtn: 0,
       rightbtn: 0,
       loading: true,
-      pastas: []
+      pastas: [],
+      baseValue: ''
     };
   }
   cl = (e) => {
@@ -53,6 +54,8 @@ class Bowlselect extends ComponentHelpers {
   cle = () => {
   };
   async componentDidMount() {
+    if(!(this.props.data.placeOrder.bowl && this.props.data.placeOrder.bowl.name))
+      return this.props.history.push('/bowlselect1')
     this.startanimation = 0;
     this.startanimationcount = 280;
     try {
@@ -61,9 +64,13 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getPastas, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
+      const baseValue= response.data.reduce((prev, curr) =>{
+        return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+      })
       this.setState({
         pastas: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
-        loading: false
+        loading: false,
+        baseValue
       })
       this.interval1 = setInterval(() => {
         this.hdl1();
@@ -276,7 +283,7 @@ class Bowlselect extends ComponentHelpers {
 
   addPastas = () => {
     if((!this.pasta || (this.pasta && Object.keys(this.pasta).length <= 0))
-  && Object.keys(this.props.data.placeOrder.pasta).length === 0){
+    && (! this.props.data.placeOrder.pasta || this.props.data.placeOrder.pasta && Object.keys(this.props.data.placeOrder.pasta).length === 0)){
     this.NotificationManager.warning('Please select one Pasta', 'Warning', 1500)
       return 
     }
@@ -336,7 +343,7 @@ class Bowlselect extends ComponentHelpers {
           <div className="under-sect plpops">
               {this.state.loading || this.state.pastas.length < 6?"": this.renderbtn()}
             {this.state.pastas.map((item, index) => {
-              return <Plcomponent type={'pasta'} 
+              return <Plcomponent baseValue={this.state.baseValue} type={'pasta'} 
               handler={(data)=>this.SelectPasta(data)} info={item} key={index} id={index} />;
             })}
           </div>

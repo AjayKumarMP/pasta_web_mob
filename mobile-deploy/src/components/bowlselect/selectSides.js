@@ -14,6 +14,7 @@ class Bowlselect extends ComponentHelpers {
         this.side = []
         this.state = {
             sides: [],
+            fromChefCurated: false
         }
     }
     cl = (e) => {
@@ -34,8 +35,13 @@ class Bowlselect extends ComponentHelpers {
     }
 
     async componentDidMount() {
+        if (!(this.props.data.placeOrder.bowl && this.props.data.placeOrder.bowl.name))
+            return this.props.history.push('/bowlselect1')
         try {
-            this.setState({ loading: true })
+            this.setState({
+                loading: true,
+                fromChefCurated: localStorage.getItem('chefCurated') !== null
+            })
             this.source = httpClient.getSource()
             const response = await httpClient.ApiCall('post', APIEndPoints.getSides, {
                 kitchen_id: this.props.data.kitchen_id
@@ -66,7 +72,8 @@ class Bowlselect extends ComponentHelpers {
         if (this.side.length > 0) {
             localStorage.setItem('sides', JSON.stringify(this.side))
         }
-        localStorage.setItem('cartItem', JSON.stringify(this.props.data.placeOrder))
+        if (!this.state.fromChefCurated)
+            localStorage.setItem('cartItem', JSON.stringify(this.props.data.placeOrder))
         this.setState({ loading: false })
         this.props.history.push(path)
     }
@@ -92,26 +99,27 @@ class Bowlselect extends ComponentHelpers {
 
     render() {
         const cost = this.props.data.getOrderPrice()
-        const { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
+        const { fromChefCurated } = this.state
+        const { sauce, pasta, vegetable, garnish, meat } = this.props.data.placeOrder
         return (
             <div className="mainWrapForSect">
                 <Loading data={this.state.loading} />
                 <div className="bowlSelectContainer updatet forSumm">
                     <div className="circle updatetCircle">
                         <Summary />
-                        <Link to="/bowlselect6"><img className="prevBtn" src="./images/prevBtn.png" /></Link>
+                        <Link to={fromChefCurated ? '/cheff' : '/bowlselect6'}><img className="prevBtn" src="./images/prevBtn.png" /></Link>
                         <p hidden={!cost} className="orderTotal">&#8377; {cost}</p>
                         <img onClick={this.cl.bind(this)} className="ordsm" src="./images/ordsm.png"></img>
                         {/* <img className="regMainBowl" src="./images/regularBowl.png" /> */}
-                        <div style={{opacity: 0}} className="selectCont regCont">
-              <span className="entered"></span>
-              <span className="entered"></span>
-              <span className="entered"></span>
-              <span className="entered"></span>
-              <span className="entered"></span>
-              <span className="active"></span>
-            </div>
-                        <div className="sauceBowl">
+                        <div style={{ opacity: 0 }} className="selectCont regCont">
+                            <span className="entered"></span>
+                            <span className="entered"></span>
+                            <span className="entered"></span>
+                            <span className="entered"></span>
+                            <span className="entered"></span>
+                            <span className="active"></span>
+                        </div>
+                        <div hidden={fromChefCurated} className="sauceBowl">
                             <img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
                             {sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
                             {pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
@@ -125,9 +133,9 @@ class Bowlselect extends ComponentHelpers {
                                 return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
                             })}
                         </div>
-                        <div className="slectSideSect">
+                        <div hidden={fromChefCurated} className="slectSideSect">
                             <h5>Congratulations!</h5>
-                            <p>You have made your pasta</p>
+                            <p>Yay! Your pasta is ready to cook</p>
                         </div>
                     </div>
                     <div className="under-section">
@@ -147,7 +155,7 @@ class Bowlselect extends ComponentHelpers {
                         }
                     </div>
                     <button onClick={() => this.addItemToCart('/cart')} className="cartBtn">Your cart</button>
-                    <button onClick={() => this.addItemToCart('/congratulations')} className="nextBtn wtCart">Next</button>
+                    <button onClick={() => this.addItemToCart(fromChefCurated ? '/cart' : '/congratulations')} className="nextBtn wtCart">Next</button>
                 </div>
             </div>
         )

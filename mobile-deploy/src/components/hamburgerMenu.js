@@ -92,31 +92,31 @@ class Hamburger extends React.Component {
 					<div className='hambMain'>
 						<ul>
 							<li hidden={!userLoggedIn}>
-								<img src='/images/shopping-bag.png' alt='my orders' />
+								<img src='./images/shopping-bag.png' alt='my orders' />
 								<Link to='/myorders'>My orders</Link>
 							</li>
 							<li hidden={!userLoggedIn}>
-								<img src='/images/placeholder.png' alt='address' />
+								<img src='./images/placeholder.png' alt='address' />
 								<Link to='/manageaddress'>Manage Addresses</Link>
 							</li>
 							<li>
-								<img src='/images/information.png' alt='about' />
+								<img src='./images/information.png' alt='about' />
 								<Link to='/aboutus'>About pasta project</Link>
 							</li>
 							<li hidden={!userLoggedIn} onClick={this.handlerCheckLogout}>
-								<img src='/images/logout.png' alt='logout' />
+								<img src='./images/logout.png' alt='logout' />
 								<p>Log out</p>
 							</li>
 							<li>
-								<img src='/images/phone-call.png' alt='contact us' />
+								<img src='./images/phone-call.png' alt='contact us' />
 								<Link to='/contactus'>Contact us</Link>
 							</li>
 							<li hidden={userLoggedIn}>
-								<img src='/images/logout.png' alt='contact us' />
+								<img src='./images/logout.png' alt='contact us' />
 								<Link to='/login'>Login</Link>
 							</li>
 							<li hidden={userLoggedIn}>
-								<img src='/images/logout.png' alt='contact us' />
+								<img src='./images/logout.png' alt='contact us' />
 								<Link to='/register'>Register</Link>
 							</li>
 						</ul>

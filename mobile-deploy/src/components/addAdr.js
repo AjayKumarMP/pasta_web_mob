@@ -85,8 +85,11 @@ class AddAdr extends ComponentHelpers {
                   }
             }
         } catch (error) {
-            console.log(error)
-            this.setState({loading: false})
+            this.setState({ loading: false })
+            if (error.response.data && error.response.data.message) {
+                return this.NotificationManager.error(error.response.data && error.response.data.message, 'Error', 1500)
+            }
+            return this.NotificationManager.error('Cannot add address, Please try later', 'Error', 1500)
         }
     }
 

@@ -50,6 +50,23 @@ class Login extends ComponentHelpers {
     return false
   }
 
+  forgotPassword = async ()=>{
+    try {
+      if(this.state.emailId === ''){
+        return this.NotificationManager.warning("E-mail/phone number is required", "Warning!!")
+      }
+      this.setState({loading: true})
+      const response = await httpClient.ApiCall('post', APIEndPoints.forgotPassword, {
+        login_name: this.state.emailId
+      })
+      this.NotificationManager.success("Please check your mail/phone to reset password", "Success")
+      this.setState({loading: false})
+    } catch (error) {
+      this.setState({loading: false})
+      this.NotificationManager.error("Cannot reset password, Please try later", "Error")
+    }
+  }
+
   render() {
     return (
       <div className="appContainer">
@@ -57,8 +74,8 @@ class Login extends ComponentHelpers {
         <div className='header'>
           <Link to={localStorage.getItem('URL') === null ? '/' : '/cart'}>
             <BackLogo />
-            Login
           </Link>
+            Login
         </div>
         <div className="LoginWrapp">
           <form className="forCenter" onSubmit={(e) => this.login(e)}>
@@ -68,9 +85,9 @@ class Login extends ComponentHelpers {
             </div>
             <div className="inpWrap">
               <p>Password</p>
-              <input required type="password" onChange={(e) => this.setState({ password: e.target.value })}></input>
+              <input type="password" onChange={(e) => this.setState({ password: e.target.value })}></input>
             </div>
-            <Link className="fPassLink" to="/login">Forget password?</Link>
+            <button type="reset" onClick={(e)=>{e.preventDefault();this.forgotPassword()}} className="fPassLink">Forget password?</button>
             <button type="submit" style={{ marginBottom: '10%', fontSize: '16px' }} disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn" >{this.state.loginBtnText}</button>
             <Link to="/register" type="submit" style={{ marginBottom: '6%' }} className="LogindoneBtn" >Register</Link>
           </form>

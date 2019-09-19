@@ -1,4 +1,10 @@
 .pastaContainer {
+
+    .chefRecIcon{
+        position: absolute;
+        width: 42px !important;
+        bottom: 73%;
+    }
     .background {
         background-color: #ffe195;
         width: 100vw;
@@ -235,16 +241,24 @@
             text-align: center;
             left: calc((85vw / 3) - 12vh);
             top: 7%;
-            width: 12%;
-            height: 13%;
+            width: 79px;
+            height: 12%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Two {
@@ -258,16 +272,24 @@
             text-align: center;
             left: calc((77vw / 2.9) + 5.02vh);
             top: 22%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Three {
@@ -281,16 +303,24 @@
             text-align: center;
             left: calc(30vw - -3vh);
             top: 41%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Four {
@@ -304,16 +334,24 @@
             text-align: center;
             left: calc((79vw / 2.9) + 5.02vh);
             top: 62%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Five {
@@ -327,16 +365,24 @@
             text-align: center;
             left: calc((84vw / 3) - 11vh);
             top: 75%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Six {
@@ -350,16 +396,24 @@
             text-align: center;
             left: calc((121vw / 3) - 12vh);
             top: 2%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Seven {
@@ -373,16 +427,24 @@
             text-align: center;
             left: calc((110vw / 2.9) + 5.02vh);
             top: 19%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Eight {
@@ -396,16 +458,24 @@
             text-align: center;
             left: calc((118vw / 2.9) + 5.02vh);
             top: 43%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Nine {
@@ -419,16 +489,24 @@
             text-align: center;
             left: calc((110vw / 2.9) + 5.02vh);
             top: 64%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         &Ten {
@@ -442,16 +520,24 @@
             text-align: center;
             left: calc((91vw / 2.9) + 5.02vh);
             top: 80%;
-            width: 12%;
-            height: 13%;
+            // width: 12%;
+            // height: 13%;
             img{
                 width: 100%;
                 object-fit: contain;
             }
             p {
                 margin: 0;
+                width: 200%;
                 position: absolute;
                 top: 99%;
+            }
+            span {
+                margin: 0;
+                position: absolute;
+                top: 125%;
+                font-size: 12px;
+                color: #3f0303
             }
         }
         @media screen and (min-width: 1500px) {

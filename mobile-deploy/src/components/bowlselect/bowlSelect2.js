@@ -24,7 +24,8 @@ class Bowlselect extends ComponentHelpers {
       leftbtn: 0,
       rightbtn: 0,
       sauces: [],
-      loading: true
+      loading: true,
+      baseValue: ''
     };
   }
   cl = e => {
@@ -57,6 +58,8 @@ class Bowlselect extends ComponentHelpers {
   };
 
   async componentDidMount() {
+    if(!(this.props.data.placeOrder.bowl && this.props.data.placeOrder.bowl.name))
+      return this.props.history.push('/bowlselect1')
     this.startanimation = 0;
     this.startanimationcount = 280;
     try {
@@ -65,9 +68,13 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getSauces, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
+      const baseValue= response.data.reduce((prev, curr) =>{
+        return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+      })
       this.setState({
         sauces: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
-        loading: false
+        loading: false,
+        baseValue
       })
       this.interval1 = setInterval(() => {
         this.hdl1();
@@ -279,7 +286,7 @@ class Bowlselect extends ComponentHelpers {
 
   getSelectedSauce =()=>{
     if((!this.sauce || (this.sauce && Object.keys(this.sauce).length <= 0))
-  && Object.keys(this.props.data.placeOrder.sauce).length === 0){
+    && (! this.props.data.placeOrder.sauce || this.props.data.placeOrder.sauce && Object.keys(this.props.data.placeOrder.sauce).length === 0)){
     this.NotificationManager.warning('Please select one Sauce', 'Warning', 1500)
       return 
     }
@@ -342,7 +349,7 @@ class Bowlselect extends ComponentHelpers {
           <div className="under-sect plpops">
             {this.state.loading || this.state.sauces.length < 6 ?"": this.renderbtn()}
             {this.state.sauces.map((item, index) => 
-                <Plcomponent type="sauce" handler={(data)=> this.getSelectSause(data)} info={item} key={index} id={index} />
+                <Plcomponent baseValue={this.state.baseValue} type="sauce" handler={(data)=> this.getSelectSause(data)} info={item} key={index} id={index} />
             )}
           </div>
           <button onClick={()=> this.getSelectedSauce()} className="nextBtn wtCart">

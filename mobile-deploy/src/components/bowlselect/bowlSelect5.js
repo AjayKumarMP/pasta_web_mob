@@ -25,7 +25,8 @@ class Bowlselect extends ComponentHelpers {
       leftbtn: 0,
       rightbtn: 0,
       loading: true,
-      garnishes: []
+      garnishes: [],
+      baseValue: ''
     };
   }
   cl = (e) => {
@@ -49,6 +50,8 @@ class Bowlselect extends ComponentHelpers {
     }
   }
   async componentDidMount() {
+    if (!(this.props.data.placeOrder.bowl && this.props.data.placeOrder.bowl.name))
+      return this.props.history.push('/bowlselect1')
     this.startanimation = 0;
     this.startanimationcount = 280;
     try {
@@ -57,9 +60,13 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getGarnishes, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
+      const baseValue= response.data.reduce((prev, curr) =>{
+        return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+      })
       this.setState({
         garnishes: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
-        loading: false
+        loading: false,
+        baseValue
       })
       this.interval1 = setInterval(() => {
         this.hdl1();
@@ -273,16 +280,16 @@ class Bowlselect extends ComponentHelpers {
 
   addGarnish = (garnish) => {
     this.garnish = this.props.data.placeOrder.garnish
-    if(!this.garnish){
+    if (!this.garnish) {
       this.garnish = []
     }
-    const index = this.garnish.map(data=>data.name).indexOf(garnish.name)
-    if(index === -1 && this.garnish.length >=2){
+    const index = this.garnish.map(data => data.name).indexOf(garnish.name)
+    if (index === -1 && this.garnish.length >= 2) {
       return
     }
-    if(index> -1){
+    if (index > -1) {
       this.garnish.splice(index, 1)
-    } else if(this.garnish.length < 2){
+    } else if (this.garnish.length < 2) {
       this.garnish.push(garnish)
     }
     this.props.placeOrder(Object.assign(this.props.data.placeOrder, { garnish: this.garnish }))
@@ -290,7 +297,7 @@ class Bowlselect extends ComponentHelpers {
 
   render() {
     const cost = this.props.data.getOrderPrice()
-    const { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
+    const { sauce, pasta, vegetable, garnish, meat } = this.props.data.placeOrder
     return (
       <div className="mainWrapForSect">
         <Loading data={this.state.loading} />
@@ -311,26 +318,26 @@ class Bowlselect extends ComponentHelpers {
             </div>
             {/* <img className="regMainBowl" src="./images/regularBowl.png" /> */}
             <div className="sauceBowl">
-										<img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
-										{sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
-										{pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
-										{vegetable && vegetable.map((el, index) => {
-											return (<img key={index} className={`sauceInbowlVeggie${index}`} alt={`veggie${index}`} src={el.src} />)
-										})}
-										{garnish && garnish.map((el, index) => {
-											return (<img key={index} className={`sauceInbowlGarnish${index}`} alt={`garnish${index}`} src={el.src} />)
-										})}
-										{meat && meat.map((data, index) => {
-											return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
-										})}
-									</div>
+              <img alt='sauce' className="regMainBowl" src="./images/regularBowl.png" />
+              {sauce && Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.src} />)}
+              {pasta && Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.src} />)}
+              {vegetable && vegetable.map((el, index) => {
+                return (<img key={index} className={`sauceInbowlVeggie${index}`} alt={`veggie${index}`} src={el.src} />)
+              })}
+              {garnish && garnish.map((el, index) => {
+                return (<img key={index} className={`sauceInbowlGarnish${index}`} alt={`garnish${index}`} src={el.src} />)
+              })}
+              {meat && meat.map((data, index) => {
+                return (<img key={index} className={`sauceInbowlMeat${index}`} alt={`meat${index}`} src={data.src} />)
+              })}
+            </div>
             <div className="textArea updatetTextarea"><p>Select your</p> <span>garnish</span><h2 style={{ fontSize: "8px", textAlign: 'center' }}>(choose any 2)</h2></div>
           </div>
           <div className="under-sect plpops">
             {this.state.loading || this.state.garnishes.length < 6 ? "" : this.renderbtn()}
             {
               this.state.garnishes.map((item, index) => {
-                return <Plcomponent handler={this.addGarnish} type={'garnish'} info={item} key={index} id={index} />
+                return <Plcomponent baseValue={this.state.baseValue} handler={this.addGarnish} type={'garnish'} info={item} key={index} id={index} />
               })
             }
           </div>

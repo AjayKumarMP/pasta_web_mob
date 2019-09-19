@@ -61,6 +61,7 @@ class Cart extends ComponentHelpers {
                 }
                 localStorage.removeItem('cartItem')
                 localStorage.removeItem('sides')
+                localStorage.removeItem('chefCurated')
                 localStorage.removeItem('URL')
                 localStorage.removeItem('curated')
             }
@@ -138,7 +139,7 @@ class Cart extends ComponentHelpers {
             }
         } catch (error) {
             console.log(error)
-            this.setState({ loading: false })
+            this.setState({ loading: false, cartItems: [] })
         }
     }
 
@@ -215,8 +216,7 @@ class Cart extends ComponentHelpers {
                 cart_id,
                 kitchen_id: this.props.data.kitchen_id
             }, this.source.token)
-            this.setState({ loading: false })
-            this.getMyCartItems()
+            await this.getMyCartItems()
             this.NotificationManager.success('Succefully deleted Item', 'Success', 1500)
         } catch (error) {
             if (error.message !== "unMounted") {
@@ -224,6 +224,16 @@ class Cart extends ComponentHelpers {
                 this.setState({ loading: false })
             }
         }
+    }
+
+    proceedNext=()=>{
+        if(this.state.selectedAddress === ''){
+            return this.NotificationManager.warning('Please add/select Address', 'No delivery Address selected')
+        }
+        if(this.state.cartItems && Object.keys(this.state.cartItems).length === 0){
+            return this.NotificationManager.warning('Cannot proceed without cart items', 'No Items in your Cart')
+        }
+        return this.props.history.push('/payment')
     }
 
     render() {
@@ -443,7 +453,7 @@ class Cart extends ComponentHelpers {
                                             </ul>
                                         </div>
                                         {/* <Link to='/payment'> */}
-                                        <button disabled={this.state.selectedAddress === ''} onClick={() => this.props.history.push('/payment')} className="couponBtn">Proceed</button>
+                                        <button onClick={() => this.proceedNext()} className="couponBtn">Proceed</button>
                                         {/* </Link> */}
                                     </div>
                                 </div>

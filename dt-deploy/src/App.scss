@@ -1857,6 +1857,8 @@ button, a{
     .fPassLink {
         font-size: 12px;
         font-weight: 500;
+        border: none;
+        background: none;
         color: #000;
         position: absolute;
         // right: 20px;
@@ -2312,7 +2314,7 @@ button, a{
     margin: auto;
     padding: 0;
     border: none !important;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    // box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     animation-name: animatetop;
     animation-duration: 0.4s
 }
@@ -2343,6 +2345,21 @@ button, a{
 }
 
 .otp-content{
+    background: rgb(255, 255, 255);
+    width: 32% !important;
+    top: 0;
+    border: 1px solid rgb(187, 187, 187);
+    padding: 5px;
+    left: 32%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    position: absolute !important;
+    border-radius: 21px;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+
+  .loc-content{
+    margin-top: 13% !important;
     background: rgb(255, 255, 255);
     width: 32% !important;
     top: 0;

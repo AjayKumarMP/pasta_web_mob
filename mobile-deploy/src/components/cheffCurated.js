@@ -8,14 +8,15 @@ import { ComponentHelpers, connect } from '../utils/componentHelper';
 
 
 
-class CheffCurated extends ComponentHelpers{
+class CheffCurated extends ComponentHelpers {
     constructor(props) {
         super(props);
         this.state = {
             kitchen_id: 2,
             CheffCurated: [],
             loading: true,
-            itemsInCart: []
+            itemsInCart: [],
+            cartItems: []
         }
     }
 
@@ -26,9 +27,10 @@ class CheffCurated extends ComponentHelpers{
                 kitchen_id: this.state.kitchen_id
             })
             this.setState({
-                CheffCurated: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
-                loading: false
+                CheffCurated: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src'))
             })
+            const data = await httpClient.ApiCall('post', APIEndPoints.getCartItems)
+            this.setState({ itemsInCart: data.data && data.data.items && data.data.items.filter(_ => _.curated !== null).flatMap(_=>_.curated.id), loading: false })
         } catch (error) {
             this.setState({ loading: false })
             console.log(error)
@@ -36,18 +38,18 @@ class CheffCurated extends ComponentHelpers{
     }
 
     addToCart = async () => {
-        this.setState({loading: true})
-        if(this.props.data.isUserLoggedIn()){
+        this.setState({ loading: true })
+        if (this.props.data.isUserLoggedIn()) {
             if (this.state.itemsInCart.length > 0) {
                 await Promise.all(
                     this.state.itemsInCart.map(data => this.addProductToCart({}, 0, 0, 1, data))
                 )
             }
-            this.props.history.push('/cart')
         } else {
             localStorage.setItem('curated', JSON.stringify(this.state.itemsInCart))
-            this.props.history.push('/cart')
         }
+        localStorage.setItem('chefCurated', '/cheff')
+        this.props.history.push('/selectsides')
     }
 
     selectItems = (data) => {
@@ -59,6 +61,7 @@ class CheffCurated extends ComponentHelpers{
             cartItems.push(data.id)
         }
         this.setState({ itemsInCart: cartItems })
+        this.props.addCurated(cartItems)
     }
 
     componentWillUnmount() {
@@ -66,8 +69,9 @@ class CheffCurated extends ComponentHelpers{
     }
 
     render() {
+        const {itemsInCart} = this.state
         return (
-            <div style={{ paddingBottom: this.state.loading ? '60%' : '0%', overflowY: 'auto'}}>
+            <div style={{ paddingBottom: this.state.loading ? '60%' : '0%', overflowY: 'auto' }}>
                 <Loading data={this.state.loading} />
                 <div className="cheffCurMainWrap">
                     <div className="headContCheff">
@@ -75,16 +79,16 @@ class CheffCurated extends ComponentHelpers{
                         {/* <h5 className="srch">Search</h5> */}
                         <h2 className="headH2">Chef curated</h2>
                     </div>
-                    <div className="cheffCuratedMainCont" style={{textAlign: 'center'}}>
+                    <div className="cheffCuratedMainCont" style={{ textAlign: 'center' }}>
                         {
                             this.state.CheffCurated.map((item, index) => {
-                                return <CheffItem handler={this.selectItems} info={item} key={index} />
+                                return <CheffItem cart={itemsInCart} handler={this.selectItems} info={item} key={index} />
                             })
                         }
                     </div>
                     <div >
-                  <button hidden={this.state.itemsInCart.length <= 0} onClick={()=>this.addToCart()} className="couponBtn chefCheckBtn">Checkout</button>
-                </div>
+                        <button hidden={this.state.itemsInCart.length <= 0} onClick={() => this.addToCart()} className="couponBtn chefCheckBtn">Checkout</button>
+                    </div>
                 </div>
             </div>
         )

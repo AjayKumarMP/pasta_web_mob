@@ -7,7 +7,7 @@ const httpClient = axios.create({
     headers: {
         "Content-type": "application/json; charset=UTF-8"
     },
-    // baseURL :"http://cripsee.com/pasta/admin/api/v1/"
+    baseURL :"http://3.212.194.151/web/api/v1/"
 })
 
 const CancelToken = axios.CancelToken
@@ -26,6 +26,7 @@ httpClient.interceptors.response.use(function(response) {
     return response.data;
 }, function(error) { // TODO: handle global server errors
     if(error.response && error.response.status === 401){
+        localStorage.removeItem('user')
         Promise.reject(error);
       return <Redirect to="/login" />
     }

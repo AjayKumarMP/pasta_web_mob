@@ -2,12 +2,16 @@ import React from 'react';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import { ComponentHelpers, connect } from '../../utils/componentHelper';
 import Loading from '../loader'
+import Popup from 'reactjs-popup'
+import { FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa'
+import { IconContext } from 'react-icons'
 
 
 class AboutUs extends ComponentHelpers {
   state = {
     loading: false,
-    pastaName: ''
+    pastaName: '',
+    sharePopup: false
   }
 
   myCart = async () => {
@@ -26,12 +30,37 @@ class AboutUs extends ComponentHelpers {
     }
   }
 
+  btnClicked(event) {
+
+    event.preventDefault();
+    window.open(
+      event.currentTarget.href,
+      'Поделиться',
+      'width=600,height=500,location=no,menubar=no,toolbar=no'
+    )
+  }
+
+  shareWithFrds() {
+    this.setState({ sharePopup: true })
+    setTimeout(() => {
+      const links = document.querySelectorAll('.share a');
+
+      links.forEach((link) => {
+        const url = encodeURIComponent(document.origin);  //'https://mobile-pasta.firebaseapp.com/congratulations'
+        const title = encodeURIComponent(document.title);
+        link.href = link.href
+          .replace('{url}', url)
+          .replace('{title}', title);
+      });
+    }, 100)
+  }
+
   render() {
-    if( this.props.data.placeOrder.sauce && Object.keys(this.props.data.placeOrder.sauce).length > 0 
-    && this.props.data.placeOrder.pasta && Object.keys(this.props.data.placeOrder.pasta).length > 0){
-      var { sauce, pasta, vegetable, garnish, meat} = this.props.data.placeOrder
-    } else {
-      var { sauce, pasta, vegetable, garnish, meat} = JSON.parse(localStorage.getItem('cartItem'))
+    if (this.props.data.placeOrder.sauce && Object.keys(this.props.data.placeOrder.sauce).length > 0
+      && this.props.data.placeOrder.pasta && Object.keys(this.props.data.placeOrder.pasta).length > 0) {
+      var { sauce, pasta, vegetable, garnish, meat } = this.props.data.placeOrder
+    } else if (localStorage.getItem('cartItem')) {
+      var { sauce, pasta, vegetable, garnish, meat } = JSON.parse(localStorage.getItem('cartItem'))
     }
     return (
       <div className="contactUsWrapp" style={{ justifyContent: 'center' }}>
@@ -68,8 +97,46 @@ class AboutUs extends ComponentHelpers {
           <h4>Name your pasta</h4>
           <input onChange={(e) => this.setState({ pastaName: e.target.value })} placeholder="For eg- 'Sam's pasta'" type='name' />
           <button onClick={() => this.myCart()} className="congratsCartBtn">Checkout</button>
-          <button disabled className="sWfBtn">Share with friends</button>
+          <button onClick={() => this.shareWithFrds()} className="sWfBtn">Share with friends</button>
         </div>
+
+        <Popup className="social" position="bottom center" open={this.state.sharePopup} onClose={() => this.setState({ sharePopup: false })}>
+          <div className="" >
+            <a className="close" onClick={() => this.setState({ sharePopup: false })}>
+              &times;
+        				</a>
+            <h3>Share with Friends</h3>
+
+            <hr />
+            <div className="share">
+              <ul style={{ display: 'flex', listStyleType: 'none' }}>
+                <li style={{ marginLeft: '15%' }}>
+                  <a onClick={(e) => this.btnClicked(e)} href="https://www.facebook.com/sharer.php?u={url}&img=url.png" title="Facebook" target="_blank">
+                    <IconContext.Provider value={{ className: 'react-icons' }}>
+                      <FaFacebook size="3em" />
+                    </IconContext.Provider>
+                  </a>
+                </li>
+                <li style={{ marginLeft: '10%' }}>
+                  <a onClick={(e) => this.btnClicked(e)} href="https://www.linkedin.com/shareArticle?mini=true&url={url}&title={title}" title="Linkedin" target="_blank">
+                    <IconContext.Provider value={{ className: 'react-icons' }}>
+                      <FaLinkedin shapeRendering="circle" size="3em" />
+                    </IconContext.Provider>
+                  </a>
+                </li>
+                <li style={{ marginLeft: '10%' }}>
+                  <a onClick={(e) => this.btnClicked(e)} href="https://twitter.com/intent/tweet?url={url}&text={title}" title="Twitter" target="_blank">
+                    <IconContext.Provider value={{ className: 'react-icons' }}>
+                      <FaTwitter size="3em" />
+                    </IconContext.Provider>
+                  </a>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+        </Popup>
+
       </div>
     )
   }

@@ -23,10 +23,10 @@ class ContactUs extends ComponentHelpers {
 
   options = {
     "key": "rzp_test_ZELvYZc9wj5bXg",
-    "amount": 1, // 2000 paise = INR 20, amount in paisa
+    "amount": 100, // 2000 paise = INR 20, amount in paisa
     "name": "Guest",
     "description": "ordered Items",
-    "image": '../assets/images/pasta-logo.png',
+    "image": '%PUBLIC_URL%/logo.png',
     "handler": async (response) => {
       this.setState({ loading: true })
       const payment = await httpClient.ApiCall('post', APIEndPoints.storePayment, { payment_info: JSON.stringify(response) })
@@ -137,9 +137,9 @@ class ContactUs extends ComponentHelpers {
 
 
   paymentHandler = () => {
-    const price = parseFloat(this.state.cartItems.grand_total.replace(/,/g,"") * 100)
+    const price = parseFloat(this.state.cartItems.grand_total.replace(/,/g, "") * 100)
     if (!price) {
-      return this.NotificationManager.error("Please visit cart page", 'No Payment Details',1500)
+      return this.NotificationManager.error("Please visit cart page", 'No Payment Details', 1500)
     }
     const address = parseInt(localStorage.getItem('address'))
     if (!address) {
@@ -197,7 +197,7 @@ class ContactUs extends ComponentHelpers {
                         <div className='cartCardMoney' style={{ width: '30%' }}>
                           <span><p style={{ position: 'absolute', left: '-14px' }}>&#8377; </p>{prices[index].price}</span>
                           {/* <Link to='/my-order'> */}
-                          <button className='cartCardFullBtn' style={{ width: '88%',marginLeft: '7%',marginTop: '-5px' }}>{cart.bowl !== null ? cart.bowl.name.split(" ")[0] : (cart.side ? cart.side.name : (cart.extra ? cart.extra.name : cart.curated && cart.curated.name))}</button>
+                          <button className='cartCardFullBtn' style={{ width: '88%', marginLeft: '5%', marginTop: '-5px' }}>{cart.bowl !== null ? cart.bowl.name.split(" ")[0] : (cart.side ? cart.side.name : (cart.extra ? cart.extra.name : cart.curated && cart.curated.name))}</button>
                           {/* </Link> */}
                         </div>
                       </div>
@@ -217,7 +217,7 @@ class ContactUs extends ComponentHelpers {
                                     : (cart.curated ? cart.curated.picture : './images/miniBowl.png'))} />
                             </div>
                             : <div className="inBowl">
-                              <img style={{marginTop: '-6px'}} src="./images/miniBowl.png" alt="loading" />
+                              <img style={{ marginTop: '-6px' }} src="./images/miniBowl.png" alt="loading" />
                               {cart.sauces && Object.keys(cart.sauces).length > 0 && (<img className="inBowlsauce" alt='sauce' src={cart.sauces[0].inbowl_picture} />)}
                               {cart.pastas && Object.keys(cart.pastas).length > 0 && (<img className="inBowlpasta" alt='pasta' src={cart.pastas[0].inbowl_picture} />)}
                               {cart.vegetables && cart.vegetables.map((veg, index) => {

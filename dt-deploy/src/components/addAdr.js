@@ -5,7 +5,7 @@ import APIEndPoints from '../utils/APIEndPoints';
 import { ComponentHelpers, connect } from '../utils/componentHelper';
 import { Spinner } from './loader'
 import Popup from 'reactjs-popup';
-import { ReactComponent as BackLogo } from  '../assets/icons/back2.svg';
+import { ReactComponent as BackLogo } from '../assets/icons/back2.svg';
 
 class AddAdr extends ComponentHelpers {
 
@@ -50,13 +50,13 @@ class AddAdr extends ComponentHelpers {
         }
     }
 
-    addAddress = async(e) => {
+    addAddress = async (e) => {
         e.preventDefault()
-        if(!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.state.email)){
+        if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.state.email)) {
             return this.NotificationManager.error('Enter valid Email', 'Error', 1500)
         }
         try {
-            this.setState({loading: true})
+            this.setState({ loading: true })
             const {
                 address_name,
                 flat_no,
@@ -75,23 +75,25 @@ class AddAdr extends ComponentHelpers {
                 phone_no,
                 email
             })
-            this.setState({loading: false})
-            if(!this.props.data.isUserLoggedIn()){
-                this.setState({confirmation_code: response.data.confirmation_code, otpModal: true})
+            this.setState({ loading: false })
+            if (!this.props.data.isUserLoggedIn()) {
+                this.setState({ confirmation_code: response.data.confirmation_code, otpModal: true })
                 // 
             } else {
                 const url = localStorage.getItem('URL')
                 if (url) {
                     localStorage.removeItem('URL')
                     this.props.history.push(url)
-                  } else {
+                } else {
                     this.props.history.push('/manageaddress')
-                  }
+                }
             }
         } catch (error) {
-            console.log(error)
-            this.NotificationManager.error(error.response.data && error.response.data.message, 'Error', 1500)
-            this.setState({loading: false})
+            this.setState({ loading: false })
+            if (error.response.data && error.response.data.message) {
+                return this.NotificationManager.error(error.response.data && error.response.data.message, 'Error', 1500)
+            }
+            return this.NotificationManager.error('Cannot add address, Please try later', 'Error', 1500)
         }
     }
 
@@ -99,36 +101,36 @@ class AddAdr extends ComponentHelpers {
 
         if (this.state.otp === '') {
             return this.NotificationManager.info('Please enter OTP', 'Warning!!')
-          }
-          if (this.state.confirmation_code === '') {
+        }
+        if (this.state.confirmation_code === '') {
             return this.NotificationManager.info('Please register again', 'Lost Connection!!')
-          }
-          this.setState({ loading: true })
-          try {
+        }
+        this.setState({ loading: true })
+        try {
             const response = await httpClient.ApiCall('post', APIEndPoints.verifyOtp, {
-              confirmation_code: this.state.confirmation_code,
-              otp: this.state.otp
+                confirmation_code: this.state.confirmation_code,
+                otp: this.state.otp
             })
             this.setState({ loading: false })
             if (response.data && response.data !== null) {
-              localStorage.setItem('user', JSON.stringify(response.data))
-              httpClient.setDefaultHeader('access-token', response.data ? response.data.access_token : "")
-              const url = localStorage.getItem('URL')
-              if (url) {
-                localStorage.removeItem('URL')
-                this.props.history.push(url)
-              } else {
-                this.props.history.push('/')
-              }
-              return this.NotificationManager.success(response.message, 'Success')
+                localStorage.setItem('user', JSON.stringify(response.data))
+                httpClient.setDefaultHeader('access-token', response.data ? response.data.access_token : "")
+                const url = localStorage.getItem('URL')
+                if (url) {
+                    localStorage.removeItem('URL')
+                    this.props.history.push(url)
+                } else {
+                    this.props.history.push('/')
+                }
+                return this.NotificationManager.success(response.message, 'Success')
             }
             this.NotificationManager.error(response.message, 'Error')
 
-          } catch (error) {
+        } catch (error) {
             this.setState({ loading: false })
             this.NotificationManager.error(error.response.data.message, 'Error')
-          }
-      }
+        }
+    }
 
     resendOTP = async () => {
         if (this.state.confirmation_code === '') {
@@ -159,11 +161,11 @@ class AddAdr extends ComponentHelpers {
             <div className="appContainer">
                 <Spinner data={loading} />
                 <div className='contactUsWrapp'>
-                <div className='header'>
-                            <Link to={localStorage.getItem('URL') === null ? '/manageaddress' : '/cart'}>
-                                <BackLogo />
-                            </Link>
-                            Add address
+                    <div className='header'>
+                        <Link to={localStorage.getItem('URL') === null ? '/manageaddress' : '/cart'}>
+                            <BackLogo />
+                        </Link>
+                        Add address
                         </div>
                     <div
                         className='mainFormWrap'

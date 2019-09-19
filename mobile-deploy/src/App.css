@@ -79,10 +79,14 @@ height: 100% !important;
     }
 }
 
+.location-content{
+    margin-top: 47% !important;
+}
+
 .deleteIcon{
     position: absolute;
     left: 65%;
-    bottom: 1%;
+    bottom: 3%;
 }    
 .deleteIcon:hover{
     cursor: pointer !important;
@@ -105,7 +109,7 @@ height: 100% !important;
 
 .loadGif::after {
     content: "";
-    background: url('/images/load1.gif') no-repeat;
+    background: url('./images/loader.gif') no-repeat;
     opacity: 0.5;
     top: 0;
     left: 0;
@@ -291,7 +295,7 @@ height: 100% !important;
     border-radius: 13px;
     transition: all 3.2s;
     margin-bottom: auto !important;
-    margin: inherit !important;
+    margin: inherit;
     width: 100% !important;
     transform: translateY(-100px, 0px);
   }
@@ -515,7 +519,7 @@ height: 100% !important;
 }
 
 .ownPastaMakeSection {
-    background: url("/images/dark-tire.png");
+    background: url("./images/dark-tire.png");
     background-color: #fee094;
     width: 100%;
     position: relative;
@@ -565,7 +569,7 @@ height: 100% !important;
     width: 100%;
     display: flex;
     position: relative;
-    background: url(/images/tt.png);
+    background: url(./images/tt.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -780,18 +784,32 @@ height: 100% !important;
 .credBtn {
     position: initial;
     bottom: 0;
-    margin-top: 2% !important;
-    background: #67023f;
-    color: #fff;
+    margin-top: 1% !important;
+    padding-bottom: 3px;
+    background: none;
+    color: #67023f;
     border: none;
     height: 39px;
+    font-weight: 800;
     line-height: 36px;
     text-align: center;
-    text-decoration: none;
+    text-decoration: underline;
     text-transform: uppercase;
     width: 30%;
     border-radius: 7%;
     margin: 1%;
+}
+
+button:hover, a:hover{
+    cursor: pointer !important;
+}
+
+.social-overlay, .cartPop-overlay{
+    padding-top: 70%;
+}
+.social-content{
+    box-shadow: 1px 1px 20px 2px grey !important;
+    border-radius: 0px !important; 
 }
 
 .hambMenu .hambHeader .userArea {
@@ -1404,6 +1422,13 @@ height: 100% !important;
     animation: border 2s infinite linear;
 }
 
+.chefRecIcon{
+    position: absolute;
+    bottom: 59%;
+    width: 58% !important;
+    left: 19% !important;
+}
+
 .activeborder {
     border: 2px dashed #67023f;
 }
@@ -1580,6 +1605,7 @@ height: 100% !important;
     margin: 20px auto;
     /* height: 100px; */
     padding-left: 30px;
+    padding-bottom: 20px;
     border-radius: 3%;
     border: 1px solid #fee094;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
@@ -2630,6 +2656,8 @@ a:hover {
     font-size: 12px;
     font-weight: 500;
     color: #000;
+    border: none;
+    background: none;
     position: relative;
     float: right;
     /* right: 20px; */
@@ -3108,7 +3136,7 @@ a:hover {
 
 .arrowRight {
     position: absolute;
-    top: -125px;
+    top: -133px;
     left: 330px;
     transform: rotate(-65deg);
     color: #ef5757;

@@ -7,12 +7,11 @@ import Loading from './loader'
 import '../shared.scss';
 import { ReactComponent as BackLogo } from '../assets/icons/back2.svg';
 import curatedImage from '../assets/images/curated-item-pic.png';
-import { ReactComponent as GreenPin } from  '../assets/icons/pin.svg';
+import { ReactComponent as GreenPin } from '../assets/icons/pin.svg';
 import { ComponentHelpers, connect } from '../utils/componentHelper';
 
 
-class CheffCurated extends ComponentHelpers
- {
+class CheffCurated extends ComponentHelpers {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,74 +24,86 @@ class CheffCurated extends ComponentHelpers
 
     async componentDidMount() {
         try {
+            localStorage.getItem('chefCurated')
             this.setState({ loading: true })
             const response = await httpClient.ApiCall('post', APIEndPoints.getChefCurated, {
                 kitchen_id: this.state.kitchen_id
             })
+            this.setState({CheffCurated: response.data})
+            const data = await httpClient.ApiCall('post', APIEndPoints.getCartItems)
+            data.data && data.data.items && data.data.items.filter(_ => _.curated !== null).forEach(_ => this.selectItems(_.curated))
             this.setState({
-                CheffCurated: response.data,
                 loading: false
             })
         } catch (error) {
             this.setState({ loading: false })
-            console.log(error)
         }
     }
 
-    addToCart = ()=>{
+    addToCart = async () => {
+        this.setState({ loading: true })
+        if (this.props.data.isUserLoggedIn()) {
+            if (this.state.itemsInCart.length > 0) {
+                await Promise.all(
+                    this.state.itemsInCart.map(data => this.addProductToCart({}, 0, 0, 1, data))
+                )
+            }
+        } else {
             localStorage.setItem('curated', JSON.stringify(this.state.itemsInCart))
-            this.props.history.push('/cart')
+        }
+        localStorage.setItem('chefCurated', '/cheff')
+        this.props.history.push('/bowlselect1')
     }
-    
-    selectItems = (data)=>{
+
+    selectItems = (data) => {
         const index = this.state.itemsInCart.indexOf(data.id)
         const cartItems = this.state.itemsInCart
-        if(index > -1){
+        if (index > -1) {
             cartItems.splice(index, 1)
         } else {
             cartItems.push(data.id)
         }
-        this.setState({itemsInCart: cartItems})
+        this.setState({ itemsInCart: cartItems })
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.source && this.source.cancel("unMounted")
     }
 
     render() {
-        const {loading, CheffCurated, itemsInCart} = this.state
+        const { loading, CheffCurated, itemsInCart } = this.state
         return (
-            <div className='container' style={{width: '90%'}}>
-            <Loading data={loading}/>
-              <div className='wrapper'>
-                <div className='header'>
-                  <Link to='/'>
-                    <BackLogo />
-                  </Link>
-                  Chef curated
-                  <div hidden={itemsInCart.length <= 0} onClick={()=>this.addToCart()} style={{marginLeft: '52%'}}>
-                  <p style={{width: '130%', paddingTop:'7%' ,height: '52px',borderRadius: '21px'}} className="couponBtn">Checkout</p>
-                </div>
-                </div>
-                <div className='curatedItemsContainer'>
-
-                {CheffCurated.map((data, index)=>
-                    <div key={index} className='curatedItem'>
-                        <img src={data.picture} alt="Potato cheese dish"/>
-                        <div className='curatedItemContent'>
-                            <h5>{data.name}</h5>
-                            <GreenPin />
-                            <p>{data.description}</p>
-                            <span>&#x20B9; {parseInt(data.price)}</span>
-                            <button onClick={()=>this.selectItems(data)}>&#43; {itemsInCart.indexOf(data.id) > -1?"Added":"Add To Cart"}</button>
+            <div className='container' style={{ width: '90%' }}>
+                <Loading data={loading} />
+                <div className='wrapper'>
+                    <div className='header'>
+                        <Link to='/'>
+                            <BackLogo />
+                        </Link>
+                        Chef curated
+                  <div hidden={itemsInCart.length <= 0} onClick={() => this.addToCart()} style={{ marginLeft: '52%' }}>
+                            <p style={{ width: '130%', paddingTop: '7%', height: '52px', borderRadius: '21px' }} className="couponBtn">Checkout</p>
                         </div>
                     </div>
-                )}
+                    <div className='curatedItemsContainer'>
+
+                        {CheffCurated.map((data, index) =>
+                            <div key={index} className='curatedItem'>
+                                <img src={data.picture} alt="Potato cheese dish" />
+                                <div className='curatedItemContent'>
+                                    <h5>{data.name}</h5>
+                                    <GreenPin />
+                                    <p>{data.description}</p>
+                                    <span>&#x20B9; {parseInt(data.price)}</span>
+                                    <button onClick={() => this.selectItems(data)}> {itemsInCart.indexOf(data.id) > -1 ? "Added" : "Add to cart"}</button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                 </div>
-                
-             </div>
             </div>
-          );
+        );
     }
 
 }

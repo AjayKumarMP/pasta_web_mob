@@ -89,13 +89,16 @@ class Plcomponent extends React.Component {
 				className='choosePl'
 				id={this.props.id}
 			>
+				<img className="chefRecIcon" hidden={parseInt(this.props.info.chef_recommended) === 0} src="./images/chef_recommended.png" alt="" />
 				<div onClick={(e)=>{this.handler(e);this.props.handler({name:this.props.info.name, id:this.props.info.id, 
 					price: parseInt(this.props.info.price), src: this.props.info.inbowl_src })}}
 				 className={this.state.selected ? 'myborder' + ' activeborder' : 'myborder'} />
 				{this.props.info.kk ? <img className='decForPl' src={this.props.info.kk} /> : null}
 				<img src={this.props.info.src} />
 				<div className='nameSection'>
-					<p>{this.props.info.name}</p>
+					<p style={{marginBottom: '0px'}}>{this.props.info.name}</p>
+					<span hidden={this.props.baseValue.price === this.props.info.price}>
+						+ ₹ { this.props.info.price  - this.props.baseValue.price }</span>
 				</div>
 			</div>
 		);

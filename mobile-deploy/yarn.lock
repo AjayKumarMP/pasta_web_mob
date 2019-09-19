@@ -7337,6 +7337,11 @@ react-router@5.0.1:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-screen-orientation@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-screen-orientation/-/react-screen-orientation-0.0.4.tgz#23c510df32e71acc9b2251c05f7a80904da26d03"
+  integrity sha512-GEs9ohTMuKbL56q3z7CZtf5JfOHkcr/PZMpTpWh/tP5VwCoFeoBpd1Jd3fttLf3id79kzSzuduK/RGCpTFCQ+A==
+
 react-scripts@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-3.0.1.tgz#e5565350d8069cc9966b5998d3fe3befe3d243ac"

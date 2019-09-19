@@ -32,6 +32,7 @@ export default {
     resendOtp: 'send-otp',
     getKitchen: 'get-kitchen',
     getCities: 'cities',
-    getLocations: 'locations'
+    getLocations: 'locations',
+    forgotPassword: 'forgot-password'
 
 }

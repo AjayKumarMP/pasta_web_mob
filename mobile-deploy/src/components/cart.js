@@ -51,6 +51,7 @@ class Cart extends ComponentHelpers {
 				localStorage.removeItem('cartItem')
 				localStorage.removeItem('sides')
 				localStorage.removeItem('URL')
+				localStorage.removeItem('chefCurated')
 				localStorage.removeItem('curated')
 			}
 			this.setState({ loading: true })
@@ -130,8 +131,7 @@ class Cart extends ComponentHelpers {
 				this.setState({ cartItems: data.data, prices: this.cartPrices, loading: false })
 			}
 		} catch (error) {
-			console.log(error)
-			this.setState({ loading: false })
+			this.setState({ loading: false, cartItems: [] })
 		}
 	}
 
@@ -188,6 +188,16 @@ class Cart extends ComponentHelpers {
 		localStorage.setItem('address', addres.id)
 	}
 
+	proceedNext=()=>{
+        if(this.state.selectedAddress === ''){
+            return this.NotificationManager.warning('Please add/select Address', 'No delivery Address selected')
+        }
+        if(this.state.cartItems && Object.keys(this.state.cartItems).length === 0){
+            return this.NotificationManager.warning('Cannot proceed without cart items', 'No Items in your Cart')
+        }
+        return this.props.history.push('/payment')
+    }
+
 	render() {
 		const { guestPopup, prices } = this.state
 		return (
@@ -206,7 +216,7 @@ class Cart extends ComponentHelpers {
 					{this.state.cartItems.items && this.state.cartItems.items.map((cart, index) =>
 						<div key={index}>
 							<Crtitem
-								handleFun={() => this.getMyCartItems()}
+								handleFun={async() => await this.getMyCartItems()}
 								details={prices[index]}
 								key={index}
 								cartData={cart}
@@ -226,8 +236,8 @@ class Cart extends ComponentHelpers {
 						</h5>
 						<p>{this.state.selectedAddress}</p>
 					</div>
-					<button style={{ zIndex: '998' }} disabled={this.state.selectedAddress === '' || this.state.cartItems && Object.keys(this.state.cartItems).length === 0}
-						onClick={() => this.props.history.push('/payment')} className='proccedLinkCrt'>PROCEED</button>
+					<button style={{ zIndex: '998' }}
+						onClick={() => this.proceedNext()} className='proccedLinkCrt'>PROCEED</button>
 				</div>
 
 				<Popup className="itemCart" position="right center" open={this.state.addressModal} onClose={() => this.setState({ addressModal: false })}>
@@ -255,7 +265,7 @@ class Cart extends ComponentHelpers {
 					</div>
 				</Popup>
 
-				<Popup className="itemCart" position="right center" open={guestPopup} onClose={() => this.setState({ guestPopup: false })}>
+				<Popup className="itemCart cartPop" open={guestPopup} onClose={() => this.setState({ guestPopup: false })}>
 					<div className="addressHeader" >
 						<a className="close" onClick={() => this.setState({ guestPopup: false })}>
 							&times;
@@ -264,8 +274,8 @@ class Cart extends ComponentHelpers {
 
 						<hr />
 						<div style={{ padding: '1%' }}>
-							<button className="credBtn" style={{ background: '#1565C0' }} onClick={() => this.props.history.push('/login')}>Login</button>
-							<button className="credBtn" style={{ background: '#80CBC4' }} onClick={() => this.props.history.push('/register')}>Register</button>
+							<button className="credBtn" onClick={() => this.props.history.push('/login')}>Login</button>
+							<button className="credBtn" onClick={() => this.props.history.push('/register')}>Register</button>
 							<button className="credBtn" onClick={() => this.props.history.push('/addaddress')}>As Guest</button>
 						</div>
 					</div>

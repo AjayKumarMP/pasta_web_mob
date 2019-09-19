@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {NotificationContainer} from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css'
 
 // bowl select components
@@ -49,11 +49,22 @@ import httpClient from './utils/httpClient';
 // store.subscribe(() => {
 // 	console.log(store.getState());
 // });
+const lockScreen = async () => {
+	try {
+		const locOrientation = window.screen.lockOrientation || window.screen.mozLockOrientation || window.screen.msLockOrientation || window.screen.orientation.lock;
+		if (document.fullscreenElement) return;
+		await document.documentElement.requestFullscreen()
+		// await locOrientation('portrait')
+	} catch (error) {
+		// console.log(error)
+	}
+}
+lockScreen()
 
 const routing = (
 	<Provider store={store}>
-		<Router>
-		<NotificationContainer />
+		<Router basename="/mobile">
+			<NotificationContainer />
 			<div className='homePage-wrapper'>
 				<Route path='/cheff' component={CheffC} />
 				<Route path='/register' component={Register} />

@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "proxy": "https://siteworx.tk/pasta/api/v1/",
+    "homepage": "http://3.212.194.151/",
     "dependencies": {
         "@fortawesome/free-solid-svg-icons": "^5.9.0",
         "@fortawesome/react-fontawesome": "^0.1.4",
@@ -12,6 +13,7 @@
         "radium": "^0.25.2",
         "react": "^16.8.6",
         "react-animations": "^1.0.0",
+        "react-device-detect": "^1.9.9",
         "react-dom": "^16.8.6",
         "react-icons": "^3.7.0",
         "react-id-swiper": "^2.3.1",

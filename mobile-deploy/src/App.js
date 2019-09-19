@@ -44,6 +44,7 @@ class PastaProject extends ComponentHelpers {
 				// return this.NotificationManager.error(response.message, "Errror")
 			}
 			localStorage.setItem('kitchn_id', response.data && response.data.id)
+			this.props.addKitchen_id(response.data.id)
 			this.setState({ locationModal: false, loading: false })
 		} catch (error) {
 			this.getCities()
@@ -99,7 +100,6 @@ class PastaProject extends ComponentHelpers {
 			if (location !== null) {
 				this.getKitchen(location)
 			} else {
-
 				navigator.geolocation.getCurrentPosition(async (data) => {
 					localStorage.setItem("location", JSON.stringify({
 						lat: data.coords.latitude,
@@ -197,7 +197,7 @@ class PastaProject extends ComponentHelpers {
 						</div>
 					</div>
 					<div className='rightSide'>
-						<img src='/images/logo.png' />
+						<img src='./images/logo.png' />
 					</div>
 				</div>
 				<div className='ownPastaMakeSection'>
@@ -205,7 +205,7 @@ class PastaProject extends ComponentHelpers {
 					<h5>
 						Craft a pasta on your own, share it & <br /> enjoy with friends & family
 					</h5>
-					<img src='images/plate.png' />
+					<img src='./images/plate.png' />
 					<Link className='linkBtn' to='/bowlselect1'>
 						Start now
 					</Link>
@@ -236,7 +236,7 @@ class PastaProject extends ComponentHelpers {
 						</div>
 						: ''
 				}
-				<Popup className="itemCart" position="right center" open={this.state.locationModal} onClose={() => this.setState({ locationModal: false })}>
+				<Popup className="itemCart location" position="right center" open={this.state.locationModal} onClose={() => this.setState({ locationModal: false })}>
 
 					<div className='editPastaPopup modalContent'>
 						<div className="modal-header">

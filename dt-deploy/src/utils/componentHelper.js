@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect as reduxConnect } from 'react-redux'
-import { addBowls, addMyAddress, addMyfavourites, placeOrder, addUserDetails } from '../actions/actions'
+import { addBowls, addMyAddress, addMyfavourites, placeOrder, addUserDetails, addKitchenId } from '../actions/actions'
 import httpClient from './httpClient';
 import APIEndPoints from './APIEndPoints';
 import { NotificationManager } from 'react-notifications';
@@ -16,7 +16,8 @@ let mapDispatchToProps = (dispatch) => {
         addMyAddAddress: addresses => dispatch(addMyAddress(addresses)),
         addMyFavourites: favourites => dispatch(addMyfavourites(favourites)),
         placeOrder: order => dispatch(placeOrder(order)),
-        UserDetails: user => dispatch(addUserDetails(user))
+        UserDetails: user => dispatch(addUserDetails(user)),
+        addKitchenId: kitchen_id => dispatch(addKitchenId(kitchen_id))
     }
 }
 

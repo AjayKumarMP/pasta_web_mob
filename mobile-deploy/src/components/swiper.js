@@ -18,7 +18,7 @@ class SimpleSwiperWithParams extends React.Component{
             <Swiper {...params}> 
 
             {
-                this.props.info.map((item,index)=>{
+                this.props.info && this.props.info.map((item,index)=>{
                     return <Favorite handler={this.props.handlerFunc} index={index} info = {item} key={index}/>
                     
                 })

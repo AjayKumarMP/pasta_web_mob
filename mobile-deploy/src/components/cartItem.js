@@ -74,7 +74,7 @@ class Crtitem extends ComponentHelpers {
                 kitchen_id: this.props.data.kitchen_id
             }, this.source.token)
             this.setState({ loading: false })
-            this.props.handleFun()
+            await this.props.handleFun()
             this.NotificationManager.success('Delete Item', 'Success', 1500)
         } catch (error) {
             if (error.message !== "unMounted") {

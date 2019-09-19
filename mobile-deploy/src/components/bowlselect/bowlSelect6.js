@@ -26,7 +26,8 @@ class Bowlselect extends ComponentHelpers {
       leftbtn: 0,
       rightbtn: 0,
       loading: true,
-      meats: []
+      meats: [],
+      baseValue: ''
     };
   }
   cl = (e) => {
@@ -50,6 +51,8 @@ class Bowlselect extends ComponentHelpers {
     }
   }
   async componentDidMount() {
+    if(!(this.props.data.placeOrder.bowl && this.props.data.placeOrder.bowl.name))
+      return this.props.history.push('/bowlselect1')
     this.startanimation = 0;
     this.startanimationcount = 280;
     try {
@@ -58,9 +61,13 @@ class Bowlselect extends ComponentHelpers {
       const response = await httpClient.ApiCall('post', APIEndPoints.getMeats, {
         kitchen_id: this.props.data.kitchen_id
       }, this.source.token)
+      const baseValue= response.data.reduce((prev, curr) =>{
+        return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+      })
       this.setState({
         meats: JSON.parse(JSON.stringify(response.data).replace(/picture/g, 'src')),
-        loading: false
+        loading: false,
+        baseValue
       })
       this.interval1 = setInterval(() => {
         this.hdl1();
@@ -331,7 +338,7 @@ class Bowlselect extends ComponentHelpers {
             {this.state.loading || this.state.meats.length <  6 ? "" : this.renderbtn()}
             {
               this.state.meats.map((item, index) => {
-                return <Plcomponent handler={this.addMeat} type={'meat'} info={item} key={index} id={index} />
+                return <Plcomponent baseValue={this.state.baseValue} handler={this.addMeat} type={'meat'} info={item} key={index} id={index} />
               })
             }
           </div>

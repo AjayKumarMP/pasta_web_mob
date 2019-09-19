@@ -44,7 +44,7 @@ class Bowlselect extends ComponentHelpers {
 			this.setState({ loadingBowls: true })
 			this.source = httpClient.getSource()
 			const response = await httpClient.ApiCall('post', APIEndPoints.getBowls, {
-				kitchen_id: this.state.kitchen_id
+				kitchen_id: this.props.data.kitchen_id
 			}, this.source.token)
 			this.props.addBowls(response.data)
 			// this.props.addBowls(response.data)
@@ -138,7 +138,7 @@ class Bowlselect extends ComponentHelpers {
 								data-bowl='mini'
 								style={this.state.animationMiniStyle}
 								onClick={this.handler.bind(this)}
-								src='/images/miniBowl.png'
+								src='images/miniBowl.png'
 							/>
 							<h5>Mini bowl</h5>
 							<p>350 ml</p>
@@ -150,13 +150,13 @@ class Bowlselect extends ComponentHelpers {
 
 								onClick={this.handler.bind(this)}
 								className='regBowlImg img1'
-								src='/images/regularBowl.png'
+								src='images/regularBowl.png'
 							/>
 							<h5>Regular bowl</h5>
 							<p> 650 ml</p>
 						</div>
 					</div>
-					<button disabled to='/bowlselect2'  className='nextBtn'>
+					<button onClick={()=>this.NotificationManager.warning('Please select one bowl', 'Warning!!', 1200)}  className='nextBtn'>
 						Next
 					</button>
 				</div>

@@ -48,6 +48,23 @@ class Login extends ComponentHelpers {
     return false
   }
 
+  forgotPassword = async ()=>{
+    try {
+      if(this.state.emailId === ''){
+        return this.NotificationManager.warning("E-mail/phone number is required", "Warning!!")
+      }
+      this.setState({loading: true})
+      const response = await httpClient.ApiCall('post', APIEndPoints.forgotPassword, {
+        login_name: this.state.emailId
+      })
+      this.NotificationManager.success("Please check your mail/phone to reset password", "Success")
+      this.setState({loading: false})
+    } catch (error) {
+      this.setState({loading: false})
+      this.NotificationManager.error("Cannot reset password, Please try later", "Error")
+    }
+  }
+
   render() {
     return (
       <>
@@ -76,8 +93,8 @@ class Login extends ComponentHelpers {
                 required
                 onChange={(e) => this.setState({ password: e.target.value })} />
             </div>
-            <Link className="fPassLink" to="/login">Forget password?</Link>
-            <button disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn">{this.state.loginBtnText}</button>
+            <button type="reset" onClick={(e)=>{e.preventDefault();this.forgotPassword()}} className="fPassLink">Forget password?</button>
+            <button type="submit" disabled={this.state.loginBtnText === 'Please Wait'} className="LogindoneBtn">{this.state.loginBtnText}</button>
             <Link to="/register"><button style={{marginTop: '4%'}} className="LogindoneBtn">Register</button></Link>
           </form>
         </div>

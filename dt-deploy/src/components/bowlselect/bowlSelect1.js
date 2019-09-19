@@ -38,15 +38,26 @@ class Bowlselect extends ComponentHelpers {
 			bowlSize: { reg: '67%', mini: '56%' },
 			animationRegularStyle: { opacity: 0.4, left: '41%', top: '57%' },
 			bowls: [],
+			fromChefCurated: false,
+			sauceBaseValue: '',
+			pastaBaseValue: '',
+			veggieBaseValue: '',
+			garnishBaseValue: '',
+			meatBaseValue: '',
+			sideBaseValue:''
 		};
 	}
 
 	async componentDidMount() {
 		try {
-			this.setState({ loading: true })
+			this.setState({
+				loading: true,
+				fromChefCurated: localStorage.getItem('chefCurated') !== null,
+				selection: localStorage.getItem('chefCurated') !== null ? 6 : 0
+			})
 			this.source = httpClient.getSource()
 			httpClient.ApiCall('post', APIEndPoints.getBowls, {
-				kitchen_id: this.state.kitchen_id
+				kitchen_id: this.props.data.kitchen_id
 			}, this.source.token).then(response => {
 				this.props.addBowls(response.data)
 				response.data.forEach(bowl => {
@@ -78,51 +89,75 @@ class Bowlselect extends ComponentHelpers {
 			httpClient.ApiCall('post', APIEndPoints.getSauces, {
 				kitchen_id: this.props.data.kitchen_id
 			}, this.sourceSauces.token).then(response => {
+				const sauceBaseValue= response.data.reduce((prev, curr) =>{
+					return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+				})
 				this.setState({
 					sauces: response.data,
+					sauceBaseValue
 				})
 			})
-
+			
 			this.sourcePastas = httpClient.getSource()
 			httpClient.ApiCall('post', APIEndPoints.getPastas, {
 				kitchen_id: this.props.data.kitchen_id
 			}, this.sourcePastas.token).then(response => {
+				const pastaBaseValue= response.data.reduce((prev, curr) =>{
+					return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+				})
 				this.setState({
 					pastas: response.data,
+					pastaBaseValue
 				})
 			})
-
+			
 			this.sourceVeggies = httpClient.getSource()
 			httpClient.ApiCall('post', APIEndPoints.getVeggies, {
 				kitchen_id: this.props.data.kitchen_id
 			}, this.sourceVeggies.token).then(response => {
+				const veggieBaseValue= response.data.reduce((prev, curr) =>{
+					return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+				})
 				this.setState({
 					veggiesList: response.data,
+					veggieBaseValue
 				})
 			})
-
+			
 			this.sourceGarnishes = httpClient.getSource()
 			httpClient.ApiCall('post', APIEndPoints.getGarnishes, {
 				kitchen_id: this.props.data.kitchen_id
 			}, this.sourceGarnishes.token).then(response => {
+				const garnishBaseValue= response.data.reduce((prev, curr) =>{
+					return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+				})
 				this.setState({
 					garnishes: response.data,
+					garnishBaseValue
 				})
 			})
 			this.sourceMeats = httpClient.getSource()
 			httpClient.ApiCall('post', APIEndPoints.getMeats, {
 				kitchen_id: this.props.data.kitchen_id
 			}, this.sourceMeats.token).then(response => {
+				const meatBaseValue= response.data.reduce((prev, curr) =>{
+					return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+				})
 				this.setState({
 					meats: response.data,
+					meatBaseValue
 				})
 			})
 			this.sourceSides = httpClient.getSource()
 			httpClient.ApiCall('post', APIEndPoints.getSides, {
 				kitchen_id: this.props.data.kitchen_id
 			}, this.sourceSides.token).then(response => {
+				const sideBaseValue= response.data.reduce((prev, curr) =>{
+					return parseInt(prev.price) < parseInt(curr.price) ? prev : curr;
+				})
 				this.setState({
 					sides: response.data,
+					sideBaseValue
 				})
 			})
 
@@ -200,9 +235,9 @@ class Bowlselect extends ComponentHelpers {
 			case 'veggies':
 				{
 					const index = veggies.indexOf(item)
-					if(index === -1 &&veggies.length >=3){
+					if (index === -1 && veggies.length >= 3) {
 						return
-					  }
+					}
 					index > -1 ? veggies.splice(index, 1) && (price -= parseInt(item.price)) : veggies.push(item) && (price += parseInt(item.price))
 					this.setState({ veggies: veggies, totalPrice: price })
 					break
@@ -210,9 +245,9 @@ class Bowlselect extends ComponentHelpers {
 			case 'meat':
 				{
 					const index = meat.indexOf(item)
-					if(index === -1 && meat.length >=2){
+					if (index === -1 && meat.length >= 2) {
 						return
-					  }
+					}
 					index > -1 ? meat.splice(index, 1) && (price -= parseInt(item.price)) : meat.push(item) && (price += parseInt(item.price))
 					this.setState({ meat: meat, totalPrice: price })
 					break
@@ -220,9 +255,9 @@ class Bowlselect extends ComponentHelpers {
 			case 'garnish':
 				{
 					const index = garnish.indexOf(item)
-					if(index === -1 && garnish.length >=2){
+					if (index === -1 && garnish.length >= 2) {
 						return
-					  }
+					}
 					index > -1 ? garnish.splice(index, 1) && (price -= parseInt(item.price)) : garnish.push(item) && (price += parseInt(item.price))
 					this.setState({ garnish: garnish, totalPrice: price })
 					break
@@ -235,18 +270,18 @@ class Bowlselect extends ComponentHelpers {
 					break
 				}
 			case 'sauce': {
-				const Price= totalPrice + parseInt(item.price) - (parseInt(sauce.price) ? parseInt(sauce.price) : 0)
+				const Price = totalPrice + parseInt(item.price) - (parseInt(sauce.price) ? parseInt(sauce.price) : 0)
 				sauce.id === item.id ?
 					this.setState({ sauce: {}, totalPrice: totalPrice - parseInt(item.price) }) :
 					this.setState({ sauce: item, totalPrice: Price })
-					break
+				break
 			}
 			case 'pasta': {
-				const Price= totalPrice + parseInt(item.price) - (parseInt(pasta.price) ? parseInt(pasta.price) : 0)
+				const Price = totalPrice + parseInt(item.price) - (parseInt(pasta.price) ? parseInt(pasta.price) : 0)
 				pasta.id === item.id ?
 					this.setState({ pasta: {}, totalPrice: totalPrice - parseInt(item.price) }) :
 					this.setState({ pasta: item, totalPrice: Price })
-					break
+				break
 			}
 			default:
 				break
@@ -254,11 +289,11 @@ class Bowlselect extends ComponentHelpers {
 	}
 
 	nextBtnDisabled() {
-		if (this.state.selection === 1 && this.state.sauce && Object.keys(this.state.sauce).length <= 0){
+		if (this.state.selection === 1 && this.state.sauce && Object.keys(this.state.sauce).length <= 0) {
 			this.NotificationManager.warning('Please select at-least one sauce', 'Warning', 1500)
 			return true
 		}
-		if (this.state.selection === 2 && this.state.pasta && Object.keys(this.state.pasta).length <= 0){
+		if (this.state.selection === 2 && this.state.pasta && Object.keys(this.state.pasta).length <= 0) {
 			this.NotificationManager.warning('Please select at-least one pasta', 'Warning', 1500)
 			return true
 		}
@@ -270,6 +305,7 @@ class Bowlselect extends ComponentHelpers {
 		if (this.state.side.length > 0) {
 			localStorage.setItem('sides', JSON.stringify(this.state.side))
 		}
+		if (!this.state.fromChefCurated)
 		localStorage.setItem('cartItem', JSON.stringify({
 			bowl: this.state.bowl,
 			meat: this.state.meat,
@@ -303,7 +339,8 @@ class Bowlselect extends ComponentHelpers {
 							</div>
 
 							<div className="backLogo">
-								<BackLogo onClick={() => selection === 0 ? this.props.history.push('/') : this.setState({ selection: selection - 1 })} />
+								<BackLogo onClick={() => selection === 0 ? this.props.history.push('/') :
+									(this.state.fromChefCurated ? this.props.history.push('/cheff') : this.setState({ selection: selection - 1 }))} />
 								<PastoLogo />
 							</div>
 							{selection === 0 && (
@@ -349,8 +386,10 @@ class Bowlselect extends ComponentHelpers {
 									{
 										sauces.map((sauc, index) =>
 											<div key={index} className={[`sauce${this.indexes[index]} ${sauce.id === sauc.id ? 'activeBorder' : ""} `].join(" ")} onClick={() => this.addItem(sauc, 'sauce')}>
+												<img className="chefRecIcon" hidden={parseInt(sauc.chef_recommended) === 0} src="./images/chef_recommended.png" alt="" />
 												<img alt='sauce' src={sauc.picture} />
 												<p className={sauce.id === sauc.id ? 'textSelected' : ''}>{sauc.name}</p>
+												<span className={sauce.id === sauc.id ? 'textSelected' : ''} hidden={this.state.sauceBaseValue.price === sauc.price}>+ ₹ { sauc.price  - this.state.sauceBaseValue.price }</span>
 											</div>
 										)
 									}
@@ -376,9 +415,11 @@ class Bowlselect extends ComponentHelpers {
 									{
 										pastas.map((past, index) =>
 
-											<div key={index} className={[`sauce${this.indexes[index]} ${pasta.id === past.id ? 'activeBorder' : ""} `].join(" ")} onClick={() => this.addItem(past,'pasta')}>
+											<div key={index} className={[`sauce${this.indexes[index]} ${pasta.id === past.id ? 'activeBorder' : ""} `].join(" ")} onClick={() => this.addItem(past, 'pasta')}>
+												<img className="chefRecIcon" hidden={parseInt(past.chef_recommended) === 0} src="./images/chef_recommended.png" alt="" />
 												<img alt='sauce' src={past.picture} />
 												<p className={past.id === pasta.id ? 'textSelected' : ''}>{past.name}</p>
+												<span className={past.id === pasta.id ? 'textSelected' : ''} hidden={this.state.pastaBaseValue.price === past.price}>+ ₹ { past.price  - this.state.pastaBaseValue.price }</span>
 											</div>
 										)
 									}
@@ -410,8 +451,11 @@ class Bowlselect extends ComponentHelpers {
 												className={[`sauce${this.indexes[index]} ${veggies.length > 0 && veggies.indexOf(vegg) > -1 ? 'activeBorder' : ""} `].join(" ")} key={index}
 												onClick={() => this.addItem(vegg, "veggies")}
 											>
+												<img className="chefRecIcon" hidden={parseInt(vegg.chef_recommended) === 0} src="./images/chef_recommended.png" alt="" />
 												<img alt='sauce' src={vegg.picture} />
 												<p className={veggies.length > 0 && veggies.indexOf(vegg) > -1 ? 'textSelected' : ''}>{vegg.name}</p>
+												<span className={veggies.length > 0 && veggies.indexOf(vegg) > -1 ? 'textSelected' : ''}
+												 hidden={this.state.veggieBaseValue.price === vegg.price}>+ ₹ { vegg.price  - this.state.veggieBaseValue.price }</span>
 											</div>
 										)
 									}
@@ -444,8 +488,10 @@ class Bowlselect extends ComponentHelpers {
 												className={[`sauce${this.indexes[index]} ${garnish.length > 0 && garnish.indexOf(garn) > -1 ? 'activeBorder' : ""} `].join(" ")}
 												onClick={() => this.addItem(garn, 'garnish')}
 											>
-												<img alt='sauce'  src={garn.picture} />
+												<img className="chefRecIcon" hidden={parseInt(garn.chef_recommended) === 0} src="./images/chef_recommended.png" alt="" />
+												<img alt='sauce' src={garn.picture} />
 												<p className={garnish.indexOf(garn) > -1 ? 'textSelected' : ''}>{garn.name}</p>
+												<span className={garnish.indexOf(garn) > -1 ? 'textSelected' : ''} hidden={this.state.garnishBaseValue.price === garn.price}>+ ₹ { garn.price  - this.state.garnishBaseValue.price }</span>
 											</div>
 										)
 									}
@@ -478,8 +524,10 @@ class Bowlselect extends ComponentHelpers {
 												className={[`sauce${this.indexes[index]} ${meat.length > 0 && meat.indexOf(data) > -1 ? 'activeBorder' : ""} `].join(" ")}
 												onClick={() => this.addItem(data, "meat")}
 											>
+												<img className="chefRecIcon" hidden={parseInt(data.chef_recommended) === 0} src="./images/chef_recommended.png" alt="" />
 												<img alt='sauce' src={data.picture} />
 												<p className={meat.indexOf(data) > -1 ? 'textSelected' : ''}>{data.name}</p>
+												<span className={meat.indexOf(data) > -1 ? 'textSelected' : ''} hidden={this.state.meatBaseValue.price === data.price}>+ ₹ { data.price  - this.state.meatBaseValue.price }</span>
 											</div>
 										)
 									}
@@ -488,7 +536,7 @@ class Bowlselect extends ComponentHelpers {
 
 							{selection === 6 && (
 								<section className="sideSection">
-									<div className="sauceBowl">
+									<div hidden={this.state.fromChefCurated} className="sauceBowl">
 										<img alt='sauce' src={bowlImage} />
 										{Object.keys(sauce).length > 0 && (<img className="sauceInbowlSauce" alt='sauce' src={sauce.inbowl_picture} />)}
 										{Object.keys(pasta).length > 0 && (<img className="sauceInbowlPasta" alt='pasta' src={pasta.inbowl_picture} />)}
@@ -518,6 +566,8 @@ class Bowlselect extends ComponentHelpers {
 													className={['sidesCard', side.name === data.name ? 'sidesCardSelected' : ''].join(' ')}
 													onClick={() => this.addItem(data, "side")}
 												>
+													<img style={{ bottom: '79%', right: '27%' }} className="chefRecIcon" hidden={parseInt(data.chef_recommended) === 0}
+														src="./images/chef_recommended.png" alt="" />
 													<img alt='French fries' src={data.picture} />
 													<p>{data.name}</p>
 												</div>
@@ -547,7 +597,7 @@ class Bowlselect extends ComponentHelpers {
 								{selection === 3 && <p>(choose any 3)</p>}
 								{selection === 4 && <p>(choose any 2)</p>}
 								{selection === 5 && <p>(choose any 2)</p>}
-								{selection === 6 && <p> You have made your pasta</p>}
+								{selection === 6 && !this.state.fromChefCurated && <p> 'Yay! Your pasta is ready to cook</p>}
 							</div>
 							<div>
 								{selection > 0 && (
@@ -618,7 +668,7 @@ class Bowlselect extends ComponentHelpers {
 								<button onClick={() => this.addItemToCart('/cart')}>Your Cart</button>
 								<button
 									className="ml20"
-									onClick={() => selection < 6 ?(!this.nextBtnDisabled()? this.setState({ selection: selection + 1 }):"")  : this.addItemToCart('/congratulations')}
+									onClick={() => selection < 6 ? (!this.nextBtnDisabled() ? this.setState({ selection: selection + 1 }) : "") : this.addItemToCart(this.state.fromChefCurated ? '/cart' : '/congratulations')}
 								>
 									Next
 					  </button>

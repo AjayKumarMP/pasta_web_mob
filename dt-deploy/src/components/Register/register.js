@@ -105,8 +105,8 @@ class Register extends ComponentHelpers {
         <div className='header'>
           <Link to={localStorage.getItem('URL') === null ? '/' : '/cart'}>
             <BackLogo />
-            Register
           </Link>
+            Register
 
         </div>
         <div className="LoginWrapp" style={{ height: '100%' }}>
