@@ -24,7 +24,7 @@
         "reactjs-popup": "^1.4.2",
         "redux": "^4.0.4",
         "start": "^5.1.0",
-        "swiper": "^4.5.0",
+        "swiper": "^6.5.1",
         "yarn": "^1.16.0"
     },
     "watch": {
